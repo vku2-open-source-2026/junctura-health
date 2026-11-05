@@ -1,0 +1,4293 @@
+{
+  "referenceDate": "2026-11-01",
+  "facility": "Trạm Y tế phường Hòa Khánh Bắc",
+  "patients": [
+    {
+      "subject": "525fd3dc-fa8c-4472-9c8d-2359aa031f40",
+      "patientId": "P0001",
+      "patientName": "Nguyễn Văn An",
+      "birthYear": 1968,
+      "sex": "male",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [
+        {
+          "substance": "Penicillin",
+          "severity": "severe",
+          "reaction": "Nổi mề đay, khó thở"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2019-03-12"
+        },
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2021-08-02"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2019-03-12"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2021-08-02"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2026-03-18",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "I10",
+            "name": "Tăng huyết áp vô căn"
+          }
+        },
+        {
+          "date": "2026-07-22",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E11",
+            "name": "Đái tháo đường type 2"
+          }
+        },
+        {
+          "date": "2026-10-28",
+          "reason": "Đau ngực, khó thở khi gắng sức",
+          "diagnosis": {
+            "code": "I20.9",
+            "name": "Cơn đau thắt ngực"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-05-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2025-10-02",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-10-28T09:15:00.000Z",
+      "vaccinationsUpdatedAt": "2025-10-02T02:00:00.000Z"
+    },
+    {
+      "subject": "94d11dcd-bac0-48e6-bca9-dbc40e58f7c1",
+      "patientId": "P0002",
+      "patientName": "Trần Thị Bình",
+      "birthYear": 1975,
+      "sex": "female",
+      "ward": "Hòa Minh",
+      "allergies": [
+        {
+          "substance": "Aspirin",
+          "severity": "moderate",
+          "reaction": "Phù mạch, sưng môi"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2010-05-20"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2010-05-20"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-12-04",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-09-15",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "J45",
+            "name": "Hen phế quản"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2025-10-09",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-09-15T08:40:00.000Z",
+      "vaccinationsUpdatedAt": "2025-10-09T02:00:00.000Z"
+    },
+    {
+      "subject": "eae2722d-3a50-445b-a2ed-8c7e14c370b3",
+      "patientId": "P0003",
+      "patientName": "Đỗ Công Long",
+      "birthYear": 2010,
+      "sex": "male",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-12-20",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        }
+      ],
+      "vaccinations": [],
+      "updatedAt": "2025-12-20T08:58:00.000Z",
+      "vaccinationsUpdatedAt": "2025-12-20T02:00:00.000Z"
+    },
+    {
+      "subject": "7ade5c51-916d-4076-beb9-dc5ed4f3a37a",
+      "patientId": "P0004",
+      "patientName": "Phan Thanh Long",
+      "birthYear": 2021,
+      "sex": "male",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2026-06-22"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2026-06-22"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-02-26",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-11-10",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-03-16",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-08-18",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-10-08",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-08-31",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-01-29",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2019-08-16",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-02-04",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-04-09",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-06",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-01-12",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-27",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-10-08T06:56:00.000Z",
+      "vaccinationsUpdatedAt": "2022-01-27T02:00:00.000Z"
+    },
+    {
+      "subject": "5b04c0b1-2cb0-487b-b971-1bcea6cf1f61",
+      "patientId": "P0005",
+      "patientName": "Ngô Ngọc Yến",
+      "birthYear": 2012,
+      "sex": "female",
+      "ward": "Hòa Cường",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-12-06",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-12-25",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-05-10",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-05-15",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-06-14",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-09-19",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2022-09-21",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2022-11-03",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-04-18",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-06-14T02:54:00.000Z",
+      "vaccinationsUpdatedAt": "2023-04-18T02:00:00.000Z"
+    },
+    {
+      "subject": "464443e6-0bf1-456c-9d60-b7e70e6a7bc9",
+      "patientId": "P0006",
+      "patientName": "Ngô Kim Nhung",
+      "birthYear": 1966,
+      "sex": "female",
+      "ward": "Hải Châu",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2024-10-09"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2016-01-09"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2024-10-09"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2016-01-09"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-04-02",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-07-13",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-11",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-04-22",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-07-13T09:14:00.000Z",
+      "vaccinationsUpdatedAt": "2022-04-22T02:00:00.000Z"
+    },
+    {
+      "subject": "ef155440-041e-4adc-a80e-5e1482ca88f3",
+      "patientId": "P0007",
+      "patientName": "Vũ Kim Hạnh",
+      "birthYear": 2005,
+      "sex": "female",
+      "ward": "Khuê Trung",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2024-12-11",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-02-23",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-11-19",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2018-10-17",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2019-02-23",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2019-07-15",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-21",
+          "doseNumber": 2
+        }
+      ],
+      "updatedAt": "2025-11-19T02:17:00.000Z",
+      "vaccinationsUpdatedAt": "2021-12-21T02:00:00.000Z"
+    },
+    {
+      "subject": "c03ae94e-355a-4fc1-b2ac-c2b424d77201",
+      "patientId": "P0008",
+      "patientName": "Bùi Thị Linh",
+      "birthYear": 1957,
+      "sex": "female",
+      "ward": "Hòa Cường",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2019-01-31"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2023-02-01"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2019-01-31"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2023-02-01"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-05-09",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-07-08",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-07-26",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-04-18",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-07-01",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-09-09",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-15",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-04-30",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-07-26T07:40:00.000Z",
+      "vaccinationsUpdatedAt": "2022-04-30T02:00:00.000Z"
+    },
+    {
+      "subject": "7c961a2c-9f84-4a5d-8a7e-dc1385c34224",
+      "patientId": "P0009",
+      "patientName": "Võ Kim Hà",
+      "birthYear": 1943,
+      "sex": "female",
+      "ward": "Hải Châu",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2016-02-12"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2020-09-24"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2016-02-12"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2020-09-24"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-02-13",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-08-16",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        },
+        {
+          "date": "2025-11-19",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-04-18",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2021-07-28",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2021-09-12",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2021-10-12",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-16",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-29",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-02-18",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-05-19",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-07-25",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-04-18T04:17:00.000Z",
+      "vaccinationsUpdatedAt": "2023-07-25T02:00:00.000Z"
+    },
+    {
+      "subject": "e2425101-061e-4178-872e-9541b95b3523",
+      "patientId": "P0010",
+      "patientName": "Phạm Thị Trang",
+      "birthYear": 1992,
+      "sex": "female",
+      "ward": "An Hải",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-07-06",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-04-10",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-10-25",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-25",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-05-09",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-10-25T06:53:00.000Z",
+      "vaccinationsUpdatedAt": "2022-05-09T02:00:00.000Z"
+    },
+    {
+      "subject": "d367db55-629b-4a27-a074-c2f19263598d",
+      "patientId": "P0011",
+      "patientName": "Huỳnh Hữu Vinh",
+      "birthYear": 1989,
+      "sex": "male",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2026-01-12"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2026-01-12"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-01-02",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "I10",
+            "name": "Tăng huyết áp vô căn"
+          }
+        },
+        {
+          "date": "2025-09-08",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-13",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-09-08T04:32:00.000Z",
+      "vaccinationsUpdatedAt": "2022-03-13T02:00:00.000Z"
+    },
+    {
+      "subject": "c0cb5b65-cc37-4408-9ed0-018bf5f38234",
+      "patientId": "P0012",
+      "patientName": "Ngô Minh Phúc",
+      "birthYear": 1942,
+      "sex": "male",
+      "ward": "Hòa Cường",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2024-04-12"
+        },
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2018-03-25"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2021-10-02"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2024-04-12"
+        },
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2018-03-25"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2021-10-02"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-01-25",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-03-18",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-09-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-18",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2024-04-22",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-03-18T06:40:00.000Z",
+      "vaccinationsUpdatedAt": "2024-04-22T02:00:00.000Z"
+    },
+    {
+      "subject": "a64aba17-19ab-47ad-8f5b-5650341cadd2",
+      "patientId": "P0013",
+      "patientName": "Bùi Thị Chi",
+      "birthYear": 2016,
+      "sex": "female",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-06-13",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-03-22",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-09-30",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-28",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-05",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-04-08",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-09-30T04:57:00.000Z",
+      "vaccinationsUpdatedAt": "2023-04-08T02:00:00.000Z"
+    },
+    {
+      "subject": "e1f41dba-1ab4-4c00-95f6-3cc739334bc0",
+      "patientId": "P0014",
+      "patientName": "Lý Ngọc Ngân",
+      "birthYear": 1999,
+      "sex": "female",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-02-07",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-04-22",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-07-24",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-12-11",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-03-02",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-01-04",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-02",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-05-21",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-07-10",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-03-02T02:28:00.000Z",
+      "vaccinationsUpdatedAt": "2022-07-10T02:00:00.000Z"
+    },
+    {
+      "subject": "0a11d5e6-f712-4979-83a4-3c6a60725e09",
+      "patientId": "P0015",
+      "patientName": "Phạm Ngọc Hà",
+      "birthYear": 1989,
+      "sex": "female",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2019-11-22"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2023-06-08"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2019-11-22"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2023-06-08"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-12-28",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-08-02",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "J45",
+            "name": "Hen phế quản"
+          }
+        },
+        {
+          "date": "2026-08-11",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-11-16",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2020-04-17",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2020-09-26",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-23",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-13",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2025-01-06",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-08-11T03:22:00.000Z",
+      "vaccinationsUpdatedAt": "2025-01-06T02:00:00.000Z"
+    },
+    {
+      "subject": "93706de4-46df-48d5-a342-6023d173f4c4",
+      "patientId": "P0016",
+      "patientName": "Hoàng Văn Long",
+      "birthYear": 1993,
+      "sex": "male",
+      "ward": "Hải Châu",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-10-17",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-10-16",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-02-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-04-25",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-12",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-19",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-04-06",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2025-10-17T01:47:00.000Z",
+      "vaccinationsUpdatedAt": "2022-04-06T02:00:00.000Z"
+    },
+    {
+      "subject": "477f1c8b-c312-481c-a4ee-192d856e267b",
+      "patientId": "P0017",
+      "patientName": "Đặng Minh Tài",
+      "birthYear": 1952,
+      "sex": "male",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2023-06-28"
+        },
+        {
+          "code": "M17",
+          "name": "Thoái hóa khớp gối",
+          "since": "2019-04-09"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2023-06-28"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "500 mg khi đau, tối đa 4 lần/ngày",
+          "since": "2019-04-09"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-12-27",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-02-15",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-03-05",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "M17",
+            "name": "Thoái hóa khớp gối"
+          }
+        },
+        {
+          "date": "2026-05-26",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-29",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-23",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-10-25",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-05-26T01:12:00.000Z",
+      "vaccinationsUpdatedAt": "2023-10-25T02:00:00.000Z"
+    },
+    {
+      "subject": "3b18a1e9-cd77-4cbe-aec2-c80a5ccac4a9",
+      "patientId": "P0018",
+      "patientName": "Huỳnh Văn Long",
+      "birthYear": 1990,
+      "sex": "male",
+      "ward": "Hải Châu",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2026-06-18"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2021-06-21"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2026-06-18"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2021-06-21"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-01-01",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-01-07",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-09-24",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-01",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-17",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-06-16",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2025-09-24T02:43:00.000Z",
+      "vaccinationsUpdatedAt": "2022-06-16T02:00:00.000Z"
+    },
+    {
+      "subject": "c3ab0d2f-d280-44e2-b914-db31ce38dae5",
+      "patientId": "P0019",
+      "patientName": "Hồ Công Tuấn",
+      "birthYear": 1969,
+      "sex": "male",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [
+        {
+          "substance": "Aspirin",
+          "severity": "moderate",
+          "reaction": "Phù mạch, sưng môi"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2019-04-09"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2019-04-09"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-06-17",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-04-03",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-27",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-31",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-04-03T06:11:00.000Z",
+      "vaccinationsUpdatedAt": "2022-03-31T02:00:00.000Z"
+    },
+    {
+      "subject": "60253d2c-cfe3-41b8-aec4-fb7c3b4c6ac7",
+      "patientId": "P0020",
+      "patientName": "Vũ Kim Chi",
+      "birthYear": 1993,
+      "sex": "female",
+      "ward": "An Hải",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-02-01",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-09-10",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-01-08",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-05-12",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-08-26",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-08",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-03-15",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-08-26",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-12-29",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-08-26T02:27:00.000Z",
+      "vaccinationsUpdatedAt": "2024-12-29T02:00:00.000Z"
+    },
+    {
+      "subject": "5dc5c479-627b-45a4-8f58-bebfb5cdeaed",
+      "patientId": "P0021",
+      "patientName": "Hồ Hữu Khoa",
+      "birthYear": 2000,
+      "sex": "male",
+      "ward": "Hải Châu",
+      "allergies": [
+        {
+          "substance": "Aspirin",
+          "severity": "moderate",
+          "reaction": "Phù mạch, sưng môi"
+        }
+      ],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-04-29",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-09-04",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-05-10",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-06-24",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-08-07",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-05",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-10",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-08-07T02:16:00.000Z",
+      "vaccinationsUpdatedAt": "2022-03-10T02:00:00.000Z"
+    },
+    {
+      "subject": "2d5f92a5-525e-4b94-afc1-d44ffc8aebc7",
+      "patientId": "P0022",
+      "patientName": "Hồ Thanh Hiếu",
+      "birthYear": 1983,
+      "sex": "male",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-02-01",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-04-12",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-10-22",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-12-21",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-05-17",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-04-12T09:42:00.000Z",
+      "vaccinationsUpdatedAt": "2019-05-17T02:00:00.000Z"
+    },
+    {
+      "subject": "4e3ab86c-991a-4afa-a141-c52f86426444",
+      "patientId": "P0023",
+      "patientName": "Lý Thu Hà",
+      "birthYear": 2015,
+      "sex": "female",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2024-12-04",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-12-17",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-04-12",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-22",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-30",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-04-12T07:58:00.000Z",
+      "vaccinationsUpdatedAt": "2022-03-30T02:00:00.000Z"
+    },
+    {
+      "subject": "6cb2f719-d202-48df-a034-98519cdd9d05",
+      "patientId": "P0024",
+      "patientName": "Dương Minh Long",
+      "birthYear": 1997,
+      "sex": "male",
+      "ward": "Mỹ An",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2024-06-02"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2024-06-02"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-08-13",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2020-01-28",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2020-04-01",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2020-08-05",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-20",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-08-02",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-12-26",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-01-23",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-08-13T03:04:00.000Z",
+      "vaccinationsUpdatedAt": "2024-01-23T02:00:00.000Z"
+    },
+    {
+      "subject": "276dbdbb-0014-4153-9cd8-00b28812fe2d",
+      "patientId": "P0025",
+      "patientName": "Dương Kim Yến",
+      "birthYear": 1960,
+      "sex": "female",
+      "ward": "Hòa Minh",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2024-07-31"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2024-07-31"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-01-01",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-05-12",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-09-17",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2025-10-10",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-08-20",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-21",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-07-12",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2026-06-10",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-08-20T07:41:00.000Z",
+      "vaccinationsUpdatedAt": "2026-06-10T02:00:00.000Z"
+    },
+    {
+      "subject": "30386316-a351-4674-b5a0-f9f3a9bded98",
+      "patientId": "P0026",
+      "patientName": "Võ Công Phúc",
+      "birthYear": 1955,
+      "sex": "male",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2025-10-04"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2013-07-26"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2017-08-15"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2025-10-04"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2013-07-26"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2017-08-15"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-04-27",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-05-03",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-05-29",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-06-27",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-08-30",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [],
+      "updatedAt": "2026-08-30T01:35:00.000Z",
+      "vaccinationsUpdatedAt": "2026-08-30T02:00:00.000Z"
+    },
+    {
+      "subject": "edaa3af2-820e-4709-af31-fe97111e8d78",
+      "patientId": "P0027",
+      "patientName": "Trần Thanh Phương",
+      "birthYear": 2007,
+      "sex": "female",
+      "ward": "Thanh Khê Đông",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-03-17",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-06-29",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-03",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-01",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-06-29T04:25:00.000Z",
+      "vaccinationsUpdatedAt": "2022-02-01T02:00:00.000Z"
+    },
+    {
+      "subject": "d7d22fba-799c-48c2-a82c-9d23d2fca2b2",
+      "patientId": "P0028",
+      "patientName": "Phan Kim Yến",
+      "birthYear": 1941,
+      "sex": "female",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2018-11-25"
+        },
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2014-12-14"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2018-11-25"
+        },
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2014-12-14"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-08-11",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-12-08",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        },
+        {
+          "date": "2026-02-07",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-04-22",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        },
+        {
+          "date": "2026-06-18",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-03-24",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-05-26",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-09-07",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-11-16",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2023-12-15",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-06-18T06:04:00.000Z",
+      "vaccinationsUpdatedAt": "2023-12-15T02:00:00.000Z"
+    },
+    {
+      "subject": "dbb3d453-67ca-40b0-a4df-ae73f8a86416",
+      "patientId": "P0029",
+      "patientName": "Nguyễn Thanh Linh",
+      "birthYear": 1970,
+      "sex": "female",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2013-08-24"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2013-08-24"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-12-02",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E11",
+            "name": "Đái tháo đường type 2"
+          }
+        },
+        {
+          "date": "2024-12-05",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-03-24",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2021-03-08",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-02",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-06-21",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-05-15",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2025-03-24T05:47:00.000Z",
+      "vaccinationsUpdatedAt": "2024-05-15T02:00:00.000Z"
+    },
+    {
+      "subject": "a294a622-a9c1-4217-8504-a41090a6b1d5",
+      "patientId": "P0030",
+      "patientName": "Võ Văn Khoa",
+      "birthYear": 1981,
+      "sex": "male",
+      "ward": "Hải Châu",
+      "allergies": [
+        {
+          "substance": "Ibuprofen",
+          "severity": "mild",
+          "reaction": "Đau thượng vị"
+        },
+        {
+          "substance": "Sulfamid",
+          "severity": "moderate",
+          "reaction": "Phát ban toàn thân"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2018-11-08"
+        },
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2022-05-22"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2018-11-08"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2022-05-22"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-11-01",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-07-24",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-06-29",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-09-05",
+          "doseNumber": 2
+        }
+      ],
+      "updatedAt": "2026-07-24T09:01:00.000Z",
+      "vaccinationsUpdatedAt": "2024-09-05T02:00:00.000Z"
+    },
+    {
+      "subject": "cc27b7bf-ff40-46df-8427-bcef4ff28103",
+      "patientId": "P0031",
+      "patientName": "Phạm Thu Anh",
+      "birthYear": 1963,
+      "sex": "female",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2019-07-22"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2019-09-01"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2019-07-22"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2019-09-01"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-03-14",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-11-29",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2025-03-14T03:58:00.000Z",
+      "vaccinationsUpdatedAt": "2023-11-29T02:00:00.000Z"
+    },
+    {
+      "subject": "a53c311c-0b03-4758-a14a-fb97551ff26e",
+      "patientId": "P0032",
+      "patientName": "Hồ Kim Phương",
+      "birthYear": 2010,
+      "sex": "female",
+      "ward": "Thanh Khê Đông",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2024-11-01",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-03-20",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-01-10",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-09-01",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-01",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-17",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-06-29",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-09-01T08:43:00.000Z",
+      "vaccinationsUpdatedAt": "2023-06-29T02:00:00.000Z"
+    },
+    {
+      "subject": "e24a89f1-a54f-41b5-ae92-0061a3ff047c",
+      "patientId": "P0033",
+      "patientName": "Trần Thanh Dũng",
+      "birthYear": 1990,
+      "sex": "male",
+      "ward": "Khuê Trung",
+      "allergies": [
+        {
+          "substance": "Ibuprofen",
+          "severity": "mild",
+          "reaction": "Đau thượng vị"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2026-06-22"
+        },
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2026-04-09"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2026-06-22"
+        },
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2026-04-09"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-04-20",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-01-04",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-10-10",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-02-27",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-11-12",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-01-06",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-04-13",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-10-10T08:07:00.000Z",
+      "vaccinationsUpdatedAt": "2024-04-13T02:00:00.000Z"
+    },
+    {
+      "subject": "43e31038-4031-4677-b92c-37ad83a19068",
+      "patientId": "P0034",
+      "patientName": "Đặng Thu Linh",
+      "birthYear": 1995,
+      "sex": "female",
+      "ward": "Hải Châu",
+      "allergies": [
+        {
+          "substance": "Aspirin",
+          "severity": "moderate",
+          "reaction": "Phù mạch, sưng môi"
+        }
+      ],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-03-30",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-18",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-20",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-03-30T04:55:00.000Z",
+      "vaccinationsUpdatedAt": "2021-11-20T02:00:00.000Z"
+    },
+    {
+      "subject": "25f3921d-91e0-451e-8407-5b9426e1315e",
+      "patientId": "P0035",
+      "patientName": "Dương Thu Hoa",
+      "birthYear": 1979,
+      "sex": "female",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2023-04-21"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2022-01-14"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2023-04-21"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2022-01-14"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-11-24",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-03-17",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-05-31",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-01-25",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-05-25",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-09-06",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-05-31T05:50:00.000Z",
+      "vaccinationsUpdatedAt": "2021-09-06T02:00:00.000Z"
+    },
+    {
+      "subject": "5569d4b0-d1cc-428f-8174-484f58b93a0d",
+      "patientId": "P0036",
+      "patientName": "Lê Ngọc Linh",
+      "birthYear": 1958,
+      "sex": "female",
+      "ward": "Thanh Khê Đông",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "J44",
+          "name": "Bệnh phổi tắc nghẽn mạn tính",
+          "since": "2025-11-28"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Tiotropium hít",
+          "dose": "1 lần/ngày",
+          "since": "2025-11-28"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-08-31",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2025-12-03",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-05-23",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2020-12-08",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-03-03",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2021-04-06",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-04",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-12",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2023-10-23",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-05-23T09:27:00.000Z",
+      "vaccinationsUpdatedAt": "2023-10-23T02:00:00.000Z"
+    },
+    {
+      "subject": "09c96d5c-7b82-43a7-bbd1-875e91b2a354",
+      "patientId": "P0037",
+      "patientName": "Vũ Ngọc Thảo",
+      "birthYear": 2008,
+      "sex": "female",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2025-12-02"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2025-12-02"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-03-05",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-05-21",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-09-07",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-25",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-09",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-07-01",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2025-09-07T01:36:00.000Z",
+      "vaccinationsUpdatedAt": "2022-07-01T02:00:00.000Z"
+    },
+    {
+      "subject": "ff4668b9-6f36-4be7-84d0-72fe87114d41",
+      "patientId": "P0038",
+      "patientName": "Phan Đức Hiếu",
+      "birthYear": 1940,
+      "sex": "male",
+      "ward": "Khuê Trung",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2023-11-18"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2024-11-23"
+        },
+        {
+          "code": "M17",
+          "name": "Thoái hóa khớp gối",
+          "since": "2023-02-16"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2023-11-18"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2024-11-23"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "500 mg khi đau, tối đa 4 lần/ngày",
+          "since": "2023-02-16"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-03-30",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-05-22",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-10-10",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-10-03",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-10-24",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-04-20",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-10-03T03:23:00.000Z",
+      "vaccinationsUpdatedAt": "2022-04-20T02:00:00.000Z"
+    },
+    {
+      "subject": "49cd2d1d-8e74-4080-a502-d4c9815b72cc",
+      "patientId": "P0039",
+      "patientName": "Hoàng Thị Hà",
+      "birthYear": 1952,
+      "sex": "female",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2012-04-30"
+        },
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2012-04-21"
+        },
+        {
+          "code": "M17",
+          "name": "Thoái hóa khớp gối",
+          "since": "2015-06-15"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2012-04-30"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2012-04-21"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "500 mg khi đau, tối đa 4 lần/ngày",
+          "since": "2015-06-15"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-12-02",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-10-26",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-12-25",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-04-23",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-09-04",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-12-31",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-10-26T08:50:00.000Z",
+      "vaccinationsUpdatedAt": "2024-12-31T02:00:00.000Z"
+    },
+    {
+      "subject": "7f921f10-4973-4067-a2d6-b8a649e0b977",
+      "patientId": "P0040",
+      "patientName": "Lý Thu Lan",
+      "birthYear": 1969,
+      "sex": "female",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2024-05-29"
+        },
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2025-12-21"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2024-05-29"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2025-12-21"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-11-29",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-09-09",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2024-09-16",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2024-11-29T02:15:00.000Z",
+      "vaccinationsUpdatedAt": "2024-09-16T02:00:00.000Z"
+    },
+    {
+      "subject": "d518f09e-b092-40b9-bee2-89a3444cf6e1",
+      "patientId": "P0041",
+      "patientName": "Đỗ Hữu Hiếu",
+      "birthYear": 1947,
+      "sex": "male",
+      "ward": "Hải Châu",
+      "allergies": [
+        {
+          "substance": "Ibuprofen",
+          "severity": "mild",
+          "reaction": "Đau thượng vị"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2014-05-25"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2016-06-12"
+        },
+        {
+          "code": "M17",
+          "name": "Thoái hóa khớp gối",
+          "since": "2015-07-01"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2014-05-25"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2016-06-12"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "500 mg khi đau, tối đa 4 lần/ngày",
+          "since": "2015-07-01"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-09-23",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2025-12-07",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2025-12-30",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-06-26",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        },
+        {
+          "date": "2026-09-29",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "K21",
+            "name": "Trào ngược dạ dày thực quản"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-02",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-11",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-09-29T06:54:00.000Z",
+      "vaccinationsUpdatedAt": "2021-12-11T02:00:00.000Z"
+    },
+    {
+      "subject": "ac052447-5190-4880-8397-d6655d4e3ea8",
+      "patientId": "P0042",
+      "patientName": "Hồ Công Tuấn",
+      "birthYear": 2008,
+      "sex": "male",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2024-11-20",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2025-10-12",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-02-12",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        },
+        {
+          "date": "2026-07-27",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2020-04-01",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-07-27T02:40:00.000Z",
+      "vaccinationsUpdatedAt": "2021-08-10T02:00:00.000Z"
+    },
+    {
+      "subject": "16ec19e2-4329-424a-a17a-023b38021a00",
+      "patientId": "P0043",
+      "patientName": "Huỳnh Ngọc Hà",
+      "birthYear": 2023,
+      "sex": "female",
+      "ward": "Hòa Minh",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-01-04",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-04-24",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2026-05-16",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-16",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-04-12",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-12-13",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-03-12",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2024-05-07",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2024-08-30",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-05-16T03:25:00.000Z",
+      "vaccinationsUpdatedAt": "2024-08-30T02:00:00.000Z"
+    },
+    {
+      "subject": "76524591-07eb-4b2e-8dcb-91b414d69357",
+      "patientId": "P0044",
+      "patientName": "Vũ Quốc Tài",
+      "birthYear": 1991,
+      "sex": "male",
+      "ward": "Hòa Minh",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2026-04-10"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2026-04-10"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-10-01",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        },
+        {
+          "date": "2025-11-24",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        },
+        {
+          "date": "2025-12-17",
+          "reason": "Đau thắt lưng khi mang vác",
+          "diagnosis": {
+            "code": "M54.5",
+            "name": "Đau vùng thắt lưng"
+          }
+        },
+        {
+          "date": "2026-06-12",
+          "reason": "Tái khám định kỳ",
+          "diagnosis": {
+            "code": "E78",
+            "name": "Rối loạn lipid máu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-14",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-05-06",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-03-22",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-07-14",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-09-30",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-06-12T02:41:00.000Z",
+      "vaccinationsUpdatedAt": "2023-09-30T02:00:00.000Z"
+    },
+    {
+      "subject": "da458e20-8b91-4415-b7fc-a7b4e28ba334",
+      "patientId": "P0045",
+      "patientName": "Hoàng Đức Thắng",
+      "birthYear": 1959,
+      "sex": "male",
+      "ward": "Hòa Khánh Bắc",
+      "allergies": [
+        {
+          "substance": "Hải sản",
+          "severity": "mild",
+          "reaction": "Ngứa, nổi mẩn"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "E11",
+          "name": "Đái tháo đường type 2",
+          "since": "2021-11-01"
+        },
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2013-11-07"
+        },
+        {
+          "code": "J44",
+          "name": "Bệnh phổi tắc nghẽn mạn tính",
+          "since": "2016-08-25"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Metformin",
+          "dose": "500 mg x 2 lần/ngày",
+          "since": "2021-11-01"
+        },
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2013-11-07"
+        },
+        {
+          "name": "Tiotropium hít",
+          "dose": "1 lần/ngày",
+          "since": "2016-08-25"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2024-12-11",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2025-03-27",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-06-24",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-08-17",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2023-12-29",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2025-01-27",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2025-03-29",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2025-05-31",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-03-27T07:09:00.000Z",
+      "vaccinationsUpdatedAt": "2025-05-31T02:00:00.000Z"
+    },
+    {
+      "subject": "e00a43bf-175c-49e1-a17f-0f74efb4d48f",
+      "patientId": "P0046",
+      "patientName": "Nguyễn Thị Ngân",
+      "birthYear": 1968,
+      "sex": "female",
+      "ward": "Hòa Cường",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "I10",
+          "name": "Tăng huyết áp vô căn",
+          "since": "2016-06-12"
+        },
+        {
+          "code": "E78",
+          "name": "Rối loạn lipid máu",
+          "since": "2019-04-07"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2018-08-12"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Amlodipin",
+          "dose": "5 mg x 1 lần/ngày",
+          "since": "2016-06-12"
+        },
+        {
+          "name": "Atorvastatin",
+          "dose": "20 mg x 1 lần/ngày, uống buổi tối",
+          "since": "2019-04-07"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2018-08-12"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-09-01",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-02-16",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-08-19",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-10-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2018-11-23",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin viêm gan B",
+          "code": "43",
+          "date": "2019-03-15",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2019-03-22",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2026-03-18",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2026-07-16",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2026-09-06",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-08-19T09:28:00.000Z",
+      "vaccinationsUpdatedAt": "2026-09-06T02:00:00.000Z"
+    },
+    {
+      "subject": "e294c8c1-fb84-491f-8843-39cfdcef445a",
+      "patientId": "P0047",
+      "patientName": "Phan Thanh Nam",
+      "birthYear": 2001,
+      "sex": "male",
+      "ward": "Hòa Minh",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2023-02-16"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2023-02-16"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-07-24",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-10-06",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-09-08",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-15",
+          "doseNumber": 3
+        },
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2022-08-15",
+          "doseNumber": 1
+        }
+      ],
+      "updatedAt": "2026-10-06T08:14:00.000Z",
+      "vaccinationsUpdatedAt": "2022-08-15T02:00:00.000Z"
+    },
+    {
+      "subject": "76cf43c0-f29e-4274-9aa1-b7fc6d4c1288",
+      "patientId": "P0048",
+      "patientName": "Đỗ Mỹ Chi",
+      "birthYear": 1964,
+      "sex": "female",
+      "ward": "Mỹ An",
+      "allergies": [],
+      "chronicConditions": [
+        {
+          "code": "J45",
+          "name": "Hen phế quản",
+          "since": "2022-10-01"
+        },
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2017-08-01"
+        },
+        {
+          "code": "J44",
+          "name": "Bệnh phổi tắc nghẽn mạn tính",
+          "since": "2020-10-20"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Salbutamol xịt",
+          "dose": "2 nhát khi khó thở",
+          "since": "2022-10-01"
+        },
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2017-08-01"
+        },
+        {
+          "name": "Tiotropium hít",
+          "dose": "1 lần/ngày",
+          "since": "2020-10-20"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2025-03-25",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2025-03-29",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-01-24",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-05-14",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin uốn ván (VAT)",
+          "code": "112",
+          "date": "2018-12-24",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-11-18",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-01-07",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2026-05-14T03:22:00.000Z",
+      "vaccinationsUpdatedAt": "2022-01-07T02:00:00.000Z"
+    },
+    {
+      "subject": "c63db303-46c3-4fa2-b96f-42b37c1c41cc",
+      "patientId": "P0049",
+      "patientName": "Huỳnh Thanh Hạnh",
+      "birthYear": 2018,
+      "sex": "female",
+      "ward": "Hòa Cường",
+      "allergies": [],
+      "chronicConditions": [],
+      "currentMedications": [],
+      "encounters": [
+        {
+          "date": "2025-04-26",
+          "reason": "Đau thượng vị sau ăn",
+          "diagnosis": {
+            "code": "K29.7",
+            "name": "Viêm dạ dày"
+          }
+        },
+        {
+          "date": "2025-11-22",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccine": "Vắc xin cúm mùa",
+          "code": "141",
+          "date": "2019-11-22",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-08-10",
+          "doseNumber": 1
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2021-12-04",
+          "doseNumber": 2
+        },
+        {
+          "vaccine": "Vắc xin COVID-19",
+          "code": "213",
+          "date": "2022-02-10",
+          "doseNumber": 3
+        }
+      ],
+      "updatedAt": "2025-11-22T06:34:00.000Z",
+      "vaccinationsUpdatedAt": "2022-02-10T02:00:00.000Z"
+    },
+    {
+      "subject": "2a1b75c3-6918-427f-b744-9e91dad33c04",
+      "patientId": "P0050",
+      "patientName": "Hoàng Công Khoa",
+      "birthYear": 1943,
+      "sex": "male",
+      "ward": "Mỹ An",
+      "allergies": [
+        {
+          "substance": "Sulfamid",
+          "severity": "moderate",
+          "reaction": "Phát ban toàn thân"
+        },
+        {
+          "substance": "Aspirin",
+          "severity": "moderate",
+          "reaction": "Phù mạch, sưng môi"
+        }
+      ],
+      "chronicConditions": [
+        {
+          "code": "K21",
+          "name": "Trào ngược dạ dày thực quản",
+          "since": "2014-05-18"
+        },
+        {
+          "code": "M17",
+          "name": "Thoái hóa khớp gối",
+          "since": "2012-10-20"
+        }
+      ],
+      "currentMedications": [
+        {
+          "name": "Omeprazol",
+          "dose": "20 mg x 1 lần/ngày trước ăn sáng",
+          "since": "2014-05-18"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "500 mg khi đau, tối đa 4 lần/ngày",
+          "since": "2012-10-20"
+        }
+      ],
+      "encounters": [
+        {
+          "date": "2026-01-01",
+          "reason": "Sốt, ho, đau họng",
+          "diagnosis": {
+            "code": "J06.9",
+            "name": "Nhiễm trùng đường hô hấp trên cấp"
+          }
+        },
+        {
+          "date": "2026-01-02",
+          "reason": "Đi ngoài phân lỏng nhiều lần",
+          "diagnosis": {
+            "code": "A09",
+            "name": "Tiêu chảy và viêm dạ dày ruột"
+          }
+        },
+        {
+          "date": "2026-10-13",
+          "reason": "Đau đầu, chóng mặt",
+          "diagnosis": {
+            "code": "R51",
+            "name": "Đau đầu"
+          }
+        }
+      ],
+      "vaccinations": [],
+      "updatedAt": "2026-10-13T04:23:00.000Z",
+      "vaccinationsUpdatedAt": "2026-10-13T02:00:00.000Z"
+    }
+  ],
+  "referrals": [
+    {
+      "referralId": "CT-2026-000126",
+      "subject": "477f1c8b-c312-481c-a4ee-192d856e267b",
+      "issuedAt": "2026-06-18T08:11:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "routine",
+      "reason": "Đau khớp gối kéo dài, cần đánh giá phẫu thuật",
+      "provisionalDiagnosis": {
+        "code": "M17.1",
+        "name": "Thoái hóa khớp gối nguyên phát"
+      },
+      "treatmentGiven": "Paracetamol; hướng dẫn tập vận động",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000128",
+      "subject": "276dbdbb-0014-4153-9cd8-00b28812fe2d",
+      "issuedAt": "2026-06-23T05:33:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000125",
+      "subject": "d367db55-629b-4a27-a074-c2f19263598d",
+      "issuedAt": "2026-07-06T05:08:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000131",
+      "subject": "49cd2d1d-8e74-4080-a502-d4c9815b72cc",
+      "issuedAt": "2026-07-16T02:37:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "routine",
+      "reason": "Đường huyết không kiểm soát dù đã điều trị",
+      "provisionalDiagnosis": {
+        "code": "E11.6",
+        "name": "Đái tháo đường type 2 có biến chứng"
+      },
+      "treatmentGiven": "Tư vấn chế độ ăn; tăng liều Metformin",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000127",
+      "subject": "3b18a1e9-cd77-4cbe-aec2-c80a5ccac4a9",
+      "issuedAt": "2026-07-16T04:54:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000132",
+      "subject": "76524591-07eb-4b2e-8dcb-91b414d69357",
+      "issuedAt": "2026-08-04T05:30:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000134",
+      "subject": "76cf43c0-f29e-4274-9aa1-b7fc6d4c1288",
+      "issuedAt": "2026-08-23T02:25:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "emergency",
+      "reason": "Khó thở tăng dần, SpO2 92%",
+      "provisionalDiagnosis": {
+        "code": "J44.1",
+        "name": "Đợt cấp bệnh phổi tắc nghẽn mạn tính"
+      },
+      "treatmentGiven": "Khí dung Salbutamol 5 mg; thở oxy 2 lít/phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000133",
+      "subject": "da458e20-8b91-4415-b7fc-a7b4e28ba334",
+      "issuedAt": "2026-08-26T09:28:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "emergency",
+      "reason": "Khó thở tăng dần, SpO2 92%",
+      "provisionalDiagnosis": {
+        "code": "J44.1",
+        "name": "Đợt cấp bệnh phổi tắc nghẽn mạn tính"
+      },
+      "treatmentGiven": "Khí dung Salbutamol 5 mg; thở oxy 2 lít/phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000130",
+      "subject": "ff4668b9-6f36-4be7-84d0-72fe87114d41",
+      "issuedAt": "2026-10-12T08:18:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000124",
+      "subject": "7c961a2c-9f84-4a5d-8a7e-dc1385c34224",
+      "issuedAt": "2026-10-16T07:20:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000129",
+      "subject": "a294a622-a9c1-4217-8504-a41090a6b1d5",
+      "issuedAt": "2026-10-20T07:59:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "routine",
+      "reason": "Đường huyết không kiểm soát dù đã điều trị",
+      "provisionalDiagnosis": {
+        "code": "E11.6",
+        "name": "Đái tháo đường type 2 có biến chứng"
+      },
+      "treatmentGiven": "Tư vấn chế độ ăn; tăng liều Metformin",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    },
+    {
+      "referralId": "CT-2026-000123",
+      "subject": "525fd3dc-fa8c-4472-9c8d-2359aa031f40",
+      "issuedAt": "2026-10-28T09:30:00.000Z",
+      "toFacility": "Bệnh viện Đà Nẵng",
+      "urgency": "urgent",
+      "reason": "Đau ngực tái diễn, cần đánh giá tim mạch chuyên sâu",
+      "provisionalDiagnosis": {
+        "code": "I20.9",
+        "name": "Cơn đau thắt ngực"
+      },
+      "treatmentGiven": "Nitroglycerin ngậm dưới lưỡi 0,5 mg; theo dõi huyết áp 30 phút",
+      "fromFacility": "Trạm Y tế phường Hòa Khánh Bắc"
+    }
+  ]
+}

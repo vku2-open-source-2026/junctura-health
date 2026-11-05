@@ -44,6 +44,10 @@ Sáu năng lực dùng chung được định nghĩa một lần trong [`contrac
 | `prescription-verify` | Hospital | Pharmacy | `dispensing` | Không |
 | `claim-verify` | Hospital | Insurance | `claim_review` | Không |
 
+## Dữ liệu mẫu
+
+`npm run seed:generate` sinh 50 người bệnh giả lập ở Đà Nẵng (hồ sơ trạm y tế, chuyển tuyến, đơn thuốc, hồ sơ thanh toán) và danh sách tài khoản demo. Cùng một seed luôn ra cùng một kết quả. Xem [`seed/README.md`](seed/README.md).
+
 ## Yêu cầu
 
 - Docker và Docker Compose
@@ -70,4 +74,4 @@ Xem [CONTRIBUTING.md](CONTRIBUTING.md). Báo lỗi và đề xuất ở [Issues]
 
 Mã nguồn phát hành theo [Apache License 2.0](LICENSE); xem thêm [NOTICE](NOTICE). Mỗi file nguồn ghi giấy phép bằng header SPDX; file không ghi chú thích được (JSON, dữ liệu) được khai trong [REUSE.toml](REUSE.toml). Repo tuân thủ [REUSE 3.3](https://reuse.software/spec-3.3/).
 
-Dữ liệu người bệnh trong repo là dữ liệu giả lập sinh bằng [Synthea](https://github.com/synthetichealth/synthea), không chứa thông tin người thật.
+Dữ liệu người bệnh trong repo là dữ liệu giả lập do chính bộ sinh của dự án tạo ra ([`seed/`](seed/README.md)), không chứa thông tin người thật và không dùng công cụ hay bộ dữ liệu bên ngoài.

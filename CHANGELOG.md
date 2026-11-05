@@ -11,6 +11,13 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Added
 
+- **Synthetic patient data** (`seed/`): a deterministic, dependency-free generator
+  (`npm run seed:generate`, `npm run seed:check`) producing 50 Vietnamese patients
+  with clinic records, referrals, hospital prescriptions and claims, insurer claim
+  requests and demo accounts with fixed identity subjects (no passwords). Featured
+  patients An and Bình follow the demo script and match the contract examples.
+  `rebase()` moves all dates to the demo day; `seed/views.mjs` maps records to each
+  contract's output. No external dataset or tool is used.
 - **Shared capability contracts** (`contracts/`, package `@junctura/health-contracts`):
   six capabilities (`pre-visit-summary`, `allergy-list`, `vaccination-history`,
   `referral-summary`, `prescription-verify`, `claim-verify`) with input/output schemas,

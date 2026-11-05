@@ -8,5 +8,6 @@ rights and agreement; it does not claim ownership of upstream components.
 External components retain their own copyright, license and notice terms.
 Dependencies are declared in package manifests and installed from their
 registries; no third-party source code has been copied into this project.
-Synthetic patient data is generated with Synthea (Apache-2.0,
-https://github.com/synthetichealth/synthea) and contains no real people.
+Patient data under seed/data/ is synthetic: produced by this project's own
+generator (seed/generate.mjs) from team-written vocabulary. It describes no
+real person. Diagnosis codes follow ICD-10 (WHO) and vaccine codes follow CVX.

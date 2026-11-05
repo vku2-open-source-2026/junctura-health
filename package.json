@@ -6,12 +6,21 @@
   "license": "Apache-2.0",
   "type": "module",
   "homepage": "https://junctura.studio",
-  "repository": { "type": "git", "url": "git+https://github.com/vku2-open-source-2026/junctura-health.git" },
-  "bugs": { "url": "https://github.com/vku2-open-source-2026/junctura-health/issues" },
-  "engines": { "node": ">=24 <25" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vku2-open-source-2026/junctura-health.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vku2-open-source-2026/junctura-health/issues"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "check": "node scripts/check.mjs",
     "check:reuse": "node scripts/check-reuse.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "seed:generate": "node seed/generate.mjs",
+    "seed:check": "node seed/generate.mjs --check"
   }
 }
