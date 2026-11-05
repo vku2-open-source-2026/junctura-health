@@ -1,0 +1,17 @@
+{
+  "name": "junctura-health",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Junctura Health: connected-care demo on Junctura DX-OS (compose bundle, shared capability contracts, synthetic patient data).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "homepage": "https://junctura.studio",
+  "repository": { "type": "git", "url": "git+https://github.com/vku2-open-source-2026/junctura-health.git" },
+  "bugs": { "url": "https://github.com/vku2-open-source-2026/junctura-health/issues" },
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "check:reuse": "node scripts/check-reuse.mjs",
+    "test": "node --test"
+  }
+}
