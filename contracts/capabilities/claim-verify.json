@@ -1,0 +1,62 @@
+{
+  "slug": "claim-verify",
+  "version": "1.0.0",
+  "provider": "junctura-hospital",
+  "consumers": [
+    "junctura-insurance"
+  ],
+  "purposes": [
+    "claim_review"
+  ],
+  "emergencyAccess": false,
+  "title": "Xác minh chi phí điều trị",
+  "description": "Cho bên bảo hiểm biết một khoản chi có khớp với hồ sơ điều trị hay không. Chỉ trả lời có/không, không trả chẩn đoán hay chi tiết điều trị.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "claimId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "Mã hồ sơ thanh toán."
+      },
+      "amountVnd": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000000000,
+        "description": "Số tiền đề nghị thanh toán (VND)."
+      }
+    },
+    "required": [
+      "claimId",
+      "amountVnd"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "matches": {
+        "type": "boolean",
+        "description": "Khoản chi khớp với hồ sơ điều trị."
+      },
+      "checkedAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      }
+    },
+    "required": [
+      "matches",
+      "checkedAt"
+    ],
+    "additionalProperties": false
+  },
+  "sideEffects": {
+    "kind": "none",
+    "description": "Chỉ đọc; không thay đổi dữ liệu của bên cung cấp.",
+    "idempotency": "none"
+  },
+  "timeoutMs": 2000
+}

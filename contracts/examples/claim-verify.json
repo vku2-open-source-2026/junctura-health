@@ -1,0 +1,10 @@
+{
+  "input": {
+    "claimId": "HS-2026-00987",
+    "amountVnd": 2450000
+  },
+  "output": {
+    "matches": true,
+    "checkedAt": "2026-11-02T04:00:00.000Z"
+  }
+}

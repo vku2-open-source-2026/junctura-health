@@ -1,0 +1,81 @@
+{
+  "slug": "vaccination-history",
+  "version": "1.0.0",
+  "provider": "junctura-clinic",
+  "consumers": [
+    "junctura-hospital"
+  ],
+  "purposes": [
+    "treatment"
+  ],
+  "emergencyAccess": false,
+  "title": "Lịch sử tiêm chủng",
+  "description": "Các mũi vắc xin người bệnh đã tiêm tại trạm y tế.",
+  "inputSchema": {
+    "type": "object",
+    "description": "Không có tham số: người bệnh được xác định qua context.dataSubject.",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "vaccinations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "vaccine": {
+              "type": "string",
+              "maxLength": 120,
+              "description": "Tên vắc xin."
+            },
+            "code": {
+              "type": "string",
+              "maxLength": 16,
+              "description": "Mã CVX."
+            },
+            "date": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10,
+              "description": "Ngày tiêm, YYYY-MM-DD."
+            },
+            "doseNumber": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "description": "Mũi thứ mấy."
+            }
+          },
+          "required": [
+            "vaccine",
+            "code",
+            "date",
+            "doseNumber"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 200
+      },
+      "updatedAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      }
+    },
+    "required": [
+      "vaccinations",
+      "updatedAt"
+    ],
+    "additionalProperties": false
+  },
+  "sideEffects": {
+    "kind": "none",
+    "description": "Chỉ đọc; không thay đổi dữ liệu của bên cung cấp.",
+    "idempotency": "none"
+  },
+  "timeoutMs": 2000
+}

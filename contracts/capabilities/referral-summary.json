@@ -1,0 +1,106 @@
+{
+  "slug": "referral-summary",
+  "version": "1.0.0",
+  "provider": "junctura-clinic",
+  "consumers": [
+    "junctura-hospital"
+  ],
+  "purposes": [
+    "referral_intake"
+  ],
+  "emergencyAccess": false,
+  "title": "Hồ sơ chuyển tuyến",
+  "description": "Phiếu chuyển tuyến điện tử từ trạm y tế: lý do chuyển, chẩn đoán sơ bộ và xử trí đã làm.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "referralId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "Mã phiếu chuyển tuyến do trạm y tế cấp."
+      }
+    },
+    "required": [
+      "referralId"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "referralId": {
+        "type": "string",
+        "maxLength": 64
+      },
+      "issuedAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      },
+      "fromFacility": {
+        "type": "string",
+        "maxLength": 160,
+        "description": "Cơ sở chuyển đi."
+      },
+      "toFacility": {
+        "type": "string",
+        "maxLength": 160,
+        "description": "Cơ sở tiếp nhận."
+      },
+      "urgency": {
+        "type": "string",
+        "maxLength": 16,
+        "description": "routine | urgent | emergency"
+      },
+      "reason": {
+        "type": "string",
+        "maxLength": 500,
+        "description": "Lý do chuyển tuyến."
+      },
+      "provisionalDiagnosis": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 16,
+            "description": "Mã ICD-10."
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Tên chẩn đoán."
+          }
+        },
+        "required": [
+          "code",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "treatmentGiven": {
+        "type": "string",
+        "maxLength": 1000,
+        "description": "Xử trí đã thực hiện trước khi chuyển."
+      }
+    },
+    "required": [
+      "referralId",
+      "issuedAt",
+      "fromFacility",
+      "toFacility",
+      "urgency",
+      "reason",
+      "provisionalDiagnosis",
+      "treatmentGiven"
+    ],
+    "additionalProperties": false
+  },
+  "sideEffects": {
+    "kind": "none",
+    "description": "Chỉ đọc; không thay đổi dữ liệu của bên cung cấp.",
+    "idempotency": "none"
+  },
+  "timeoutMs": 3000
+}

@@ -1,0 +1,20 @@
+{
+  "input": {},
+  "output": {
+    "vaccinations": [
+      {
+        "vaccine": "Vắc xin uốn ván (VAT)",
+        "code": "112",
+        "date": "2024-05-10",
+        "doseNumber": 1
+      },
+      {
+        "vaccine": "Vắc xin cúm mùa",
+        "code": "141",
+        "date": "2025-10-02",
+        "doseNumber": 1
+      }
+    ],
+    "updatedAt": "2025-10-02T02:00:00.000Z"
+  }
+}
