@@ -1,0 +1,13 @@
+{
+  "input": {},
+  "output": {
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "severity": "severe",
+        "reaction": "Nổi mề đay, khó thở"
+      }
+    ],
+    "updatedAt": "2026-10-28T09:15:00.000Z"
+  }
+}

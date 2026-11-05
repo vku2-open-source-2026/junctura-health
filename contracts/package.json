@@ -1,0 +1,15 @@
+{
+  "name": "@junctura/health-contracts",
+  "version": "1.0.0",
+  "description": "Shared capability contracts of Junctura Health: schemas, manifests and purpose rules for connected-care applications on Junctura DX-OS.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "homepage": "https://junctura.studio",
+  "repository": { "type": "git", "url": "git+https://github.com/vku2-open-source-2026/junctura-health.git", "directory": "contracts" },
+  "bugs": { "url": "https://github.com/vku2-open-source-2026/junctura-health/issues" },
+  "engines": { "node": ">=24 <25" },
+  "exports": { ".": { "types": "./index.d.ts", "import": "./index.mjs" } },
+  "types": "./index.d.ts",
+  "files": ["index.mjs", "index.d.ts", "capabilities/", "examples/", "README.md", "LICENSE", "NOTICE"],
+  "sideEffects": false
+}

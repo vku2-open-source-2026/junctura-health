@@ -1,0 +1,50 @@
+{
+  "input": {},
+  "output": {
+    "patientName": "Nguyễn Văn An",
+    "birthYear": 1968,
+    "sex": "male",
+    "allergies": [
+      {
+        "substance": "Penicillin",
+        "severity": "severe",
+        "reaction": "Nổi mề đay, khó thở"
+      }
+    ],
+    "chronicConditions": [
+      {
+        "code": "I10",
+        "name": "Tăng huyết áp vô căn",
+        "since": "2019-03-12"
+      },
+      {
+        "code": "E11",
+        "name": "Đái tháo đường type 2",
+        "since": "2021-08-02"
+      }
+    ],
+    "currentMedications": [
+      {
+        "name": "Amlodipin",
+        "dose": "5 mg x 1 lần/ngày",
+        "since": "2019-03-12"
+      },
+      {
+        "name": "Metformin",
+        "dose": "500 mg x 2 lần/ngày",
+        "since": "2021-08-02"
+      }
+    ],
+    "recentEncounters": [
+      {
+        "date": "2026-10-28",
+        "reason": "Đau ngực, khó thở khi gắng sức",
+        "diagnosis": {
+          "code": "I20.9",
+          "name": "Cơn đau thắt ngực"
+        }
+      }
+    ],
+    "updatedAt": "2026-10-28T09:15:00.000Z"
+  }
+}

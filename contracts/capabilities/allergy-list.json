@@ -1,0 +1,75 @@
+{
+  "slug": "allergy-list",
+  "version": "1.0.0",
+  "provider": "junctura-clinic",
+  "consumers": [
+    "junctura-hospital",
+    "junctura-pharmacy"
+  ],
+  "purposes": [
+    "treatment",
+    "dispensing"
+  ],
+  "emergencyAccess": true,
+  "title": "Danh sách dị ứng",
+  "description": "Các chất gây dị ứng đã ghi nhận của người bệnh, dùng để cảnh báo khi kê đơn hoặc phát thuốc.",
+  "inputSchema": {
+    "type": "object",
+    "description": "Không có tham số: người bệnh được xác định qua context.dataSubject.",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "allergies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "substance": {
+              "type": "string",
+              "maxLength": 120,
+              "description": "Chất gây dị ứng, ví dụ Penicillin."
+            },
+            "severity": {
+              "type": "string",
+              "maxLength": 16,
+              "description": "mild | moderate | severe"
+            },
+            "reaction": {
+              "type": "string",
+              "maxLength": 240,
+              "description": "Biểu hiện đã ghi nhận."
+            }
+          },
+          "required": [
+            "substance",
+            "severity",
+            "reaction"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 50
+      },
+      "updatedAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      }
+    },
+    "required": [
+      "allergies",
+      "updatedAt"
+    ],
+    "additionalProperties": false
+  },
+  "sideEffects": {
+    "kind": "none",
+    "description": "Chỉ đọc; không thay đổi dữ liệu của bên cung cấp.",
+    "idempotency": "none"
+  },
+  "timeoutMs": 2000
+}

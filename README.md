@@ -31,6 +31,19 @@ Người bệnh khám ở trạm y tế xã, được chuyển tuyến lên bệ
 
 Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳng nhau và không đọc database của nhau. SDK dùng chung: [`@junctura/server-client`](https://www.npmjs.com/package/@junctura/server-client).
 
+## Hợp đồng năng lực
+
+Sáu năng lực dùng chung được định nghĩa một lần trong [`contracts/`](contracts/README.md): dữ liệu vào/ra, bên cung cấp, bên được gọi, mục đích được phép và có cho truy cập cấp cứu hay không.
+
+| Năng lực | Bên cung cấp | Bên gọi | Mục đích | Cấp cứu |
+| --- | --- | --- | --- | --- |
+| `pre-visit-summary` | Clinic | Hospital | `treatment` | Có |
+| `allergy-list` | Clinic | Hospital, Pharmacy | `treatment`, `dispensing` | Có |
+| `vaccination-history` | Clinic | Hospital | `treatment` | Không |
+| `referral-summary` | Clinic | Hospital | `referral_intake` | Không |
+| `prescription-verify` | Hospital | Pharmacy | `dispensing` | Không |
+| `claim-verify` | Hospital | Insurance | `claim_review` | Không |
+
 ## Yêu cầu
 
 - Docker và Docker Compose
@@ -42,7 +55,10 @@ Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳ
 git clone https://github.com/vku2-open-source-2026/junctura-health.git
 cd junctura-health
 npm run check
+npm test
 ```
+
+`npm test` kiểm tra hợp đồng; nếu có sẵn thư mục `../junctura-dxos` (hoặc đặt `JUNCTURA_DXOS_DIR`), test còn đối chiếu manifest với bộ kiểm tra của chính Junctura.
 
 Hướng dẫn chạy cả hệ thống sẽ được bổ sung khi compose hoàn thiện.
 

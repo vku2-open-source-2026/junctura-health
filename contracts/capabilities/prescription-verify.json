@@ -1,0 +1,105 @@
+{
+  "slug": "prescription-verify",
+  "version": "1.0.0",
+  "provider": "junctura-hospital",
+  "consumers": [
+    "junctura-pharmacy"
+  ],
+  "purposes": [
+    "dispensing"
+  ],
+  "emergencyAccess": false,
+  "title": "Xác minh đơn thuốc",
+  "description": "Kiểm tra một đơn thuốc do bệnh viện kê: còn hiệu lực không, gồm những thuốc gì, đã phát chưa.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prescriptionCode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 32,
+        "description": "Mã đơn thuốc in trên đơn."
+      }
+    },
+    "required": [
+      "prescriptionCode"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "valid": {
+        "type": "boolean",
+        "description": "Đơn tồn tại, đúng người bệnh và còn hạn."
+      },
+      "issuedAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      },
+      "expiresAt": {
+        "type": "string",
+        "minLength": 20,
+        "maxLength": 30,
+        "description": "Thời điểm ISO 8601 (UTC)."
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 160,
+              "description": "Tên thuốc."
+            },
+            "strength": {
+              "type": "string",
+              "maxLength": 80,
+              "description": "Hàm lượng."
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "description": "Số lượng."
+            },
+            "instructions": {
+              "type": "string",
+              "maxLength": 240,
+              "description": "Cách dùng."
+            }
+          },
+          "required": [
+            "name",
+            "strength",
+            "quantity",
+            "instructions"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 20
+      },
+      "dispensed": {
+        "type": "boolean",
+        "description": "Đơn đã được phát thuốc."
+      }
+    },
+    "required": [
+      "valid",
+      "issuedAt",
+      "expiresAt",
+      "items",
+      "dispensed"
+    ],
+    "additionalProperties": false
+  },
+  "sideEffects": {
+    "kind": "none",
+    "description": "Chỉ đọc; không thay đổi dữ liệu của bên cung cấp.",
+    "idempotency": "none"
+  },
+  "timeoutMs": 2000
+}

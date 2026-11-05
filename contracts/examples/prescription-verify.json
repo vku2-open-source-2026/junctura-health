@@ -1,0 +1,19 @@
+{
+  "input": {
+    "prescriptionCode": "DT-2026-004521"
+  },
+  "output": {
+    "valid": true,
+    "issuedAt": "2026-10-29T03:00:00.000Z",
+    "expiresAt": "2026-11-03T03:00:00.000Z",
+    "items": [
+      {
+        "name": "Clopidogrel",
+        "strength": "75 mg",
+        "quantity": 30,
+        "instructions": "Uống 1 viên/ngày sau ăn sáng"
+      }
+    ],
+    "dispensed": false
+  }
+}

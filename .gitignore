@@ -22,5 +22,8 @@ coverage/
 !.env.example
 .junctura/
 
+# Junctura DX-OS checkout used only by CI conformance tests (never committed)
+.junctura-dxos/
+
 # Release output
 release/
