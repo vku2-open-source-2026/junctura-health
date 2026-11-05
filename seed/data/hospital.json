@@ -1,0 +1,356 @@
+{
+  "referenceDate": "2026-11-01",
+  "facility": "Bệnh viện Đà Nẵng",
+  "prescriptions": [
+    {
+      "prescriptionCode": "DT-2026-004529",
+      "subject": "e24a89f1-a54f-41b5-ae92-0061a3ff047c",
+      "issuedAt": "2026-04-28T08:13:00.000Z",
+      "expiresAt": "2026-05-03T08:13:00.000Z",
+      "items": [
+        {
+          "name": "Amoxicillin",
+          "strength": "500 mg",
+          "quantity": 21,
+          "instructions": "Uống 1 viên x 3 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004530",
+      "subject": "09c96d5c-7b82-43a7-bbd1-875e91b2a354",
+      "issuedAt": "2026-05-08T08:25:00.000Z",
+      "expiresAt": "2026-05-13T08:25:00.000Z",
+      "items": [
+        {
+          "name": "Amoxicillin",
+          "strength": "500 mg",
+          "quantity": 21,
+          "instructions": "Uống 1 viên x 3 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004525",
+      "subject": "477f1c8b-c312-481c-a4ee-192d856e267b",
+      "issuedAt": "2026-06-19T08:11:00.000Z",
+      "expiresAt": "2026-06-24T08:11:00.000Z",
+      "items": [
+        {
+          "name": "Celecoxib",
+          "strength": "200 mg",
+          "quantity": 14,
+          "instructions": "Uống 1 viên/ngày sau ăn"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004527",
+      "subject": "276dbdbb-0014-4153-9cd8-00b28812fe2d",
+      "issuedAt": "2026-06-24T05:33:00.000Z",
+      "expiresAt": "2026-06-29T05:33:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004524",
+      "subject": "93706de4-46df-48d5-a342-6023d173f4c4",
+      "issuedAt": "2026-06-27T04:41:00.000Z",
+      "expiresAt": "2026-07-02T04:41:00.000Z",
+      "items": [
+        {
+          "name": "Amoxicillin",
+          "strength": "500 mg",
+          "quantity": 21,
+          "instructions": "Uống 1 viên x 3 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004523",
+      "subject": "d367db55-629b-4a27-a074-c2f19263598d",
+      "issuedAt": "2026-07-07T05:08:00.000Z",
+      "expiresAt": "2026-07-12T05:08:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004532",
+      "subject": "49cd2d1d-8e74-4080-a502-d4c9815b72cc",
+      "issuedAt": "2026-07-17T02:37:00.000Z",
+      "expiresAt": "2026-07-22T02:37:00.000Z",
+      "items": [
+        {
+          "name": "Gliclazid",
+          "strength": "30 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày trước ăn sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004526",
+      "subject": "3b18a1e9-cd77-4cbe-aec2-c80a5ccac4a9",
+      "issuedAt": "2026-07-17T04:54:00.000Z",
+      "expiresAt": "2026-07-22T04:54:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004535",
+      "subject": "e294c8c1-fb84-491f-8843-39cfdcef445a",
+      "issuedAt": "2026-07-31T08:29:00.000Z",
+      "expiresAt": "2026-08-05T08:29:00.000Z",
+      "items": [
+        {
+          "name": "Amoxicillin",
+          "strength": "500 mg",
+          "quantity": 21,
+          "instructions": "Uống 1 viên x 3 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004533",
+      "subject": "76524591-07eb-4b2e-8dcb-91b414d69357",
+      "issuedAt": "2026-08-05T05:30:00.000Z",
+      "expiresAt": "2026-08-10T05:30:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004536",
+      "subject": "76cf43c0-f29e-4274-9aa1-b7fc6d4c1288",
+      "issuedAt": "2026-08-24T02:25:00.000Z",
+      "expiresAt": "2026-08-29T02:25:00.000Z",
+      "items": [
+        {
+          "name": "Budesonid/Formoterol hít",
+          "strength": "160/4,5 mcg",
+          "quantity": 1,
+          "instructions": "Hít 2 nhát x 2 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004534",
+      "subject": "da458e20-8b91-4415-b7fc-a7b4e28ba334",
+      "issuedAt": "2026-08-27T09:28:00.000Z",
+      "expiresAt": "2026-09-01T09:28:00.000Z",
+      "items": [
+        {
+          "name": "Budesonid/Formoterol hít",
+          "strength": "160/4,5 mcg",
+          "quantity": 1,
+          "instructions": "Hít 2 nhát x 2 lần/ngày"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004531",
+      "subject": "ff4668b9-6f36-4be7-84d0-72fe87114d41",
+      "issuedAt": "2026-10-13T08:18:00.000Z",
+      "expiresAt": "2026-10-18T08:18:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": false
+    },
+    {
+      "prescriptionCode": "DT-2026-004522",
+      "subject": "7c961a2c-9f84-4a5d-8a7e-dc1385c34224",
+      "issuedAt": "2026-10-17T07:20:00.000Z",
+      "expiresAt": "2026-10-22T07:20:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        },
+        {
+          "name": "Bisoprolol",
+          "strength": "2,5 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày buổi sáng"
+        }
+      ],
+      "dispensed": true
+    },
+    {
+      "prescriptionCode": "DT-2026-004528",
+      "subject": "a294a622-a9c1-4217-8504-a41090a6b1d5",
+      "issuedAt": "2026-10-21T07:59:00.000Z",
+      "expiresAt": "2026-10-26T07:59:00.000Z",
+      "items": [
+        {
+          "name": "Gliclazid",
+          "strength": "30 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày trước ăn sáng"
+        }
+      ],
+      "dispensed": false
+    },
+    {
+      "prescriptionCode": "DT-2026-004521",
+      "subject": "525fd3dc-fa8c-4472-9c8d-2359aa031f40",
+      "issuedAt": "2026-10-29T03:00:00.000Z",
+      "expiresAt": "2026-11-03T03:00:00.000Z",
+      "items": [
+        {
+          "name": "Clopidogrel",
+          "strength": "75 mg",
+          "quantity": 30,
+          "instructions": "Uống 1 viên/ngày sau ăn sáng"
+        }
+      ],
+      "dispensed": false
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "HS-2026-00990",
+      "subject": "477f1c8b-c312-481c-a4ee-192d856e267b",
+      "amountVnd": 10351000,
+      "recordedAt": "2026-06-21T08:11:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00992",
+      "subject": "276dbdbb-0014-4153-9cd8-00b28812fe2d",
+      "amountVnd": 2518000,
+      "recordedAt": "2026-06-26T05:33:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00989",
+      "subject": "d367db55-629b-4a27-a074-c2f19263598d",
+      "amountVnd": 2516000,
+      "recordedAt": "2026-07-09T05:08:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00995",
+      "subject": "49cd2d1d-8e74-4080-a502-d4c9815b72cc",
+      "amountVnd": 5751000,
+      "recordedAt": "2026-07-19T02:37:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00991",
+      "subject": "3b18a1e9-cd77-4cbe-aec2-c80a5ccac4a9",
+      "amountVnd": 6693000,
+      "recordedAt": "2026-07-19T04:54:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00996",
+      "subject": "76524591-07eb-4b2e-8dcb-91b414d69357",
+      "amountVnd": 8054000,
+      "recordedAt": "2026-08-07T05:30:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00998",
+      "subject": "76cf43c0-f29e-4274-9aa1-b7fc6d4c1288",
+      "amountVnd": 14313000,
+      "recordedAt": "2026-08-26T02:25:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00997",
+      "subject": "da458e20-8b91-4415-b7fc-a7b4e28ba334",
+      "amountVnd": 3450000,
+      "recordedAt": "2026-08-29T09:28:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00994",
+      "subject": "ff4668b9-6f36-4be7-84d0-72fe87114d41",
+      "amountVnd": 13184000,
+      "recordedAt": "2026-10-15T08:18:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00988",
+      "subject": "7c961a2c-9f84-4a5d-8a7e-dc1385c34224",
+      "amountVnd": 14050000,
+      "recordedAt": "2026-10-19T07:20:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00993",
+      "subject": "a294a622-a9c1-4217-8504-a41090a6b1d5",
+      "amountVnd": 9890000,
+      "recordedAt": "2026-10-23T07:59:00.000Z"
+    },
+    {
+      "claimId": "HS-2026-00987",
+      "subject": "525fd3dc-fa8c-4472-9c8d-2359aa031f40",
+      "amountVnd": 2450000,
+      "recordedAt": "2026-10-31T10:00:00.000Z"
+    }
+  ]
+}

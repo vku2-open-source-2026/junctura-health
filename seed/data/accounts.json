@@ -1,0 +1,391 @@
+{
+  "referenceDate": "2026-11-01",
+  "note": "Demo accounts only. Passwords are never stored here; the demo stack sets them from .env.",
+  "users": [
+    {
+      "subject": "d09a7500-0105-4b45-9968-be4f87b846da",
+      "username": "ysi.tramyte",
+      "displayName": "Y sĩ Lê Thị Hoa",
+      "role": "clinic-staff",
+      "app": "junctura-clinic"
+    },
+    {
+      "subject": "13d52845-8843-45fa-8cb3-4ae4105a4140",
+      "username": "bacsi.benhvien",
+      "displayName": "BS. Phạm Minh Quang",
+      "role": "physician",
+      "app": "junctura-hospital"
+    },
+    {
+      "subject": "b7132e9b-b870-4662-a80f-700478e43a78",
+      "username": "duocsi.nhathuoc",
+      "displayName": "DS. Võ Thu Trang",
+      "role": "pharmacist",
+      "app": "junctura-pharmacy"
+    },
+    {
+      "subject": "271bb17f-c76b-4020-8e21-719a070ad1a7",
+      "username": "giamdinh.baohiem",
+      "displayName": "Giám định viên Đỗ Quốc Hùng",
+      "role": "claims-assessor",
+      "app": "junctura-insurance"
+    },
+    {
+      "subject": "0bcbfe94-cf05-47a2-9a90-2db7cd153fd7",
+      "username": "quantri.soyte",
+      "displayName": "Quản trị Sở Y tế",
+      "role": "health-admin",
+      "app": "junctura-dxos"
+    },
+    {
+      "subject": "525fd3dc-fa8c-4472-9c8d-2359aa031f40",
+      "username": "benhnhan.an",
+      "displayName": "Nguyễn Văn An",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "94d11dcd-bac0-48e6-bca9-dbc40e58f7c1",
+      "username": "benhnhan.binh",
+      "displayName": "Trần Thị Bình",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "eae2722d-3a50-445b-a2ed-8c7e14c370b3",
+      "username": "benhnhan.p0003",
+      "displayName": "Đỗ Công Long",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "7ade5c51-916d-4076-beb9-dc5ed4f3a37a",
+      "username": "benhnhan.p0004",
+      "displayName": "Phan Thanh Long",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "5b04c0b1-2cb0-487b-b971-1bcea6cf1f61",
+      "username": "benhnhan.p0005",
+      "displayName": "Ngô Ngọc Yến",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "464443e6-0bf1-456c-9d60-b7e70e6a7bc9",
+      "username": "benhnhan.p0006",
+      "displayName": "Ngô Kim Nhung",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "ef155440-041e-4adc-a80e-5e1482ca88f3",
+      "username": "benhnhan.p0007",
+      "displayName": "Vũ Kim Hạnh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "c03ae94e-355a-4fc1-b2ac-c2b424d77201",
+      "username": "benhnhan.p0008",
+      "displayName": "Bùi Thị Linh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "7c961a2c-9f84-4a5d-8a7e-dc1385c34224",
+      "username": "benhnhan.p0009",
+      "displayName": "Võ Kim Hà",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "e2425101-061e-4178-872e-9541b95b3523",
+      "username": "benhnhan.p0010",
+      "displayName": "Phạm Thị Trang",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "d367db55-629b-4a27-a074-c2f19263598d",
+      "username": "benhnhan.p0011",
+      "displayName": "Huỳnh Hữu Vinh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "c0cb5b65-cc37-4408-9ed0-018bf5f38234",
+      "username": "benhnhan.p0012",
+      "displayName": "Ngô Minh Phúc",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "a64aba17-19ab-47ad-8f5b-5650341cadd2",
+      "username": "benhnhan.p0013",
+      "displayName": "Bùi Thị Chi",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "e1f41dba-1ab4-4c00-95f6-3cc739334bc0",
+      "username": "benhnhan.p0014",
+      "displayName": "Lý Ngọc Ngân",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "0a11d5e6-f712-4979-83a4-3c6a60725e09",
+      "username": "benhnhan.p0015",
+      "displayName": "Phạm Ngọc Hà",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "93706de4-46df-48d5-a342-6023d173f4c4",
+      "username": "benhnhan.p0016",
+      "displayName": "Hoàng Văn Long",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "477f1c8b-c312-481c-a4ee-192d856e267b",
+      "username": "benhnhan.p0017",
+      "displayName": "Đặng Minh Tài",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "3b18a1e9-cd77-4cbe-aec2-c80a5ccac4a9",
+      "username": "benhnhan.p0018",
+      "displayName": "Huỳnh Văn Long",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "c3ab0d2f-d280-44e2-b914-db31ce38dae5",
+      "username": "benhnhan.p0019",
+      "displayName": "Hồ Công Tuấn",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "60253d2c-cfe3-41b8-aec4-fb7c3b4c6ac7",
+      "username": "benhnhan.p0020",
+      "displayName": "Vũ Kim Chi",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "5dc5c479-627b-45a4-8f58-bebfb5cdeaed",
+      "username": "benhnhan.p0021",
+      "displayName": "Hồ Hữu Khoa",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "2d5f92a5-525e-4b94-afc1-d44ffc8aebc7",
+      "username": "benhnhan.p0022",
+      "displayName": "Hồ Thanh Hiếu",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "4e3ab86c-991a-4afa-a141-c52f86426444",
+      "username": "benhnhan.p0023",
+      "displayName": "Lý Thu Hà",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "6cb2f719-d202-48df-a034-98519cdd9d05",
+      "username": "benhnhan.p0024",
+      "displayName": "Dương Minh Long",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "276dbdbb-0014-4153-9cd8-00b28812fe2d",
+      "username": "benhnhan.p0025",
+      "displayName": "Dương Kim Yến",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "30386316-a351-4674-b5a0-f9f3a9bded98",
+      "username": "benhnhan.p0026",
+      "displayName": "Võ Công Phúc",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "edaa3af2-820e-4709-af31-fe97111e8d78",
+      "username": "benhnhan.p0027",
+      "displayName": "Trần Thanh Phương",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "d7d22fba-799c-48c2-a82c-9d23d2fca2b2",
+      "username": "benhnhan.p0028",
+      "displayName": "Phan Kim Yến",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "dbb3d453-67ca-40b0-a4df-ae73f8a86416",
+      "username": "benhnhan.p0029",
+      "displayName": "Nguyễn Thanh Linh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "a294a622-a9c1-4217-8504-a41090a6b1d5",
+      "username": "benhnhan.p0030",
+      "displayName": "Võ Văn Khoa",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "cc27b7bf-ff40-46df-8427-bcef4ff28103",
+      "username": "benhnhan.p0031",
+      "displayName": "Phạm Thu Anh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "a53c311c-0b03-4758-a14a-fb97551ff26e",
+      "username": "benhnhan.p0032",
+      "displayName": "Hồ Kim Phương",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "e24a89f1-a54f-41b5-ae92-0061a3ff047c",
+      "username": "benhnhan.p0033",
+      "displayName": "Trần Thanh Dũng",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "43e31038-4031-4677-b92c-37ad83a19068",
+      "username": "benhnhan.p0034",
+      "displayName": "Đặng Thu Linh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "25f3921d-91e0-451e-8407-5b9426e1315e",
+      "username": "benhnhan.p0035",
+      "displayName": "Dương Thu Hoa",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "5569d4b0-d1cc-428f-8174-484f58b93a0d",
+      "username": "benhnhan.p0036",
+      "displayName": "Lê Ngọc Linh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "09c96d5c-7b82-43a7-bbd1-875e91b2a354",
+      "username": "benhnhan.p0037",
+      "displayName": "Vũ Ngọc Thảo",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "ff4668b9-6f36-4be7-84d0-72fe87114d41",
+      "username": "benhnhan.p0038",
+      "displayName": "Phan Đức Hiếu",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "49cd2d1d-8e74-4080-a502-d4c9815b72cc",
+      "username": "benhnhan.p0039",
+      "displayName": "Hoàng Thị Hà",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "7f921f10-4973-4067-a2d6-b8a649e0b977",
+      "username": "benhnhan.p0040",
+      "displayName": "Lý Thu Lan",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "d518f09e-b092-40b9-bee2-89a3444cf6e1",
+      "username": "benhnhan.p0041",
+      "displayName": "Đỗ Hữu Hiếu",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "ac052447-5190-4880-8397-d6655d4e3ea8",
+      "username": "benhnhan.p0042",
+      "displayName": "Hồ Công Tuấn",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "16ec19e2-4329-424a-a17a-023b38021a00",
+      "username": "benhnhan.p0043",
+      "displayName": "Huỳnh Ngọc Hà",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "76524591-07eb-4b2e-8dcb-91b414d69357",
+      "username": "benhnhan.p0044",
+      "displayName": "Vũ Quốc Tài",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "da458e20-8b91-4415-b7fc-a7b4e28ba334",
+      "username": "benhnhan.p0045",
+      "displayName": "Hoàng Đức Thắng",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "e00a43bf-175c-49e1-a17f-0f74efb4d48f",
+      "username": "benhnhan.p0046",
+      "displayName": "Nguyễn Thị Ngân",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "e294c8c1-fb84-491f-8843-39cfdcef445a",
+      "username": "benhnhan.p0047",
+      "displayName": "Phan Thanh Nam",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "76cf43c0-f29e-4274-9aa1-b7fc6d4c1288",
+      "username": "benhnhan.p0048",
+      "displayName": "Đỗ Mỹ Chi",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "c63db303-46c3-4fa2-b96f-42b37c1c41cc",
+      "username": "benhnhan.p0049",
+      "displayName": "Huỳnh Thanh Hạnh",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    },
+    {
+      "subject": "2a1b75c3-6918-427f-b744-9e91dad33c04",
+      "username": "benhnhan.p0050",
+      "displayName": "Hoàng Công Khoa",
+      "role": "patient",
+      "app": "junctura-myhealth"
+    }
+  ]
+}
