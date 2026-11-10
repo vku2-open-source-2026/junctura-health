@@ -195,6 +195,21 @@ export function rebase(dataset, today) {
   return walk(dataset);
 }
 
+/**
+ * Replaces seeded subjects with the ones the identity provider actually issued
+ * (`mapping`: seeded subject -> real subject). Unmapped subjects stay as they are.
+ */
+export function withSubjects(dataset, mapping) {
+  const walk = value => {
+    if (Array.isArray(value)) return value.map(walk);
+    if (value && typeof value === "object") {
+      return Object.fromEntries(Object.entries(value).map(([key, v]) => [key, key === "subject" && typeof v === "string" ? mapping[v] ?? v : walk(v)]));
+    }
+    return value;
+  };
+  return walk(dataset);
+}
+
 export const serialize = value => `${JSON.stringify(value, null, 2)}\n`;
 export const loadData = name => JSON.parse(readFileSync(new URL(name, DATA), "utf8"));
 

@@ -21,6 +21,7 @@
     "check:reuse": "node scripts/check-reuse.mjs",
     "test": "node --test",
     "seed:generate": "node seed/generate.mjs",
-    "seed:check": "node seed/generate.mjs --check"
+    "seed:check": "node seed/generate.mjs --check",
+    "demo:setup": "node demo/setup.mjs"
   }
 }
