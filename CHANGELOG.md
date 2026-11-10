@@ -11,6 +11,12 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Added
 
+- **Demo environment** (`npm run demo:setup`, `demo/`): prepares a running Junctura
+  DX-OS stack for the health scenario through the real Gateway: 55 demo accounts that
+  keep their seeded subjects, five applications with backend and browser (PKCE)
+  clients, the six contract capabilities published, and seven grants. Idempotent;
+  credentials are written only to the Git-ignored `.junctura/demo/`. `withSubjects()`
+  remaps seeded subjects when an identity provider issues different ones.
 - **Synthetic patient data** (`seed/`): a deterministic, dependency-free generator
   (`npm run seed:generate`, `npm run seed:check`) producing 50 Vietnamese patients
   with clinic records, referrals, hospital prescriptions and claims, insurer claim

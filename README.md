@@ -48,6 +48,10 @@ Sáu năng lực dùng chung được định nghĩa một lần trong [`contrac
 
 `npm run seed:generate` sinh 50 người bệnh giả lập ở Đà Nẵng (hồ sơ trạm y tế, chuyển tuyến, đơn thuốc, hồ sơ thanh toán) và danh sách tài khoản demo. Cùng một seed luôn ra cùng một kết quả. Xem [`seed/README.md`](seed/README.md).
 
+## Môi trường demo
+
+Với `junctura-dxos` đang chạy ở thư mục bên cạnh, `npm run demo:setup` tạo tài khoản demo, đăng ký 5 ứng dụng, công bố 6 năng lực và cấp grant theo hợp đồng. Xem [`demo/README.md`](demo/README.md).
+
 ## Yêu cầu
 
 - Docker và Docker Compose
