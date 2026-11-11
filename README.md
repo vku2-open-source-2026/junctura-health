@@ -41,7 +41,7 @@ Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳ
 
 ## Hợp đồng năng lực
 
-Sáu năng lực dùng chung được định nghĩa một lần trong [`contracts/`](contracts/README.md): dữ liệu vào/ra, bên cung cấp, bên được gọi, mục đích được phép và có cho truy cập cấp cứu hay không.
+Cài cho ứng dụng: `npm install @junctura/health-contracts`. Sáu năng lực dùng chung được định nghĩa một lần trong [`contracts/`](contracts/README.md): dữ liệu vào/ra, bên cung cấp, bên được gọi, mục đích được phép và có cho truy cập cấp cứu hay không.
 
 | Năng lực | Bên cung cấp | Bên gọi | Mục đích | Cấp cứu |
 | --- | --- | --- | --- | --- |

@@ -41,3 +41,22 @@ const issues = validateValue(getContract("allergy-list").outputSchema, output);
 ## Đổi hợp đồng
 
 Mở PR ở repo này. Thay đổi không tương thích (bỏ trường, đổi kiểu, siết giới hạn) phải tăng **major** version; thêm trường không bắt buộc tăng **minor**. Cập nhật ví dụ, `CHANGELOG.md`, và báo các repo app liên quan.
+
+## Cài đặt
+
+```sh
+npm install @junctura/health-contracts
+```
+
+Gói không phụ thuộc thư viện ngoài, chạy trên Node 24, có sẵn kiểu TypeScript (`index.d.ts`). Mỗi bản phát hành lên npm kèm provenance (có thể kiểm tra bản build đến từ repo này).
+
+## Phát hành lên npm
+
+Sau khi PR đổi hợp đồng đã merge: sửa `version` trong `contracts/package.json`, rồi đẩy tag trùng version:
+
+```sh
+git tag contracts-v1.0.0
+git push origin contracts-v1.0.0
+```
+
+Workflow `Publish contracts library` kiểm tra tag khớp version, chạy test, rồi publish.
