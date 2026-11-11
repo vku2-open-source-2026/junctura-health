@@ -43,7 +43,7 @@ export function Popover({ label, trigger, triggerLabel, children, align = "start
       </button>
       {open && (
         <div id={panelId} data-panel role="group" aria-label={label}
-          className={cn(side === "top" ? "bottom-full mb-1.5" : "mt-1.5", "absolute z-40 min-w-60 rounded-xl border border-line bg-surface p-1.5 text-ink shadow-pop", align === "end" ? "right-0" : "left-0", panelClassName)}>
+          className={cn(side === "top" ? "bottom-full mb-1.5" : "mt-1.5", "absolute z-40 min-w-60 rounded-lg border border-line bg-surface p-1.5 text-ink shadow-pop", align === "end" ? "right-0" : "left-0", panelClassName)}>
           {children(close)}
         </div>
       )}

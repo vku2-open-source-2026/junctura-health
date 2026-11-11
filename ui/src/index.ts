@@ -17,6 +17,8 @@ export * from "./components/JuncturaMark";
 export * from "./components/LandingPage";
 export * from "./components/Layout";
 export * from "./components/PatientBanner";
+export * from "./components/PreviewFrame";
+export * from "./components/SignInPage";
 export * from "./components/Popover";
 export * from "./components/QueueList";
 export * from "./components/StatCard";

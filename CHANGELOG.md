@@ -9,7 +9,14 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ## Unreleased
 
+### Changed
+
+- **`@junctura/health-ui` 0.3.0 aligns with the Junctura Console look**: the Junctura "J" tile logo (colours follow the theme), a floating side bar card, a top bar with breadcrumbs (`breadcrumbs`, `status` props on `AppShell`) and theme pill, wider content margins (max 80rem, 2rem), `PageHeader` with `badges`, a bold title and a divider, `StatStrip` as cards with optional icon and hint, `Section` with a description, `Card` titles in sentence case, and radius `rounded-lg` everywhere.
+- **Breaking:** `LandingPage` takes `benefits`, `steps`, `audiences`, `trust`, `faq`, `cta`, `hero`, `badge` and `footer: { links, note }` instead of `values` and a text footer. Sections are shown when given.
+
 ### Added
+
+- `LandingPage` in the Console structure (sticky bar with section links, headline with a picture of the app, benefits, how it works, who it is for, trust, questions, call to action, footer), `PreviewFrame` for that picture, `SignInPage` (centred card on the pattern background, message, text size and theme, back link) and `PublicControls`.
 
 - **UX analysis** (`docs/UX.md`): working context, users, day rhythm, 18 user stories for Clinic (P1/P2), layout principles (open on the work to do, the patient as context, queue always at hand, global quick find, drafts that never get lost), information architecture and screen layouts, and how the other four apps reuse the frame.
 - **AppShell v2 and layout components** (`@junctura/health-ui` 0.2.0): `AppShell` with grouped navigation, station switcher, quick find (`/` or Ctrl+K), notifications, account menu (text size, theme, sign out), collapsible side bar and bottom navigation on phones; `CommandSearch`, `Popover`, `PageHeader`, `WorkspaceLayout` (main column plus side rail), `Section`, `FormSection`, `StatStrip`, `SegmentedControl`, `QueueList` (people in line as action rows with waiting time) and `ActionList`. The flat `nav` list of 0.1 still works. `DataTable` rows now expose a real button in the first cell for keyboard users.

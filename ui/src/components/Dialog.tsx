@@ -23,7 +23,7 @@ export function Dialog({ open, title, onClose, children, footer }: DialogProps) 
   }, [open]);
   return (
     <dialog ref={ref} aria-labelledby={titleId} onClose={onClose} onCancel={onClose}
-      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-xl border border-line bg-surface p-0 text-ink shadow-pop backdrop:bg-ink/50">
+      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-lg border border-line bg-surface p-0 text-ink shadow-pop backdrop:bg-ink/50">
       <div className="space-y-3 p-5">
         <h2 id={titleId} className="text-lg font-semibold">{title}</h2>
         <div className="text-sm text-ink-2">{children}</div>

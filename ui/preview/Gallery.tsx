@@ -1,11 +1,12 @@
 // SPDX-FileCopyrightText: 2026 Junctura Contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Activity, CalendarDays, FileText, Pill, Users } from "lucide-react";
+import { Activity, CalendarDays, Users } from "lucide-react";
 import { ClinicDemo } from "./ClinicDemo";
+import { ClinicLanding } from "./Landing";
 import { useState } from "react";
 import {
   AiSummaryPanel, AlertBanner, AllergyStatus, AppShell, Badge, Button, Card, ConfirmDialog, ConsentBadge, DataTable, DisplayPrefsProvider, EmergencyBar, EmergencyDialog,
-  EmptyState, ErrorState, IdChip, LandingPage, PatientBanner, PermissionState, SelectField, Skeleton, SourceBadge, StaleNotice, StatCard, Tabs, TextAreaField, TextField,
+  EmptyState, ErrorState, IdChip, PatientBanner, SignInPage, PermissionState, SelectField, Skeleton, SourceBadge, StaleNotice, StatCard, Tabs, TextAreaField, TextField,
   Timeline, ToastProvider, useToast,
 } from "../src";
 
@@ -115,23 +116,21 @@ function ClinicWithToast() {
 }
 
 export function Gallery() {
-  const [view, setView] = useState<"clinic" | "landing" | "app">("clinic");
+  const [view, setView] = useState<"clinic" | "landing" | "signin" | "app">("clinic");
   const [nav, setNav] = useState("patients");
   return (
     <DisplayPrefsProvider>
       <ToastProvider>
-        <div className="flex gap-2 bg-surface-2 p-2 text-sm">
+        <div className="sticky top-0 z-50 flex gap-2 border-b border-line bg-surface-2 p-2 text-sm">
           <Button variant={view === "clinic" ? "primary" : "secondary"} onClick={() => setView("clinic")}>Màn hình Clinic</Button>
           <Button variant={view === "landing" ? "primary" : "secondary"} onClick={() => setView("landing")}>Landing</Button>
+          <Button variant={view === "signin" ? "primary" : "secondary"} onClick={() => setView("signin")}>Đăng nhập</Button>
           <Button variant={view === "app" ? "primary" : "secondary"} onClick={() => setView("app")}>Thành phần</Button>
         </div>
         {view === "clinic" ? <ClinicWithToast /> : view === "landing" ? (
-          <LandingPage product="Clinic" headline="Hồ sơ khám bệnh gọn, an toàn, chia sẻ khi người bệnh đồng ý" lead="Tiếp nhận, khám và chuyển tuyến trên một màn hình, dữ liệu liên thông qua Junctura."
-            onSignIn={() => {}} note="Tài khoản do đơn vị cấp" values={[
-              { icon: <Users className="size-5" />, title: "Một hồ sơ, nhiều trạm", text: "Theo dõi người bệnh qua các trạm trong cùng phòng khám." },
-              { icon: <FileText className="size-5" />, title: "Chia sẻ có đồng ý", text: "Mỗi lần xem dữ liệu liên thông đều có phiếu một lần và nhật ký." },
-              { icon: <Pill className="size-5" />, title: "Dị ứng luôn hiển thị", text: "Trạng thái dị ứng nằm cố định trên đầu hồ sơ." },
-            ]} footer="Phát hành theo Apache-2.0" />
+          <ClinicLanding onSignIn={() => setView("signin")} />
+        ) : view === "signin" ? (
+          <SignInPage product="Clinic" subtitle="Đăng nhập để vào hồ sơ người bệnh" onSignIn={() => setView("clinic")} onBack={() => setView("landing")} note="Dùng tài khoản Junctura của trạm y tế." />
         ) : (
           <AppShell product="Clinic" nav={[{ id: "patients", label: "Bệnh nhân", icon: <Users className="size-5" /> }, { id: "schedule", label: "Lịch hẹn", icon: <CalendarDays className="size-5" />, count: 4 }, { id: "stats", label: "Thống kê", icon: <Activity className="size-5" /> }]}
             current={nav} onNavigate={setNav} user={{ name: "BS. Phạm Thu Hà", role: "Bác sĩ", unit: "PK Hoà Mỹ" }} onSignOut={() => {}}>

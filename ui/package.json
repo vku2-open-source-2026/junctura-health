@@ -1,6 +1,6 @@
 {
   "name": "@junctura/health-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Shared React components and design tokens for the Junctura Health applications.",
   "license": "Apache-2.0",
   "type": "module",

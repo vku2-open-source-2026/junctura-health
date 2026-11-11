@@ -40,7 +40,7 @@ export function DataTable<Row>({ caption, columns, rows, rowKey, onRowClick, emp
   const toggle = (key: string) => setSort(current => (current?.key === key ? (current.dir === 1 ? { key, dir: -1 } : null) : { key, dir: 1 }));
 
   return (
-    <div className={cn("overflow-x-auto rounded-xl border border-line bg-surface shadow-card", className)}>
+    <div className={cn("overflow-x-auto rounded-lg border border-line bg-surface shadow-card", className)}>
       <table className="min-w-full text-left text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="border-b border-line bg-surface-2 text-xs uppercase tracking-wide text-muted">

@@ -3,14 +3,17 @@
 import type { ReactNode } from "react";
 import { cn } from "../lib/cn";
 
-/** Page title with optional description, meta line and actions. One per screen (the h1). */
-export function PageHeader({ title, description, meta, actions, className }: { title: ReactNode; description?: ReactNode; meta?: ReactNode; actions?: ReactNode; className?: string }) {
+/** Page title with optional status badges, description, meta line and actions. One per screen (the h1). */
+export function PageHeader({ title, description, meta, badges, actions, className }: { title: ReactNode; description?: ReactNode; meta?: ReactNode; badges?: ReactNode; actions?: ReactNode; className?: string }) {
   return (
-    <header className={cn("flex flex-wrap items-end justify-between gap-x-6 gap-y-3", className)}>
-      <div className="min-w-0">
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">{title}</h1>
-        {description && <p className="mt-1 max-w-2xl text-ink-2">{description}</p>}
-        {meta && <div className="mt-1 text-sm text-muted">{meta}</div>}
+    <header className={cn("mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-line pb-5", className)}>
+      <div className="min-w-0 space-y-1">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <h1 className="text-3xl font-bold tracking-tight text-ink">{title}</h1>
+          {badges && <div className="flex flex-wrap items-center gap-1.5">{badges}</div>}
+        </div>
+        {description && <p className="max-w-3xl text-ink-2">{description}</p>}
+        {meta && <div className="text-sm text-muted">{meta}</div>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </header>
@@ -28,11 +31,14 @@ export function WorkspaceLayout({ children, aside, asideLabel = "Thông tin bên
 }
 
 /** Lightweight section: a heading, optional count and actions, then content. No box around it. */
-export function Section({ title, count, actions, children, className }: { title: string; count?: number; actions?: ReactNode; children: ReactNode; className?: string }) {
+export function Section({ title, description, count, actions, children, className }: { title: string; description?: string; count?: number; actions?: ReactNode; children: ReactNode; className?: string }) {
   return (
     <section aria-label={title} className={cn("space-y-3", className)}>
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-base font-semibold text-ink">{title}{count !== undefined && <span className="ml-2 font-normal text-muted">{count}</span>}</h2>
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-bold tracking-tight text-ink">{title}{count !== undefined && <span className="ml-2 text-base font-normal text-muted">{count}</span>}</h2>
+          {description && <p className="text-sm text-muted">{description}</p>}
+        </div>
         {actions}
       </div>
       {children}
@@ -53,15 +59,18 @@ export function FormSection({ title, description, children }: { title: string; d
   );
 }
 
-/** One line of headline numbers. For people who need to act, not admire a chart. */
-export function StatStrip({ items }: { items: { label: string; value: ReactNode; tone?: "neutral" | "ok" | "warn" | "danger" }[] }) {
-  const TONE = { neutral: "text-ink", ok: "text-ok", warn: "text-warn", danger: "text-danger" };
+/** Row of headline numbers as cards: for people who need to act, not admire a chart. */
+export function StatStrip({ items }: { items: { label: string; value: ReactNode; tone?: "neutral" | "ok" | "warn" | "danger"; icon?: ReactNode; hint?: string }[] }) {
   return (
-    <dl className="flex flex-wrap divide-x divide-line rounded-xl border border-line bg-surface">
+    <dl className="grid grid-cols-2 gap-3 xl:grid-cols-4">
       {items.map(item => (
-        <div key={item.label} className="flex-1 basis-32 px-4 py-2.5">
-          <dt className="text-sm text-muted">{item.label}</dt>
-          <dd className={cn("text-2xl font-semibold tabular-nums", TONE[item.tone ?? "neutral"])}>{item.value}</dd>
+        <div key={item.label} className="rounded-lg border border-line bg-surface p-4 shadow-card">
+          <div className="flex items-start justify-between gap-2">
+            <dt className="text-sm text-muted">{item.label}</dt>
+            {item.icon && <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-md bg-surface-2 text-ink-2">{item.icon}</span>}
+          </div>
+          <dd className={cn("mt-1 text-2xl font-bold tabular-nums tracking-tight", { neutral: "text-ink", ok: "text-ok", warn: "text-warn", danger: "text-danger" }[item.tone ?? "neutral"])}>{item.value}</dd>
+          {item.hint && <p className="mt-0.5 text-xs text-muted">{item.hint}</p>}
         </div>
       ))}
     </dl>

@@ -7,7 +7,7 @@ import { Button } from "./Button";
 
 function StateFrame({ icon, title, children, action, role }: { icon: ReactNode; title: string; children?: ReactNode; action?: ReactNode; role?: "alert" | "status" }) {
   return (
-    <div role={role} className="mx-auto flex max-w-md flex-col items-center gap-2 rounded-xl border border-dashed border-line bg-surface px-6 py-10 text-center">
+    <div role={role} className="mx-auto flex max-w-md flex-col items-center gap-2 rounded-lg border border-dashed border-line bg-surface px-6 py-10 text-center">
       <span aria-hidden className="grid size-11 place-items-center rounded-full bg-surface-2 text-muted">{icon}</span>
       <h2 className="text-lg font-semibold text-ink">{title}</h2>
       {children && <p className="text-sm text-ink-2">{children}</p>}
