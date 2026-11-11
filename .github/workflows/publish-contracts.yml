@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 Junctura Contributors
+# SPDX-License-Identifier: Apache-2.0
+name: Publish contracts library
+
+# Push a tag `contracts-vX.Y.Z` (same version as contracts/package.json) to publish @junctura/health-contracts.
+on:
+  push:
+    tags: ["contracts-v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-contracts
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version-file: .node-version
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Tag must match the package version
+        run: |
+          version="$(node -p "require('./contracts/package.json').version")"
+          test "${GITHUB_REF_NAME}" = "contracts-v${version}" || { echo "Tag ${GITHUB_REF_NAME} does not match contracts/package.json version ${version}"; exit 1; }
+      - name: Test the contracts
+        run: node --test tests/contracts.test.mjs
+      - name: Ship license files with the package
+        run: cp LICENSE NOTICE contracts/
+      - name: List what will be published
+        working-directory: contracts
+        run: npm pack --dry-run
+      - name: Publish
+        working-directory: contracts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public

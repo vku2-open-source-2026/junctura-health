@@ -52,3 +52,9 @@ jobs:
         env:
           JUNCTURA_DXOS_DIR: .junctura-dxos
         run: npm test
+      - name: Check the contracts package contents (what npm would publish)
+        run: |
+          cp LICENSE NOTICE contracts/
+          npm pack --dry-run --json --prefix contracts > pack.json
+          node -e "const f=JSON.parse(require('fs').readFileSync('pack.json'))[0].files.map(x=>x.path);for(const need of ['index.mjs','index.d.ts','LICENSE','NOTICE','capabilities/allergy-list.json']){if(!f.includes(need)){console.error('missing from package: '+need);process.exit(1)}}console.log(f.length+' files in the package')"
+          rm -f pack.json contracts/LICENSE contracts/NOTICE
