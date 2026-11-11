@@ -1,0 +1,9 @@
+/* SPDX-FileCopyrightText: 2026 Junctura Contributors */
+/* SPDX-License-Identifier: Apache-2.0 */
+/*
+ * Complete stylesheet of @junctura/health-ui: Tailwind utilities used by the components + the tokens.
+ * Apps with their own Tailwind 4 build import `tokens.css` and add the library to @source instead.
+ */
+@import "tailwindcss" source(none);
+@source "./";
+@import "./tokens.css";

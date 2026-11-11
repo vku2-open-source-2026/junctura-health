@@ -109,10 +109,11 @@ Lấy từ Junctura Console (`junctura-dxos`, `console/src/index.css` và `docs/
 | Nền ứng dụng | `#F4F6F6` | Nền trang |
 | Bề mặt | `#FFFFFF` | Thẻ, bảng |
 | Viền | `#DCE3E5` | Đường viền |
-| Cảnh báo | `#A8772F` (nền `#FBF4EE`) | Mức cảnh báo, lưu ý |
+| Cảnh báo | `#8A5F1B` (nền `#FBF4EE`) | Mức cảnh báo, lưu ý |
 | Lỗi | `#B4453F` (nền `#F8E9E8`) | Mức nghiêm trọng, lỗi |
 | Thông tin | `#176B80` (nền `#E5F0F3`) | Thông tin |
 
+- Thư viện `@junctura/health-ui` làm đậm một số tông chữ so với Console để đạt WCAG 2.2 AA: cảnh báo `#8A5F1B`, thành công dạng chữ `#136B61`, chữ gợi ý `#647379`, viền ô nhập `#73868D`. Test `ui/tests/contrast.test.ts` kiểm từng cặp, sáng và tối.
 - Chế độ tối dùng bộ giá trị tương ứng của Console (`.dark`), người dùng chọn được và máy nhớ lựa chọn.
 - **Font:** Inter cho giao diện, JetBrains Mono cho mã và định danh. Cỡ chữ gốc 17,5 px; người dùng chọn 16 / 17,5 / 19 px. MyHealth mặc định cỡ lớn.
 - **Hình khối:** bo góc 4 / 8 / 12 / 16 px, bóng nhẹ. Khoảng cách theo bội số của 4 px.
