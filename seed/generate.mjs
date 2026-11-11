@@ -98,16 +98,26 @@ function randomPatient(r, index) {
     encounters.push({ date: day(-r.int(5, 730)), reason: visit.diagnosis || chronic ? visit.reason : VISITS[0].reason, diagnosis });
   }
   encounters.sort(byDate("date"));
-  const vaccinations = [];
+  const given = [];
   for (const vaccine of VACCINES) {
     if (!r.chance(vaccine.code === "213" ? 0.8 : 0.4)) continue;
     let date = vaccine.code === "213" ? "2021-08-10" : day(-r.int(120, 3000));
     for (let dose = 1; dose <= vaccine.doses; dose++) {
       if (dose > 1 && !r.chance(0.85)) break;
-      vaccinations.push({ vaccine: vaccine.vaccine, code: vaccine.code, date, doseNumber: dose });
+      given.push({ vaccine: vaccine.vaccine, code: vaccine.code, date, doseNumber: dose });
       date = plusDays(`${date}T00:00:00.000Z`, r.int(28, 180)).slice(0, 10);
     }
   }
+  // Only the birth year is known, so the last day of that year is the earliest date a person can be vaccinated.
+  // A series stops at the first dose outside [birth year, reference date]; it never keeps a later dose without the first.
+  // This runs after every random draw, so it does not change any other generated value.
+  const born = `${birthYear}-12-31`, stopped = new Set();
+  const vaccinations = given.filter(v => {
+    if (stopped.has(v.code)) return false;
+    if (v.date >= born && v.date <= REFERENCE_DATE) return true;
+    stopped.add(v.code);
+    return false;
+  });
   vaccinations.sort(byDate("date"));
   const last = encounters.at(-1).date;
   return {

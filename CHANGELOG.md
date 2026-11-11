@@ -50,3 +50,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 - Repository foundation: Apache-2.0 `LICENSE` and `NOTICE`, REUSE 3.3 metadata,
   SPDX header check (`npm run check`), CI, issue and pull request templates,
   contribution guide.
+
+### Fixed
+
+- **Synthetic data**: two patients (P0004, P0043) had vaccinations dated before they were born. The generator now stops a vaccine series at the first dose outside the range from the patient's birth year to the reference date. Only those two records changed; identities, subjects and every other value are the same. A test now checks that no encounter, chronic condition or vaccination predates the birth year, no vaccination is in the future, and doses are numbered in order.

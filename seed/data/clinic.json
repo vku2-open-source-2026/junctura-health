@@ -230,62 +230,14 @@
       ],
       "vaccinations": [
         {
-          "vaccine": "Vắc xin viêm gan B",
-          "code": "43",
-          "date": "2018-08-31",
-          "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin viêm gan B",
-          "code": "43",
-          "date": "2019-01-29",
-          "doseNumber": 2
-        },
-        {
-          "vaccine": "Vắc xin uốn ván (VAT)",
-          "code": "112",
-          "date": "2019-08-16",
-          "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin uốn ván (VAT)",
-          "code": "112",
-          "date": "2020-02-04",
-          "doseNumber": 2
-        },
-        {
-          "vaccine": "Vắc xin uốn ván (VAT)",
-          "code": "112",
-          "date": "2020-04-09",
-          "doseNumber": 3
-        },
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2021-08-10",
-          "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2021-10-06",
-          "doseNumber": 2
-        },
-        {
           "vaccine": "Vắc xin cúm mùa",
           "code": "141",
           "date": "2022-01-12",
           "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2022-01-27",
-          "doseNumber": 3
         }
       ],
       "updatedAt": "2026-10-08T06:56:00.000Z",
-      "vaccinationsUpdatedAt": "2022-01-27T02:00:00.000Z"
+      "vaccinationsUpdatedAt": "2022-01-12T02:00:00.000Z"
     },
     {
       "subject": "5b04c0b1-2cb0-487b-b971-1bcea6cf1f61",
@@ -3450,42 +3402,6 @@
         }
       ],
       "vaccinations": [
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2021-08-10",
-          "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2021-12-16",
-          "doseNumber": 2
-        },
-        {
-          "vaccine": "Vắc xin COVID-19",
-          "code": "213",
-          "date": "2022-04-12",
-          "doseNumber": 3
-        },
-        {
-          "vaccine": "Vắc xin viêm gan B",
-          "code": "43",
-          "date": "2023-12-13",
-          "doseNumber": 1
-        },
-        {
-          "vaccine": "Vắc xin viêm gan B",
-          "code": "43",
-          "date": "2024-03-12",
-          "doseNumber": 2
-        },
-        {
-          "vaccine": "Vắc xin viêm gan B",
-          "code": "43",
-          "date": "2024-05-07",
-          "doseNumber": 3
-        },
         {
           "vaccine": "Vắc xin cúm mùa",
           "code": "141",
