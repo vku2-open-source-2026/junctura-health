@@ -34,6 +34,25 @@ test("50 patients with unique identifiers and one account each", () => {
   for (const u of users) assert.match(u.subject, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
 });
 
+test("no date in a patient record falls before the birth year, and no vaccination is in the future", () => {
+  for (const p of clinic.patients) {
+    const birth = String(p.birthYear);
+    for (const e of p.encounters) assert.ok(e.date.slice(0, 4) >= birth, `${p.patientId}: encounter ${e.date} before birth ${birth}`);
+    for (const c of p.chronicConditions) assert.ok(c.since.slice(0, 4) >= birth, `${p.patientId}: condition ${c.since} before birth ${birth}`);
+    const series = new Map();
+    for (const v of p.vaccinations) {
+      assert.ok(v.date >= `${birth}-12-31`, `${p.patientId}: ${v.vaccine} dose ${v.doseNumber} on ${v.date} before birth ${birth}`);
+      assert.ok(v.date <= REFERENCE_DATE, `${p.patientId}: ${v.vaccine} dose ${v.doseNumber} on ${v.date} is in the future`);
+      series.set(v.code, [...(series.get(v.code) ?? []), v]);
+    }
+    for (const doses of series.values()) {
+      const ordered = [...doses].sort((a, b) => a.doseNumber - b.doseNumber);
+      ordered.forEach((v, i) => assert.equal(v.doseNumber, i + 1, `${p.patientId}: ${v.vaccine} doses must be numbered 1, 2, 3 without gaps`));
+      ordered.slice(1).forEach((v, i) => assert.ok(v.date >= ordered[i].date, `${p.patientId}: ${v.vaccine} dose ${v.doseNumber} before dose ${i + 1}`));
+    }
+  }
+});
+
 test("every record fits its capability contract", () => {
   for (const p of clinic.patients) {
     valid("pre-visit-summary", preVisitSummary(clinic, p.subject));
