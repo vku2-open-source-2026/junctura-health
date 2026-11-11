@@ -5,7 +5,7 @@
 
 Tài liệu này là nguồn chung cho giao diện của cả năm ứng dụng y tế (Clinic, Hospital, MyHealth, Pharmacy, Insurance). Mục tiêu: một người dùng chuyển từ app này sang app khác vẫn thấy cùng một hệ thống, và không màn hình nào làm người dùng hiểu nhầm một dữ kiện y tế.
 
-Tính năng từng app nằm ở [`APPS.md`](APPS.md). Thành phần dùng chung sẽ nằm ở thư viện `@junctura/health-ui` (xây theo tài liệu này).
+Tính năng từng app nằm ở [`APPS.md`](APPS.md); phân tích người dùng và bố cục màn hình ở [`UX.md`](UX.md). Thành phần dùng chung nằm ở thư viện `@junctura/health-ui` (xây theo các tài liệu này).
 
 ## 1. Ranh giới hai tầng
 
@@ -159,7 +159,7 @@ Chúng ta tự kiểm tra và ghi kết quả; đây **không phải** chứng n
 
 | Thành phần | Mô tả |
 | --- | --- |
-| `AppShell` | Đầu trang, điều hướng, vùng nội dung, chọn cơ sở, tìm kiếm toàn cục |
+| `AppShell` | Thanh bên có nhóm điều hướng và chọn trạm, thanh trên có tìm nhanh (`/`) và thông báo, menu tài khoản (cỡ chữ, sáng/tối), thanh dưới trên điện thoại |
 | `LandingPage` | Khung landing theo mẫu mục 6 |
 | `PatientBanner` | Thanh định danh (mục 4.1) |
 | `AllergyStatus` | Bốn trạng thái dị ứng (mục 4.2) |
@@ -169,6 +169,9 @@ Chúng ta tự kiểm tra và ghi kết quả; đây **không phải** chứng n
 | `EmergencyBar`, `EmergencyDialog` | Truy cập cấp cứu (mục 4.5) |
 | `ConfirmDialog` | Hành động không hoàn tác (mục 4.6) |
 | `Button`, `Badge`, `Card`, `Tabs`, `DataTable`, `FormField` | Thành phần nền |
+| `PageHeader`, `WorkspaceLayout`, `Section`, `FormSection`, `StatStrip`, `SegmentedControl` | Bố cục màn hình: tiêu đề, cột chính + cột bên, khối nội dung không viền, biểu mẫu chia mục (xem `UX.md`) |
+| `QueueList`, `ActionList` | Hàng đợi dạng hành động; việc cần xử lý |
+| `CommandSearch`, `Popover` | Tìm nhanh toàn cục; menu nổi có bàn phím |
 | `IdChip` | Mã định danh đơn cách có nút sao chép |
 | `Timeline` | Lượt khám, nhật ký truy cập |
 | `StatCard`, `Chart` | Chỉ số và biểu đồ theo bảng màu Console |

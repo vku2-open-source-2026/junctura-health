@@ -64,11 +64,16 @@ export function DataTable<Row>({ caption, columns, rows, rowKey, onRowClick, emp
         <tbody className="divide-y divide-line">
           {sorted.map(row => (
             <tr key={rowKey(row)} onClick={onRowClick && (() => onRowClick(row))} className={cn(onRowClick && "cursor-pointer", "hover:bg-brand-soft")}>
-              {columns.map(column => (
-                <td key={column.key} className={cn("px-4 py-3", column.align === "right" && "text-right", column.mono && "font-mono text-xs")}>
-                  {column.render ? column.render(row) : String((row as Record<string, unknown>)[column.key] ?? "")}
-                </td>
-              ))}
+              {columns.map((column, index) => {
+                const content = column.render ? column.render(row) : String((row as Record<string, unknown>)[column.key] ?? "");
+                return (
+                  <td key={column.key} className={cn("px-4 py-3", column.align === "right" && "text-right", column.mono && "font-mono text-xs")}>
+                    {onRowClick && index === 0
+                      ? <button type="button" onClick={event => { event.stopPropagation(); onRowClick(row); }} className="text-left font-medium text-brand underline-offset-2 hover:underline">{content}</button>
+                      : content}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
