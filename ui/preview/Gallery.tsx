@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Junctura Contributors
 // SPDX-License-Identifier: Apache-2.0
 import { Activity, CalendarDays, FileText, Pill, Users } from "lucide-react";
+import { ClinicDemo } from "./ClinicDemo";
 import { useState } from "react";
 import {
   AiSummaryPanel, AlertBanner, AllergyStatus, AppShell, Badge, Button, Card, ConfirmDialog, ConsentBadge, DataTable, DisplayPrefsProvider, EmergencyBar, EmergencyDialog,
@@ -108,17 +109,23 @@ function Components() {
   );
 }
 
+function ClinicWithToast() {
+  const { notify } = useToast();
+  return <ClinicDemo toast={message => notify(message, "ok")} />;
+}
+
 export function Gallery() {
-  const [view, setView] = useState<"landing" | "app">("app");
+  const [view, setView] = useState<"clinic" | "landing" | "app">("clinic");
   const [nav, setNav] = useState("patients");
   return (
     <DisplayPrefsProvider>
       <ToastProvider>
         <div className="flex gap-2 bg-surface-2 p-2 text-sm">
+          <Button variant={view === "clinic" ? "primary" : "secondary"} onClick={() => setView("clinic")}>Màn hình Clinic</Button>
           <Button variant={view === "landing" ? "primary" : "secondary"} onClick={() => setView("landing")}>Landing</Button>
-          <Button variant={view === "app" ? "primary" : "secondary"} onClick={() => setView("app")}>Ứng dụng</Button>
+          <Button variant={view === "app" ? "primary" : "secondary"} onClick={() => setView("app")}>Thành phần</Button>
         </div>
-        {view === "landing" ? (
+        {view === "clinic" ? <ClinicWithToast /> : view === "landing" ? (
           <LandingPage product="Clinic" headline="Hồ sơ khám bệnh gọn, an toàn, chia sẻ khi người bệnh đồng ý" lead="Tiếp nhận, khám và chuyển tuyến trên một màn hình, dữ liệu liên thông qua Junctura."
             onSignIn={() => {}} note="Tài khoản do đơn vị cấp" values={[
               { icon: <Users className="size-5" />, title: "Một hồ sơ, nhiều trạm", text: "Theo dõi người bệnh qua các trạm trong cùng phòng khám." },

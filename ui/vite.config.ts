@@ -9,7 +9,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    lib: { entry: "src/index.ts", formats: ["es"], fileName: "index", cssFileName: "styles" },
+    lib: { entry: "src/lib-entry.ts", formats: ["es"], fileName: "index", cssFileName: "styles" },
     rollupOptions: {
       external: ["react", "react-dom", "react/jsx-runtime", /^lucide-react(\/.*)?$/],
     },

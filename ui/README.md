@@ -38,9 +38,10 @@ Bọc ứng dụng trong `DisplayPrefsProvider` (cỡ chữ 16 / 17,5 / 19 px, c
 
 | Nhóm | Thành phần |
 | --- | --- |
-| Khung | `AppShell`, `LandingPage`, `JuncturaMark`, `TextSizeSelector`, `ThemeToggle` |
+| Khung | `AppShell` (nhóm điều hướng, chọn trạm, tìm nhanh `/`, thông báo, menu tài khoản), `LandingPage`, `JuncturaMark`, `TextSizeSelector`, `ThemeToggle` |
+| Bố cục | `PageHeader`, `WorkspaceLayout` (cột chính + cột bên), `Section`, `FormSection`, `StatStrip`, `SegmentedControl`, `Popover`, `CommandSearch` |
 | An toàn y tế | `PatientBanner`, `AllergyStatus` (4 trạng thái), `AlertBanner` (4 mức), `SourceBadge`, `StaleNotice`, `ConsentBadge`, `EmergencyBar`, `EmergencyDialog`, `ConfirmDialog` |
-| Dữ liệu | `DataTable` (sắp xếp được), `Timeline`, `StatCard`, `IdChip`, `Card`, `Badge` |
+| Dữ liệu | `QueueList` (hàng đợi dạng hành động), `ActionList` (việc cần xử lý), `DataTable` (sắp xếp được, bàn phím), `Timeline`, `StatCard`, `IdChip`, `Card`, `Badge` |
 | Nhập liệu | `Button`, `TextField`, `TextAreaField`, `SelectField`, `Tabs` |
 | Trạng thái | `EmptyState`, `ErrorState`, `PermissionState`, `Skeleton`, `ToastProvider` |
 | AI | `AiSummaryPanel`: chỉ tóm tắt, mặc định tắt, luôn kèm nhãn "Tóm tắt do AI tạo, cần kiểm tra lại với hồ sơ gốc" |
