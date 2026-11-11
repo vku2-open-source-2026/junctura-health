@@ -5,20 +5,22 @@
 // to prove the data fits the contracts. A null result means "no such record for
 // this person": the provider then fails the call instead of returning data.
 
+// "recorded" when the station holds allergies; an empty list is "not-recorded" (never "none"): the seed has no confirmed-none flag.
+const allergyStateOf = p => (p.allergies.length ? "recorded" : "not-recorded");
 const patientOf = (clinic, subject) => clinic.patients.find(p => p.subject === subject) ?? null;
 
 export function preVisitSummary(clinic, subject) {
   const p = patientOf(clinic, subject);
   return p && {
     patientName: p.patientName, birthYear: p.birthYear, sex: p.sex,
-    allergies: p.allergies, chronicConditions: p.chronicConditions, currentMedications: p.currentMedications,
+    allergies: p.allergies, allergyState: allergyStateOf(p), chronicConditions: p.chronicConditions, currentMedications: p.currentMedications,
     recentEncounters: p.encounters.slice(-3).reverse(), updatedAt: p.updatedAt,
   };
 }
 
 export function allergyList(clinic, subject) {
   const p = patientOf(clinic, subject);
-  return p && { allergies: p.allergies, updatedAt: p.updatedAt };
+  return p && { allergies: p.allergies, allergyState: allergyStateOf(p), updatedAt: p.updatedAt };
 }
 
 export function vaccinationHistory(clinic, subject) {

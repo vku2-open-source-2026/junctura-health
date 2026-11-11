@@ -11,6 +11,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Changed
 
+- **Capability contracts 1.1.0** (`@junctura/health-contracts`): `allergy-list` and `pre-visit-summary` now return `allergyState` (`recorded`, `none-known`, `not-recorded`) next to `allergies`, so a provider can say "not recorded" instead of an empty list that a caller might read as "no allergy". The examples, the seed projections and the tests follow. Providers and callers move to 1.1.0 together (no app consumes 1.0.0 yet).
 - **`@junctura/health-ui` 0.3.0 aligns with the Junctura Console look**: the Junctura "J" tile logo (colours follow the theme), a floating side bar card, a top bar with breadcrumbs (`breadcrumbs`, `status` props on `AppShell`) and theme pill, wider content margins (max 80rem, 2rem), `PageHeader` with `badges`, a bold title and a divider, `StatStrip` as cards with optional icon and hint, `Section` with a description, `Card` titles in sentence case, and radius `rounded-lg` everywhere.
 - **Breaking:** `LandingPage` takes `benefits`, `steps`, `audiences`, `trust`, `faq`, `cta`, `hero`, `badge` and `footer: { links, note }` instead of `values` and a text footer. Sections are shown when given.
 

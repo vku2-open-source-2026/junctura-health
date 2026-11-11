@@ -150,27 +150,27 @@ test("capabilities are published once through validate, approve and publish", as
   const api = async (path, token, body, headers = {}) => {
     const action = path.split("/versions")[1] ?? path;
     seen.push(`${token}:${body === undefined ? "GET" : "POST"} ${action}`);
-    if (path === "/v1/approvals") { assert.equal(body.resourceId, `urn:junctura:capability:${provider}:allergy-list@1.0.0`); return reply(201, { approvalId: "ap1" }); }
-    if (action === "/1.0.0" && body === undefined) return state === "missing" ? reply(404, {}) : reply(200, { state, capabilityId: "cap", digest: "d", revision: 1 }, { etag: '"1"' });
+    if (path === "/v1/approvals") { assert.equal(body.resourceId, `urn:junctura:capability:${provider}:allergy-list@1.1.0`); return reply(201, { approvalId: "ap1" }); }
+    if (action === "/1.1.0" && body === undefined) return state === "missing" ? reply(404, {}) : reply(200, { state, capabilityId: "cap", digest: "d", revision: 1 }, { etag: '"1"' });
     if (action === "") { assert.equal(body.providerAppId, provider); state = "draft"; return reply(201, { state, digest: "d", revision: 1 }, { etag: '"1"' }); }
-    if (action === "/1.0.0/validate") { assert.equal(headers["If-Match"], '"1"'); return reply(200, { digest: "d2", revision: 2 }, { etag: '"2"' }); }
-    if (action === "/1.0.0/publish") { assert.equal(headers["If-Match"], '"2"'); assert.equal(body.approvalId, "ap1"); state = "published"; return reply(200, { state }); }
+    if (action === "/1.1.0/validate") { assert.equal(headers["If-Match"], '"1"'); return reply(200, { digest: "d2", revision: 2 }, { etag: '"2"' }); }
+    if (action === "/1.1.0/publish") { assert.equal(headers["If-Match"], '"2"'); assert.equal(body.approvalId, "ap1"); state = "published"; return reply(200, { state }); }
     throw new Error(`unexpected ${path}`);
   };
   const must = async (response, expected, what) => { assert.ok(expected.includes(response.status), what); return response; };
   const owner = { id: "owner-id", token: "owner" }, approver = { token: "approver" };
   assert.equal((await ensureCapability({ api, must }, contract, provider, owner, approver)).state, "published");
-  assert.deepEqual(seen, ["owner:GET /1.0.0", "owner:POST ", "owner:POST /1.0.0/validate", "approver:POST /v1/approvals", "owner:POST /1.0.0/publish"]);
+  assert.deepEqual(seen, ["owner:GET /1.1.0", "owner:POST ", "owner:POST /1.1.0/validate", "approver:POST /v1/approvals", "owner:POST /1.1.0/publish"]);
   seen.length = 0;
   await ensureCapability({ api, must }, contract, provider, owner, approver);
-  assert.deepEqual(seen, ["owner:GET /1.0.0"], "second run only reads");
+  assert.deepEqual(seen, ["owner:GET /1.1.0"], "second run only reads");
   state = "deprecated";
   await assert.rejects(ensureCapability({ api, must }, contract, provider, owner, approver), /deprecated/);
 });
 
 test("grants are proposed by the owner, activated by the approver, and not duplicated", async () => {
   const enrolled = { "junctura-clinic": { appId: "p", subject: "ps" }, "junctura-pharmacy": { appId: "c", subject: "cs" } };
-  const published = { "allergy-list": { capabilityId: "cap", version: "1.0.0", digest: "d", manifest: { requiredPermissions: ["perm"] } } };
+  const published = { "allergy-list": { capabilityId: "cap", version: "1.1.0", digest: "d", manifest: { requiredPermissions: ["perm"] } } };
   const grant = planGrants().find(g => g.slug === "allergy-list" && g.consumer === "junctura-pharmacy"), seen = [];
   const api = async (path, token, body, headers = {}) => {
     seen.push(`${token} ${path}`);
@@ -188,7 +188,7 @@ test("grants are proposed by the owner, activated by the approver, and not dupli
   await ensureGrant({ api, must }, grant, enrolled, published, [], { id: "o", token: "owner" }, { token: "approver" });
   assert.deepEqual(seen, ["owner /v1/trust/grants", "approver /v1/approvals", "approver /v1/trust/grants/g1/activate"]);
   seen.length = 0;
-  const edge = { providerAppId: "p", consumerAppId: "c", capabilityId: "cap", version: "1.0.0", state: "active" };
+  const edge = { providerAppId: "p", consumerAppId: "c", capabilityId: "cap", version: "1.1.0", state: "active" };
   await ensureGrant({ api, must }, grant, enrolled, published, [edge], { id: "o", token: "owner" }, { token: "approver" });
   assert.deepEqual(seen, []);
   assert.equal(existingGrant([{ ...edge, state: "revoked" }], edge), undefined, "a revoked grant is proposed again");
