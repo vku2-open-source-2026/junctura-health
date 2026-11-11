@@ -31,6 +31,12 @@ Người bệnh khám ở trạm y tế xã, được chuyển tuyến lên bệ
 
 Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳng nhau và không đọc database của nhau. SDK dùng chung: [`@junctura/server-client`](https://www.npmjs.com/package/@junctura/server-client).
 
+## Tài liệu thiết kế và tính năng
+
+- [`docs/DESIGN.md`](docs/DESIGN.md): người dùng và bối cảnh, nguyên tắc, quy tắc an toàn hiển thị (thanh định danh, dị ứng, cảnh báo), nhận diện nối với Junctura Console, truy cập, nội dung tiếng Việt, danh sách thành phần dùng chung.
+- [`docs/APPS.md`](docs/APPS.md): tính năng, các tab, dữ liệu nhập và dữ liệu lấy qua Junctura của từng ứng dụng; ranh giới của phần AI.
+- [`skills/junctura-health-design`](skills/junctura-health-design/SKILL.md): skill cho người và Claude Code làm giao diện đúng chuẩn (chép vào `.claude/skills/` của repo app hoặc `~/.claude/skills/` để Claude Code tự dùng).
+
 ## Hợp đồng năng lực
 
 Sáu năng lực dùng chung được định nghĩa một lần trong [`contracts/`](contracts/README.md): dữ liệu vào/ra, bên cung cấp, bên được gọi, mục đích được phép và có cho truy cập cấp cứu hay không.

@@ -11,6 +11,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Added
 
+- **Design guide and app specs** (`docs/DESIGN.md`, `docs/APPS.md`): user analysis for the five apps, safe-display rules (patient banner, four allergy states, alert levels, source and freshness of shared data, emergency access), visual identity aligned with Junctura Console, accessibility and Vietnamese content rules, the shared component list, and the features, tabs and data of each app including the boundary of the AI summary feature. A `junctura-health-design` skill (`skills/`) keeps new screens consistent.
 - **Demo environment** (`npm run demo:setup`, `demo/`): prepares a running Junctura
   DX-OS stack for the health scenario through the real Gateway: 55 demo accounts that
   keep their seeded subjects, five applications with backend and browser (PKCE)

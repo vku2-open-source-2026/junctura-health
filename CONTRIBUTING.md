@@ -24,6 +24,7 @@
 
   File không ghi được chú thích (JSON, dữ liệu) thì khai trong `REUSE.toml`.
 - **Không chép thư viện vào repo.** Khai báo trong `package.json` và commit lockfile; `node_modules/` không bao giờ được commit.
+- **Giao diện theo [docs/DESIGN.md](docs/DESIGN.md).** Mọi màn hình y tế dùng thành phần dùng chung và tuân quy tắc an toàn hiển thị; tính năng từng app theo [docs/APPS.md](docs/APPS.md).
 - **Không dùng dữ liệu người bệnh thật.** Chỉ dùng dữ liệu giả lập.
 - **Không commit bí mật** (`.env`, khóa, token). Dùng `.env.example` để mô tả biến môi trường.
 - Ghi thay đổi đáng chú ý vào mục `Unreleased` của `CHANGELOG.md`.
