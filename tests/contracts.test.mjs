@@ -31,6 +31,19 @@ test("six contracts, one file each, with consistent metadata", () => {
   }
 });
 
+test("allergy outputs say whether allergies were recorded (an empty list is never \"none\")", () => {
+  for (const slug of ["allergy-list", "pre-visit-summary"]) {
+    const schema = getContract(slug).outputSchema;
+    assert.ok(schema.required.includes("allergyState"), `${slug}: allergyState is required`);
+    assert.match(schema.properties.allergyState.description, /none-known/, slug);
+    assert.match(schema.properties.allergyState.description, /not-recorded/, slug);
+    assert.equal(example(slug).output.allergyState, "recorded", slug);
+    const empty = structuredClone(example(slug).output);
+    delete empty.allergyState;
+    assert.ok(validateValue(schema, empty).some(issue => issue.path === "/allergyState"), `${slug}: output without allergyState is invalid`);
+  }
+});
+
 test("every example input and output matches its schema", () => {
   for (const c of CONTRACTS) {
     const { input, output } = example(c.slug);

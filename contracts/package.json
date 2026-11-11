@@ -1,6 +1,6 @@
 {
   "name": "@junctura/health-contracts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shared capability contracts of Junctura Health: schemas, manifests and purpose rules for connected-care applications on Junctura DX-OS.",
   "license": "Apache-2.0",
   "type": "module",

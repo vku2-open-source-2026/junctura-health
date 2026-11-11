@@ -20,6 +20,7 @@ Schema dùng đúng profile payload của Junctura: `object` (bắt buộc `prop
 - Mọi năng lực đều về **một người bệnh**. Người bệnh không nằm trong `input` mà đi qua `context.dataSubject` (Keycloak `sub` của người bệnh); Junctura kiểm tra đồng thuận của người đó trước khi cấp vé.
 - Bên gọi luôn khai `context.purpose`, phải nằm trong `purposes` của hợp đồng.
 - `emergency: true` (truy cập cấp cứu) chỉ dùng được với năng lực có `emergencyAccess: true`, kèm `justification`, và bị rà soát sau.
+- **Dị ứng luôn kèm `allergyState`** (`allergy-list`, `pre-visit-summary`): `recorded` (có dị ứng đã ghi nhận), `none-known` (nhân viên đã xác nhận chưa biết dị ứng nào) hoặc `not-recorded` (chưa ghi nhận). Mảng `allergies` rỗng với `not-recorded` **không** có nghĩa là không dị ứng; bên gọi phải hiển thị "chưa ghi nhận dị ứng".
 - Dữ liệu trả về là **tối thiểu**: ví dụ `claim-verify` chỉ trả `matches` có/không, không có chẩn đoán.
 
 ## Dùng trong ứng dụng

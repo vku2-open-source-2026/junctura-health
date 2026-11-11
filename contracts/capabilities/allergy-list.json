@@ -1,6 +1,6 @@
 {
   "slug": "allergy-list",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "provider": "junctura-clinic",
   "consumers": [
     "junctura-hospital",
@@ -53,6 +53,11 @@
         },
         "maxItems": 50
       },
+      "allergyState": {
+        "type": "string",
+        "maxLength": 16,
+        "description": "recorded | none-known | not-recorded. Mảng allergies rỗng chỉ có nghĩa là không dị ứng khi giá trị là none-known (nhân viên đã xác nhận). not-recorded là chưa ghi nhận: người bệnh chưa được hỏi hoặc chưa nhập, không phải không dị ứng."
+      },
       "updatedAt": {
         "type": "string",
         "minLength": 20,
@@ -62,6 +67,7 @@
     },
     "required": [
       "allergies",
+      "allergyState",
       "updatedAt"
     ],
     "additionalProperties": false
