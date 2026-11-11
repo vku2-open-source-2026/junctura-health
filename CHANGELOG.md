@@ -16,6 +16,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Added
 
+- **Guide to building a new Layer 2 app** (`docs/new-app.md`): what to reuse from Junctura DX-OS and what an app writes itself, environment and credentials from `demo:setup`, the app skeleton to copy from Clinic, sign-in and role checks, providing and calling capabilities with `@junctura/server-client` and `@junctura/health-contracts`, the shared UI, workflow rules and a pre-PR checklist.
 - **`@junctura/health-contracts` on npm**: a tag-triggered publish workflow (`contracts-vX.Y.Z`, with provenance, same pattern as the UI library), an install section in the contracts README, and a CI step that checks the package would contain the code, the schemas and the license files.
 - `LandingPage` in the Console structure (sticky bar with section links, headline with a picture of the app, benefits, how it works, who it is for, trust, questions, call to action, footer), `PreviewFrame` for that picture, `SignInPage` (centred card on the pattern background, message, text size and theme, back link) and `PublicControls`.
 
