@@ -6,43 +6,69 @@
 [![Checks](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml/badge.svg)](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![REUSE](https://img.shields.io/badge/REUSE-3.3-green.svg)](REUSE.toml)
+[![npm](https://img.shields.io/npm/v/@junctura/health-contracts?label=health-contracts)](https://www.npmjs.com/package/@junctura/health-contracts)
 
-**Junctura Health** là Tầng 2 của [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos) trong lĩnh vực y tế. Các ứng dụng độc lập (trạm y tế, bệnh viện, nhà thuốc, bảo hiểm, sổ sức khỏe của người bệnh) chia sẻ dữ liệu qua Junctura. Dữ liệu chỉ được chia sẻ khi người bệnh đồng ý, đúng mục đích, và người bệnh xem lại được ai đã truy cập.
+**Trao đổi   dữ liệu y tế giữa trạm y tế, bệnh viện, nhà thuốc và bảo hiểm: chỉ khi người bệnh đồng ý, chỉ phần cần thiết, và mọi lần truy cập đều để lại dấu vết.**
 
-Repo này là **repo tổng hợp**: chạy cả hệ thống bằng một lệnh, chứa hợp đồng năng lực dùng chung, dữ liệu mẫu giả lập và kịch bản demo.
+Junctura Health là Tầng 2 (lĩnh vực y tế) xây trên [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos). Repo này là **repo tổng hợp** của bộ năm ứng dụng: chứa hợp đồng năng lực dùng chung, thư viện giao diện dùng chung, dữ liệu mẫu giả lập và công cụ dựng môi trường demo.
 
-> Trạng thái: đang xây dựng. Theo dõi tiến độ ở [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues) và [CHANGELOG](CHANGELOG.md).
+## Mục lục
+
+- [Bài toán](#bài-toán)
+- [Giải pháp](#giải-pháp)
+- [Kiến trúc](#kiến-trúc)
+- [Hợp đồng năng lực](#hợp-đồng-năng-lực)
+- [Bắt đầu nhanh](#bắt-đầu-nhanh)
+- [Cấu trúc repo](#cấu-trúc-repo)
+- [Kiểm thử](#kiểm-thử)
+- [Tài liệu](#tài-liệu)
+- [Đóng góp](#đóng-góp)
+- [Giấy phép](#giấy-phép)
 
 ## Bài toán
 
-Người bệnh khám ở trạm y tế xã, được chuyển tuyến lên bệnh viện. Bệnh viện phải hỏi lại tiền sử, dị ứng, tiêm chủng; giấy chuyển tuyến đi bằng tay; bảo hiểm phải xin cả hồ sơ để kiểm tra một khoản chi. Junctura Health cho các bên trao đổi đúng phần dữ liệu cần thiết, có đồng thuận, có nhật ký không sửa được.
+Một người bệnh khám ở trạm y tế xã rồi được chuyển lên bệnh viện. Bệnh viện hỏi lại tiền sử, dị ứng, tiêm chủng; giấy chuyển tuyến đi bằng tay; nhà thuốc không biết đơn có xung đột dị ứng hay không; bảo hiểm phải xin cả hồ sơ để kiểm tra một khoản chi. Dữ liệu nằm rải rác, hoặc bị chia sẻ quá mức cần thiết.
 
-## Các ứng dụng
+## Giải pháp
+
+Mỗi bên giữ dữ liệu của mình và chỉ trả lời khi được hỏi qua Junctura, theo một **hợp đồng năng lực** định nghĩa trước dữ liệu vào, dữ liệu ra, bên được gọi và mục đích được phép.
+
+| Nguyên tắc | Cách thực hiện |
+| --- | --- |
+| Người bệnh quyết định | Mỗi truy cập cần đồng thuận của người bệnh, đúng mục đích; thu hồi được bất cứ lúc nào |
+| Chỉ chia sẻ phần cần thiết | Dữ liệu trả về nhỏ nhất theo hợp đồng. Bảo hiểm chỉ nhận câu trả lời có/không, không nhận hồ sơ |
+| Cấp cứu có kiểm soát | Truy cập khẩn cấp phải ghi lý do và được rà soát sau |
+| Có thể kiểm chứng | Nhật ký chuỗi băm không sửa được; người bệnh xem lại ai đã truy cập dữ liệu của mình |
+| An toàn khi hiển thị | Danh sách dị ứng rỗng luôn hiện là "chưa ghi nhận", không bao giờ là "không dị ứng" (xem trường `allergyState`) |
+
+## Kiến trúc
+
+```text
+  Clinic      Hospital      MyHealth      Pharmacy      Insurance
+     \           |             |             |            /
+      └──────────┴──────┬──────┴─────────────┴───────────┘
+                        ▼
+              Junctura DX-OS (Tầng 1)
+   định danh · đồng thuận · vé gọi dùng một lần · nhật ký chuỗi băm
+```
+
+Các ứng dụng không gọi thẳng nhau và không đọc database của nhau. Bên gọi xin vé từ Junctura; bên cung cấp đổi vé, kiểm tra đồng thuận và mục đích, rồi mới trả dữ liệu.
 
 | Repo | Vai trò |
 | --- | --- |
-| [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) | Tầng 1: định danh, đồng thuận, vé gọi năng lực dùng một lần, nhật ký chuỗi băm, BPMN, Console quản trị |
-| [junctura-health](https://github.com/vku2-open-source-2026/junctura-health) | Repo tổng hợp: compose, hợp đồng năng lực, dữ liệu mẫu, kịch bản demo |
-| [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Trạm y tế xã: hồ sơ ban đầu, tiêm chủng, gửi chuyển tuyến; cung cấp tóm tắt trước khám và danh sách dị ứng |
-| [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Bệnh viện: tiếp nhận chuyển tuyến, màn khám, cảnh báo dị ứng, truy cập cấp cứu có rà soát |
-| [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Sổ sức khỏe của tôi: cấp và thu hồi đồng thuận, xem ai đã truy cập dữ liệu của mình |
+| [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) | Tầng 1: định danh, đồng thuận, vé gọi, nhật ký chuỗi băm, Console quản trị |
+| **junctura-health** (repo này) | Hợp đồng năng lực, thư viện giao diện, dữ liệu mẫu, môi trường demo |
+| [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Trạm y tế xã: hồ sơ, hàng chờ khám, tiêm chủng, chuyển tuyến |
+| [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Bệnh viện: tiếp nhận chuyển tuyến, cảnh báo dị ứng, truy cập cấp cứu |
+| [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |
 | [junctura-pharmacy](https://github.com/vku2-open-source-2026/junctura-pharmacy) | Nhà thuốc: xác minh đơn thuốc trước khi phát |
-| [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Bảo hiểm: xác minh chi phí, chỉ nhận câu trả lời có/không |
+| [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Bảo hiểm: xác minh chi phí, chỉ nhận có/không |
 
-Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳng nhau và không đọc database của nhau. SDK dùng chung: [`@junctura/server-client`](https://www.npmjs.com/package/@junctura/server-client).
-
-## Tài liệu thiết kế và tính năng
-
-- [`docs/DESIGN.md`](docs/DESIGN.md): người dùng và bối cảnh, nguyên tắc, quy tắc an toàn hiển thị (thanh định danh, dị ứng, cảnh báo), nhận diện nối với Junctura Console, truy cập, nội dung tiếng Việt, danh sách thành phần dùng chung.
-- [`docs/UX.md`](docs/UX.md): phân tích người dùng, user story, luồng việc và kiến trúc bố cục; từ đó ra khung ứng dụng dùng chung.
-- [`docs/new-app.md`](docs/new-app.md): hướng dẫn dựng một ứng dụng Tầng 2 mới, từng bước: dùng lại gì từ Tầng 1, cài gói nào, đăng nhập, cung cấp và gọi năng lực, giao diện, danh sách kiểm trước khi mở PR.
-- [`docs/APPS.md`](docs/APPS.md): tính năng, các tab, dữ liệu nhập và dữ liệu lấy qua Junctura của từng ứng dụng; ranh giới của phần AI.
-- [`ui/`](ui/README.md): thư viện giao diện dùng chung [`@junctura/health-ui`](https://www.npmjs.com/package/@junctura/health-ui) (React): thành phần an toàn y tế, token, chế độ sáng/tối, cỡ chữ. Cả năm ứng dụng dùng chung để giao diện thống nhất. `npm run ui:preview` mở trang xem thử mọi thành phần.
-- [`skills/junctura-health-design`](skills/junctura-health-design/SKILL.md): skill cho người và Claude Code làm giao diện đúng chuẩn (chép vào `.claude/skills/` của repo app hoặc `~/.claude/skills/` để Claude Code tự dùng).
+Thư viện dùng chung: [`@junctura/health-contracts`](https://www.npmjs.com/package/@junctura/health-contracts) (hợp đồng), [`@junctura/health-ui`](https://www.npmjs.com/package/@junctura/health-ui) (giao diện React), [`@junctura/server-client`](https://www.npmjs.com/package/@junctura/server-client) (SDK Tầng 1).
 
 ## Hợp đồng năng lực
 
-Cài cho ứng dụng: `npm install @junctura/health-contracts`. Sáu năng lực dùng chung được định nghĩa một lần trong [`contracts/`](contracts/README.md): dữ liệu vào/ra, bên cung cấp, bên được gọi, mục đích được phép và có cho truy cập cấp cứu hay không.
+Định nghĩa một lần trong [`contracts/`](contracts/README.md), cài bằng `npm install @junctura/health-contracts`.
 
 | Năng lực | Bên cung cấp | Bên gọi | Mục đích | Cấp cứu |
 | --- | --- | --- | --- | --- |
@@ -53,20 +79,11 @@ Cài cho ứng dụng: `npm install @junctura/health-contracts`. Sáu năng lự
 | `prescription-verify` | Hospital | Pharmacy | `dispensing` | Không |
 | `claim-verify` | Hospital | Insurance | `claim_review` | Không |
 
-## Dữ liệu mẫu
+## Bắt đầu nhanh
 
-`npm run seed:generate` sinh 50 người bệnh giả lập ở Đà Nẵng (hồ sơ trạm y tế, chuyển tuyến, đơn thuốc, hồ sơ thanh toán) và danh sách tài khoản demo. Cùng một seed luôn ra cùng một kết quả. Xem [`seed/README.md`](seed/README.md).
+**Yêu cầu:** Node.js 24 (xem `.node-version`), Git. Dựng môi trường demo cần thêm Docker và [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) đặt cạnh repo này.
 
-## Môi trường demo
-
-Với `junctura-dxos` đang chạy ở thư mục bên cạnh, `npm run demo:setup` tạo tài khoản demo, đăng ký 5 ứng dụng, công bố 6 năng lực và cấp grant theo hợp đồng. Xem [`demo/README.md`](demo/README.md).
-
-## Yêu cầu
-
-- Docker và Docker Compose
-- Node.js 24 (xem `.node-version`)
-
-## Build từ mã nguồn
+### Build từ mã nguồn và kiểm thử
 
 ```sh
 git clone https://github.com/vku2-open-source-2026/junctura-health.git
@@ -75,24 +92,73 @@ npm run check
 npm test
 ```
 
-`npm test` kiểm tra hợp đồng; nếu có sẵn thư mục `../junctura-dxos` (hoặc đặt `JUNCTURA_DXOS_DIR`), test còn đối chiếu manifest với bộ kiểm tra của chính Junctura.
+Có sẵn `../junctura-dxos` (hoặc đặt `JUNCTURA_DXOS_DIR`) thì `npm test` còn đối chiếu hợp đồng với bộ kiểm tra của chính Junctura.
 
-Thư viện giao diện (cần Node 24):
+### Dựng môi trường demo
+
+```sh
+# 1. Trong thư mục junctura-dxos
+npm run setup
+npm run local:up
+
+# 2. Trong repo này
+npm run demo:setup
+```
+
+`demo:setup` tạo 55 tài khoản demo, đăng ký 5 ứng dụng, công bố 6 năng lực và cấp quyền gọi theo bảng trên; chạy lại nhiều lần vẫn an toàn. Chi tiết, cổng và file sinh ra: [`demo/README.md`](demo/README.md). Sau đó chạy từng ứng dụng theo README của nó, ví dụ [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic#readme).
+
+> Chạy cả bộ bằng một lệnh `docker compose` đang được hoàn thiện, theo dõi ở [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues).
+
+### Thư viện giao diện
 
 ```sh
 npm run ui:install
 npm run ui:test
 npm run ui:build
+npm run ui:preview   # trang xem thử mọi thành phần
 ```
 
-Hướng dẫn chạy cả hệ thống sẽ được bổ sung khi compose hoàn thiện.
+## Cấu trúc repo
+
+```text
+contracts/   hợp đồng năng lực (npm: @junctura/health-contracts)
+ui/          thư viện giao diện (npm: @junctura/health-ui)
+seed/        bộ sinh dữ liệu mẫu giả lập, xác định theo seed
+demo/        dựng môi trường demo trên Junctura DX-OS
+docs/        thiết kế, UX, tính năng từng ứng dụng, hướng dẫn dựng app mới
+skills/      skill thiết kế giao diện cho người và Claude Code
+tests/       kiểm thử hợp đồng, dữ liệu mẫu, demo
+scripts/     kiểm tra cú pháp và tuân thủ REUSE
+```
+
+Dữ liệu mẫu là **50 người bệnh giả lập ở Đà Nẵng** do [`seed/`](seed/README.md) sinh ra; cùng seed luôn cho cùng kết quả. Không có thông tin người thật.
+
+## Kiểm thử
+
+| Lệnh | Kiểm tra |
+| --- | --- |
+| `npm run check` | Cú pháp mã nguồn và tính hợp lệ của hợp đồng |
+| `npm run check:reuse` | Tuân thủ REUSE 3.3 (cần `pip install -r requirements-reuse.txt`) |
+| `npm test` | Hợp đồng, dữ liệu mẫu, logic dựng demo |
+| `npm run ui:test` | Thư viện giao diện |
+
+Mọi lệnh trên chạy tự động trong [CI](.github/workflows/ci.yml) cho mỗi PR.
+
+## Tài liệu
+
+| Tài liệu | Nội dung |
+| --- | --- |
+| [docs/new-app.md](docs/new-app.md) | Dựng một ứng dụng Tầng 2 mới, từng bước |
+| [docs/APPS.md](docs/APPS.md) | Tính năng và dữ liệu của từng ứng dụng; ranh giới phần AI |
+| [docs/DESIGN.md](docs/DESIGN.md) | Nguyên tắc thiết kế, quy tắc an toàn hiển thị |
+| [docs/UX.md](docs/UX.md) | Người dùng, luồng việc, bố cục |
+| [contracts/README.md](contracts/README.md) | Quy tắc hợp đồng và cách đổi hợp đồng |
+| [CHANGELOG.md](CHANGELOG.md) | Lịch sử thay đổi |
 
 ## Đóng góp
 
-Xem [CONTRIBUTING.md](CONTRIBUTING.md). Báo lỗi và đề xuất ở [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues).
+Xem [CONTRIBUTING.md](CONTRIBUTING.md). Báo lỗi và đề xuất tại [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues).
 
 ## Giấy phép
 
-Mã nguồn phát hành theo [Apache License 2.0](LICENSE); xem thêm [NOTICE](NOTICE). Mỗi file nguồn ghi giấy phép bằng header SPDX; file không ghi chú thích được (JSON, dữ liệu) được khai trong [REUSE.toml](REUSE.toml). Repo tuân thủ [REUSE 3.3](https://reuse.software/spec-3.3/).
-
-Dữ liệu người bệnh trong repo là dữ liệu giả lập do chính bộ sinh của dự án tạo ra ([`seed/`](seed/README.md)), không chứa thông tin người thật và không dùng công cụ hay bộ dữ liệu bên ngoài.
+[Apache License 2.0](LICENSE), xem thêm [NOTICE](NOTICE). Mỗi file nguồn có header SPDX; file không ghi chú thích được (JSON, dữ liệu) được khai trong [REUSE.toml](REUSE.toml). Repo tuân thủ [REUSE 3.3](https://reuse.software/spec-3.3/).
