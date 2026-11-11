@@ -71,4 +71,4 @@ docker compose -f compose.yaml -f compose.providers.yaml up -d core
 ## Lưu ý
 
 - Chỉ dùng cho môi trường local/demo. Tài khoản và mật khẩu demo không được dùng cho hệ thống thật.
-- Không chạy `npm run seed:health` của `junctura-dxos` trên cùng tenant với demo này: lệnh đó đăng ký một bộ ứng dụng y tế minh họa khác, Console sẽ hiện hai bộ.
+- Dữ liệu y tế chỉ nằm ở tầng này (`seed/` và `demo/`); `junctura-dxos` (Tầng 1) không còn lệnh seed y tế riêng, nên Console chỉ hiện bộ ứng dụng do `npm run demo:setup` đăng ký.

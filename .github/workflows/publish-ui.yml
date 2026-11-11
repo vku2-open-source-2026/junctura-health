@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: 2026 Junctura Contributors
+# SPDX-License-Identifier: Apache-2.0
+name: Publish UI library
+
+# Push a tag `ui-vX.Y.Z` (same version as ui/package.json) to publish @junctura/health-ui.
+on:
+  push:
+    tags: ["ui-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version-file: .node-version
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Tag must match the package version
+        run: |
+          version="$(node -p "require('./ui/package.json').version")"
+          test "${GITHUB_REF_NAME}" = "ui-v${version}" || { echo "Tag ${GITHUB_REF_NAME} does not match ui/package.json version ${version}"; exit 1; }
+      - name: Install, typecheck, test, build
+        run: |
+          npm --prefix ui ci
+          npm --prefix ui run typecheck
+          npm --prefix ui test
+          npm --prefix ui run build
+      - name: Ship license files with the package
+        run: cp LICENSE NOTICE ui/
+      - name: Publish
+        working-directory: ui
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public

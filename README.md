@@ -35,6 +35,7 @@ Mọi ứng dụng chỉ trao đổi với nhau qua Junctura, không gọi thẳ
 
 - [`docs/DESIGN.md`](docs/DESIGN.md): người dùng và bối cảnh, nguyên tắc, quy tắc an toàn hiển thị (thanh định danh, dị ứng, cảnh báo), nhận diện nối với Junctura Console, truy cập, nội dung tiếng Việt, danh sách thành phần dùng chung.
 - [`docs/APPS.md`](docs/APPS.md): tính năng, các tab, dữ liệu nhập và dữ liệu lấy qua Junctura của từng ứng dụng; ranh giới của phần AI.
+- [`ui/`](ui/README.md): thư viện giao diện dùng chung [`@junctura/health-ui`](https://www.npmjs.com/package/@junctura/health-ui) (React): thành phần an toàn y tế, token, chế độ sáng/tối, cỡ chữ. Cả năm ứng dụng dùng chung để giao diện thống nhất. `npm run ui:preview` mở trang xem thử mọi thành phần.
 - [`skills/junctura-health-design`](skills/junctura-health-design/SKILL.md): skill cho người và Claude Code làm giao diện đúng chuẩn (chép vào `.claude/skills/` của repo app hoặc `~/.claude/skills/` để Claude Code tự dùng).
 
 ## Hợp đồng năng lực
@@ -73,6 +74,14 @@ npm test
 ```
 
 `npm test` kiểm tra hợp đồng; nếu có sẵn thư mục `../junctura-dxos` (hoặc đặt `JUNCTURA_DXOS_DIR`), test còn đối chiếu manifest với bộ kiểm tra của chính Junctura.
+
+Thư viện giao diện (cần Node 24):
+
+```sh
+npm run ui:install
+npm run ui:test
+npm run ui:build
+```
 
 Hướng dẫn chạy cả hệ thống sẽ được bổ sung khi compose hoàn thiện.
 

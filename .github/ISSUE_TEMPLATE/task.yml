@@ -23,4 +23,4 @@ body:
     id: part
     attributes:
       label: Thuộc phần
-      options: ["Compose / chạy cả bộ", "Hợp đồng capability", "Dữ liệu mẫu", "Kịch bản demo", "Tài liệu", "CI / Phát hành"]
+      options: ["Compose / chạy cả bộ", "Hợp đồng capability", "Dữ liệu mẫu", "Kịch bản demo", "Giao diện (UI)", "Tài liệu", "CI / Phát hành"]
