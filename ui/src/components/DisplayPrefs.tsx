@@ -64,8 +64,13 @@ export function ThemeToggle() {
   const dark = theme === "dark";
   return (
     <button type="button" aria-pressed={dark} aria-label="Giao diện tối" onClick={() => setTheme(dark ? "light" : "dark")}
-      className="grid size-9 place-items-center rounded-lg border border-control bg-surface text-ink hover:bg-surface-2">
+      className="grid size-9 place-items-center rounded-full border border-line bg-surface text-ink hover:border-brand">
       {dark ? <Moon aria-hidden className="size-4" /> : <Sun aria-hidden className="size-4" />}
     </button>
   );
+}
+
+/** Display settings for pages without a shell (landing, sign-in): text size and theme. */
+export function PublicControls() {
+  return <div className="flex items-center gap-2"><TextSizeSelector /><ThemeToggle /></div>;
 }

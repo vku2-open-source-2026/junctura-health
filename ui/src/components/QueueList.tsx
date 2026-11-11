@@ -47,9 +47,9 @@ export const minutesWaiting = (since: string | undefined, now: Date = new Date()
 
 /** People in line as action rows, not a table: ticket, who, why they matter, how long, one button. */
 export function QueueList({ items, label, onCall, onOpen, callLabel = "Gọi vào", openLabel = "Mở hồ sơ", warnAfter = 30, now, empty, compact = false }: QueueListProps) {
-  if (items.length === 0) return <p className="rounded-xl border border-dashed border-line px-4 py-6 text-center text-sm text-muted">{empty ?? "Không có ai trong hàng."}</p>;
+  if (items.length === 0) return <p className="rounded-lg border border-dashed border-line px-4 py-6 text-center text-sm text-muted">{empty ?? "Không có ai trong hàng."}</p>;
   return (
-    <ul aria-label={label} className="divide-y divide-line rounded-xl border border-line bg-surface">
+    <ul aria-label={label} className="divide-y divide-line rounded-lg border border-line bg-surface">
       {items.map(item => {
         const waited = minutesWaiting(item.since, now);
         const slow = waited !== null && waited >= warnAfter;

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Junctura Contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Bell, Building2, ChevronsUpDown, Ellipsis, LogOut, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
+import { Bell, Building2, ChevronRight, ChevronsUpDown, Ellipsis, LogOut, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "../lib/cn";
 import { Badge, type Tone } from "./Badge";
@@ -31,6 +31,10 @@ export interface AppShellProps {
   notifications?: ShellNotification[];
   /** Persistent strip above everything, e.g. EmergencyBar. */
   banner?: ReactNode;
+  /** Extra breadcrumb levels after the current section, e.g. the name of the open record. */
+  breadcrumbs?: string[];
+  /** Status pills at the right of the top bar (unit, mode, connection). */
+  status?: ReactNode;
   children: ReactNode;
 }
 
@@ -40,8 +44,8 @@ const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(-2).m
 function NavButton({ item, active, collapsed, onClick }: { item: NavItem; active: boolean; collapsed: boolean; onClick: () => void }) {
   return (
     <button type="button" aria-current={active ? "page" : undefined} onClick={onClick} title={collapsed ? item.label : undefined}
-      className={cn("flex min-h-10 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-medium", collapsed && "justify-center px-0",
-        active ? "bg-brand-soft text-brand" : "text-ink-2 hover:bg-surface-2")}>
+      className={cn("relative flex min-h-10 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-medium", collapsed && "justify-center px-0",
+        active ? "bg-brand-soft font-semibold text-brand before:absolute before:inset-y-1.5 before:left-0 before:w-0.5 before:rounded-full before:bg-brand before:content-['']" : "text-ink-2 hover:bg-brand-soft/60")}>
       {item.icon && <span aria-hidden className="shrink-0">{item.icon}</span>}
       <span className={cn("min-w-0 flex-1 truncate", collapsed && "sr-only")}>{item.label}</span>
       {item.count !== undefined && item.count > 0 && <span className={cn("rounded-full bg-surface-2 px-1.5 text-xs tabular-nums", collapsed && "sr-only")}>{item.count}</span>}
@@ -109,7 +113,7 @@ function UserMenu({ user, onSignOut, collapsed, side }: { user: NonNullable<AppS
 function Notifications({ items }: { items: ShellNotification[] }) {
   return (
     <Popover label="Thông báo" align="end" panelClassName="w-80" triggerLabel={`Thông báo, ${items.length} mục`}
-      triggerClassName="relative grid size-10 place-items-center rounded-lg border border-line bg-surface hover:bg-surface-2"
+      triggerClassName="relative grid size-9 place-items-center rounded-full border border-line bg-surface hover:border-brand"
       trigger={<><Bell aria-hidden className="size-4" />{items.length > 0 && <span aria-hidden className="absolute -right-1 -top-1 grid min-w-4 place-items-center rounded-full bg-danger px-1 text-[10px] font-semibold text-on-danger">{items.length}</span>}</>}>
       {close => items.length === 0 ? <p className="p-3 text-sm text-muted">Không có thông báo mới.</p> : (
         <ul className="max-h-80 divide-y divide-line overflow-y-auto">
@@ -132,7 +136,7 @@ function Notifications({ items }: { items: ShellNotification[] }) {
  * Application frame. Wide screens: side navigation (groups, station switcher, account) and a top bar with quick find and notifications.
  * Narrow screens: bottom navigation. Content scrolls under a sticky top bar; the patient banner sticks just below it.
  */
-export function AppShell({ product, nav, current, onNavigate, unit, user, onSignOut, search, notifications, banner, children }: AppShellProps) {
+export function AppShell({ product, nav, current, onNavigate, unit, user, onSignOut, search, notifications, banner, breadcrumbs, status, children }: AppShellProps) {
   const groups: NavGroup[] = isGroups(nav) ? nav : [{ items: nav }];
   const flat = groups.flatMap(group => group.items);
   const [collapsed, setCollapsed] = useState(false);
@@ -154,25 +158,30 @@ export function AppShell({ product, nav, current, onNavigate, unit, user, onSign
   const rest = flat.length > 5 ? flat.slice(4) : [];
   const go = (id: string) => { setMoreOpen(false); onNavigate(id); };
 
+  const section = groups.find(group => group.items.some(item => item.id === current));
+  const currentItem = flat.find(item => item.id === current);
+  const trail = [section?.label, currentItem?.label, ...(breadcrumbs ?? [])].filter((part, index, all): part is string => Boolean(part) && part !== all[index - 1]);
+  const pill = "inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full border border-line bg-surface px-3 text-sm text-ink hover:border-brand";
+
   return (
     <div className="min-h-dvh bg-app text-ink" style={{ "--jh-topbar": "3.5rem" } as React.CSSProperties}>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-3 focus:py-2 focus:text-on-brand">Bỏ qua điều hướng</a>
       {banner}
-      <div className={cn("md:grid", collapsed ? "md:grid-cols-[4.5rem_minmax(0,1fr)]" : "md:grid-cols-[16rem_minmax(0,1fr)]")}>
-        <div className="hidden border-r border-line bg-surface md:sticky md:top-0 md:flex md:h-dvh md:flex-col">
-          <div className={cn("flex h-14 items-center border-b border-line px-4", collapsed && "justify-center px-0")}>
-            {collapsed ? <JuncturaMark className="[&>span]:sr-only" /> : <JuncturaMark product={product} />}
+      <div className="hidden md:block">
+        <aside aria-label="Điều hướng" className={cn("fixed inset-y-3 left-3 z-40 flex select-none flex-col rounded-lg border border-line bg-surface shadow-pop transition-[width] duration-300", collapsed ? "w-[4.5rem]" : "w-64")}>
+          <div className={cn("flex items-center border-b border-line p-3", collapsed ? "justify-center" : "justify-between")}>
+            <JuncturaMark product={product} size={30} showText={!collapsed} />
           </div>
-          <nav aria-label="Chức năng chính" className="flex-1 space-y-4 overflow-y-auto p-3">
+          <nav aria-label="Chức năng chính" className="flex-1 space-y-4 overflow-y-auto p-2">
             {unit && <StationSwitcher unit={unit} collapsed={collapsed} />}
             {groups.map((group, index) => (
               <div key={group.label ?? index} className="space-y-0.5">
-                {group.label && !collapsed && <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-muted">{group.label}</p>}
+                {group.label && !collapsed && <p className="px-3 pb-1 pt-1 text-xs font-semibold uppercase tracking-wider text-muted">{group.label}</p>}
                 {group.items.map(item => <NavButton key={item.id} item={item} active={item.id === current} collapsed={collapsed} onClick={() => onNavigate(item.id)} />)}
               </div>
             ))}
           </nav>
-          <div className="space-y-1 border-t border-line p-3">
+          <div className="space-y-1 border-t border-line p-2">
             {user && <UserMenu user={user} onSignOut={onSignOut} collapsed={collapsed} side="top" />}
             <button type="button" onClick={() => setCollapsed(value => !value)} aria-pressed={collapsed} title={collapsed ? "Mở rộng thanh bên" : "Thu gọn thanh bên"}
               className="flex min-h-9 w-full items-center gap-3 rounded-lg px-3 text-sm text-muted hover:bg-surface-2">
@@ -180,26 +189,36 @@ export function AppShell({ product, nav, current, onNavigate, unit, user, onSign
               <span className="sr-only">{collapsed ? "Mở rộng thanh bên" : "Thu gọn thanh bên"}</span>
             </button>
           </div>
-        </div>
+        </aside>
+      </div>
 
-        <div className="min-w-0">
-          <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-line bg-surface px-4 sm:px-6">
-            <span className="md:hidden"><JuncturaMark /></span>
+      <div className={cn("min-w-0 transition-[padding] duration-300", collapsed ? "md:pl-[5.5rem]" : "md:pl-[17.5rem]")}>
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 bg-app/90 px-4 backdrop-blur-sm md:px-8">
+          <span className="md:hidden"><JuncturaMark size={28} showText={false} product={product} /></span>
+          <nav aria-label="Vị trí hiện tại" className="hidden min-w-0 flex-1 items-center gap-1.5 overflow-hidden text-sm text-muted md:flex">
+            <span className="truncate">{product}</span>
+            {trail.map((part, index) => (
+              <span key={`${part}-${index}`} className="flex min-w-0 items-center gap-1.5">
+                <ChevronRight aria-hidden className="size-3.5 shrink-0" />
+                <span aria-current={index === trail.length - 1 ? "page" : undefined} className={cn("truncate", index === trail.length - 1 && "font-semibold text-ink")}>{part}</span>
+              </span>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-2">
+            {status && <div className="hidden items-center gap-2 lg:flex">{status}</div>}
             {search && (
-              <button type="button" onClick={() => setSearchOpen(true)} aria-label="Tìm nhanh (phím /)"
-                className="ml-auto flex h-10 min-w-0 items-center gap-2 rounded-lg border border-control bg-surface px-3 text-sm text-muted hover:bg-surface-2 md:ml-0 md:w-96">
+              <button type="button" onClick={() => setSearchOpen(true)} aria-label="Tìm nhanh (phím /)" className={cn(pill, "text-muted md:w-60 md:justify-start")}>
                 <Search aria-hidden className="size-4 shrink-0" />
                 <span className="hidden flex-1 truncate text-left md:inline">{search.placeholder ?? "Tìm người bệnh, mã hồ sơ"}</span>
                 <kbd aria-hidden className="hidden rounded border border-line bg-surface-2 px-1.5 font-mono text-xs md:inline">/</kbd>
               </button>
             )}
-            <div className="ml-auto flex items-center gap-2">
-              {notifications && <Notifications items={notifications} />}
-              {user && <div className="md:hidden"><UserMenu user={user} onSignOut={onSignOut} collapsed side="bottom" /></div>}
-            </div>
-          </header>
-          <main id="main" tabIndex={-1} className="px-4 pb-24 pt-5 sm:px-6 md:pb-8">{children}</main>
-        </div>
+            {notifications && <Notifications items={notifications} />}
+            <div className="hidden md:block"><ThemeToggle /></div>
+            {user && <div className="md:hidden"><UserMenu user={user} onSignOut={onSignOut} collapsed side="bottom" /></div>}
+          </div>
+        </header>
+        <main id="main" tabIndex={-1} className="mx-auto w-full max-w-7xl px-4 pb-24 pt-3 md:px-8 md:pb-10 md:pt-4">{children}</main>
       </div>
 
       <nav aria-label="Chức năng chính (điện thoại)" className="fixed inset-x-0 bottom-0 z-30 flex border-t border-line bg-surface md:hidden">

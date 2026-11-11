@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import { describe, expect, it, vi } from "vitest";
-import { ActionList, AppShell, CommandSearch, DisplayPrefsProvider, Popover, QueueList, SegmentedControl, minutesWaiting } from "../src";
+import { ActionList, AppShell, CommandSearch, DisplayPrefsProvider, LandingPage, Popover, QueueList, SegmentedControl, SignInPage, minutesWaiting } from "../src";
 
 const NAV = [{ label: "Hôm nay", items: [{ id: "today", label: "Hôm nay" }, { id: "intake", label: "Tiếp đón" }] }, { label: "Người bệnh", items: [{ id: "patients", label: "Bệnh nhân", count: 3 }] }];
 const STATIONS = [{ id: "s1", name: "Trạm Hoà Mỹ" }, { id: "s2", name: "Trạm An Hải" }];
@@ -128,5 +128,39 @@ describe("ActionList and SegmentedControl", () => {
     expect(screen.getByRole("radio", { name: "Tất cả" }).getAttribute("aria-checked")).toBe("true");
     await userEvent.click(screen.getByRole("radio", { name: "Dị ứng" }));
     expect(onChange).toHaveBeenCalledWith("b");
+  });
+});
+
+describe("breadcrumbs and sign-in", () => {
+  it("shows group, section and the open record once each", () => {
+    render(
+      <DisplayPrefsProvider>
+        <AppShell product="Clinic" nav={[{ label: "Hôm nay", items: [{ id: "today", label: "Hôm nay" }] }, { label: "Người bệnh", items: [{ id: "patients", label: "Bệnh nhân" }] }]} current="patients" onNavigate={() => {}} breadcrumbs={["Nguyễn Văn An"]}>x</AppShell>
+      </DisplayPrefsProvider>,
+    );
+    const trail = screen.getByRole("navigation", { name: "Vị trí hiện tại" });
+    expect(trail.textContent).toBe("ClinicNgười bệnhBệnh nhânNguyễn Văn An");
+    expect(trail.querySelector("[aria-current=page]")?.textContent).toBe("Nguyễn Văn An");
+  });
+  it("does not repeat a section named like its group", () => {
+    render(
+      <DisplayPrefsProvider>
+        <AppShell product="Clinic" nav={[{ label: "Hôm nay", items: [{ id: "today", label: "Hôm nay" }] }]} current="today" onNavigate={() => {}}>x</AppShell>
+      </DisplayPrefsProvider>,
+    );
+    expect(screen.getByRole("navigation", { name: "Vị trí hiện tại" }).textContent).toBe("ClinicHôm nay");
+  });
+  it("sign-in page calls back and shows the message", async () => {
+    const onSignIn = vi.fn(); const onBack = vi.fn();
+    render(<SignInPage product="Clinic" onSignIn={onSignIn} onBack={onBack} message="Phiên đã hết hạn" />, { wrapper: DisplayPrefsProvider });
+    expect(screen.getByText("Phiên đã hết hạn")).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: /Đăng nhập với Junctura/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Về trang giới thiệu/ }));
+    expect(onSignIn).toHaveBeenCalledOnce(); expect(onBack).toHaveBeenCalledOnce();
+  });
+  it("landing page shows only the sections it is given", () => {
+    render(<LandingPage product="Clinic" headline="H" lead="L" onSignIn={() => {}} faq={{ title: "Hỏi đáp", items: [{ q: "Q?", a: "A." }] }} />, { wrapper: DisplayPrefsProvider });
+    expect(screen.getByRole("button", { name: "Hỏi đáp" })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Lợi ích" })).toBeNull();
   });
 });

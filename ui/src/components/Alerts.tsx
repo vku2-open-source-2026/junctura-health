@@ -21,7 +21,7 @@ export const alertLevelLabel = (level: AlertLevel) => LEVEL[level].label;
 export function AlertBanner({ level, title, children, action, className }: { level: AlertLevel; title: string; children?: ReactNode; action?: ReactNode; className?: string }) {
   const { label, tone, Icon, role } = LEVEL[level];
   return (
-    <div role={role} className={cn("flex items-start gap-3 rounded-xl border px-4 py-3", TONE_BOX[tone], className)}>
+    <div role={role} className={cn("flex items-start gap-3 rounded-lg border px-4 py-3", TONE_BOX[tone], className)}>
       <Icon aria-hidden className="mt-0.5 size-5 shrink-0" />
       <div className="min-w-0 flex-1">
         <p className="text-xs font-semibold uppercase tracking-wide">{label}</p>

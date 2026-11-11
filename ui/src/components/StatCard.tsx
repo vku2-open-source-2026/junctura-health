@@ -9,12 +9,12 @@ const VALUE: Record<Tone, string> = { neutral: "text-ink", brand: "text-brand", 
 /** One headline number with a label and an optional explanation. */
 export function StatCard({ label, value, hint, tone = "neutral", icon }: { label: string; value: ReactNode; hint?: string; tone?: Tone; icon?: ReactNode }) {
   return (
-    <div className="rounded-xl border border-line bg-surface p-4 shadow-card">
+    <div className="rounded-lg border border-line bg-surface p-4 shadow-card">
       <div className="flex items-center justify-between gap-2 text-sm text-muted">
         <span>{label}</span>
-        {icon && <span aria-hidden>{icon}</span>}
+        {icon && <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-md bg-surface-2 text-ink-2">{icon}</span>}
       </div>
-      <p className={cn("mt-1 text-3xl font-semibold tabular-nums", VALUE[tone])}>{value}</p>
+      <p className={cn("mt-1 text-2xl font-bold tracking-tight tabular-nums", VALUE[tone])}>{value}</p>
       {hint && <p className="mt-1 text-sm text-muted">{hint}</p>}
     </div>
   );

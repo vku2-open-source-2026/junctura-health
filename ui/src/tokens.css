@@ -68,6 +68,10 @@
     --jh-danger-line: #E7C3C0;
     --jh-on-danger: #FFFFFF;
     --jh-sand: #C58B62;
+    --jh-logo-tile: #172F3D;
+    --jh-logo-blue: #4FB3C8;
+    --jh-logo-green: #5FCDBE;
+    --jh-logo-sand: #D8A581;
     --jh-shadow-card: 0 1px 3px 0 rgb(23 47 61 / 0.06), 0 1px 2px -1px rgb(23 47 61 / 0.06);
     --jh-shadow-pop: 0 20px 25px -5px rgb(23 47 61 / 0.14), 0 8px 10px -6px rgb(23 47 61 / 0.14);
     color-scheme: light;
@@ -99,6 +103,10 @@
     --jh-danger-line: #7A3438;
     --jh-on-danger: #0D1A22;
     --jh-sand: #D8A581;
+    --jh-logo-tile: #E8F3F5;
+    --jh-logo-blue: #176B80;
+    --jh-logo-green: #0F6F66;
+    --jh-logo-sand: #8A5A38;
     --jh-shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3);
     --jh-shadow-pop: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
     color-scheme: dark;

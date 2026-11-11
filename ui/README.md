@@ -38,7 +38,7 @@ Bọc ứng dụng trong `DisplayPrefsProvider` (cỡ chữ 16 / 17,5 / 19 px, c
 
 | Nhóm | Thành phần |
 | --- | --- |
-| Khung | `AppShell` (nhóm điều hướng, chọn trạm, tìm nhanh `/`, thông báo, menu tài khoản), `LandingPage`, `JuncturaMark`, `TextSizeSelector`, `ThemeToggle` |
+| Khung | `AppShell` (thanh bên nổi, breadcrumb, chọn trạm, tìm nhanh `/`, thông báo, menu tài khoản), `LandingPage`, `SignInPage`, `PreviewFrame`, `JuncturaMark`, `TextSizeSelector`, `ThemeToggle` |
 | Bố cục | `PageHeader`, `WorkspaceLayout` (cột chính + cột bên), `Section`, `FormSection`, `StatStrip`, `SegmentedControl`, `Popover`, `CommandSearch` |
 | An toàn y tế | `PatientBanner`, `AllergyStatus` (4 trạng thái), `AlertBanner` (4 mức), `SourceBadge`, `StaleNotice`, `ConsentBadge`, `EmergencyBar`, `EmergencyDialog`, `ConfirmDialog` |
 | Dữ liệu | `QueueList` (hàng đợi dạng hành động), `ActionList` (việc cần xử lý), `DataTable` (sắp xếp được, bàn phím), `Timeline`, `StatCard`, `IdChip`, `Card`, `Badge` |

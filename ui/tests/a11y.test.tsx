@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import axe from "axe-core";
 import { describe, expect, it } from "vitest";
-import { AiSummaryPanel, AlertBanner, AllergyStatus, AppShell, Card, ConsentBadge, DataTable, DisplayPrefsProvider, EmptyState, ErrorState, LandingPage, PatientBanner, Skeleton, SourceBadge, StatCard, Tabs, TextField, Timeline } from "../src";
+import { AiSummaryPanel, AlertBanner, AllergyStatus, AppShell, Card, ConsentBadge, DataTable, DisplayPrefsProvider, EmptyState, ErrorState, LandingPage, PatientBanner, PreviewFrame, SignInPage, Skeleton, SourceBadge, StatCard, Tabs, TextField, Timeline } from "../src";
 
 async function violations(node: HTMLElement) {
   // color-contrast needs real layout, which jsdom lacks: covered by contrast.test.ts.
@@ -13,7 +13,11 @@ async function violations(node: HTMLElement) {
 
 describe("axe", () => {
   it("landing page", async () => {
-    const { container } = render(<LandingPage product="Clinic" headline="Hồ sơ" lead="Mô tả" onSignIn={() => {}} values={[{ title: "A", text: "a" }, { title: "B", text: "b" }]} />, { wrapper: DisplayPrefsProvider });
+    const { container } = render(<LandingPage product="Clinic" headline="Hồ sơ" lead="Mô tả" onSignIn={() => {}} benefits={{ title: "Lợi ích", items: [{ title: "A", text: "a" }, { title: "B", text: "b" }] }} steps={{ title: "Cách dùng", items: [{ title: "Một", text: "x" }] }} faq={{ title: "Hỏi đáp", items: [{ q: "Câu hỏi?", a: "Trả lời." }] }} cta={{ title: "Bắt đầu" }} hero={<PreviewFrame label="Minh hoạ">x</PreviewFrame>} footer={{ links: [{ label: "GitHub", href: "https://example.org" }] }} />, { wrapper: DisplayPrefsProvider });
+    expect(await violations(container)).toEqual([]);
+  });
+  it("sign-in page", async () => {
+    const { container } = render(<SignInPage product="Clinic" subtitle="Đăng nhập" onSignIn={() => {}} onBack={() => {}} message="Phiên đã hết hạn" />, { wrapper: DisplayPrefsProvider });
     expect(await violations(container)).toEqual([]);
   });
   it("app shell with patient banner and content", async () => {

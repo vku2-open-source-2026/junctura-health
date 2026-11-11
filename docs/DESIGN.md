@@ -122,7 +122,7 @@ Lấy từ Junctura Console (`junctura-dxos`, `console/src/index.css` và `docs/
 
 ## 6. Bố cục
 
-- **Landing** (trước đăng nhập): tên và vai trò của app, ba giá trị chính theo người dùng của app đó, nút "Đăng nhập với Junctura", liên kết tới tài liệu và mã nguồn. Cho biết app kết nối với Junctura ra sao. Không giới thiệu dài dòng.
+- **Landing** (trước đăng nhập): tên và vai trò của app, ba giá trị chính theo người dùng của app đó, nút "Đăng nhập với Junctura", liên kết tới tài liệu và mã nguồn. Cho biết app kết nối với Junctura ra sao. Cấu trúc theo trang giới thiệu của console Tầng 1: hero có hình minh hoạ giả lập (không dữ liệu thật), lợi ích, cách hoạt động, dành cho ai, bảo mật, hỏi đáp, kêu gọi, footer. Nút "Đăng nhập" dẫn tới thẻ đăng nhập (`SignInPage`) rồi mới chuyển sang trang đăng nhập Junctura.
 - **Đăng nhập**: chuyển sang Junctura (OpenID Connect, PKCE); quay về đúng trang đang mở.
 - **Không gian làm việc**: đầu trang (logo app, chọn cơ sở nếu có, tìm kiếm toàn cục, cỡ chữ, sáng/tối, tài khoản) + thanh điều hướng (thanh bên trên máy tính, thanh dưới trên điện thoại ở MyHealth) + vùng nội dung. Mỗi tab có tiêu đề, thao tác chính và bộ lọc ở vị trí cố định.
 - **Mọi màn hình có đủ bốn trạng thái**: đang tải (khung chờ, không xoay vô tận), rỗng (nói việc tiếp theo nên làm), lỗi (nguyên nhân + cách thử lại + không lộ chi tiết kỹ thuật), không đủ quyền (nói ai cấp quyền).
@@ -159,8 +159,8 @@ Chúng ta tự kiểm tra và ghi kết quả; đây **không phải** chứng n
 
 | Thành phần | Mô tả |
 | --- | --- |
-| `AppShell` | Thanh bên có nhóm điều hướng và chọn trạm, thanh trên có tìm nhanh (`/`) và thông báo, menu tài khoản (cỡ chữ, sáng/tối), thanh dưới trên điện thoại |
-| `LandingPage` | Khung landing theo mẫu mục 6 |
+| `AppShell` | Thanh bên nổi (thẻ bo góc) có nhóm điều hướng và chọn trạm, thanh trên có breadcrumb, tìm nhanh (`/`), thông báo và nút sáng/tối, menu tài khoản (cỡ chữ, đăng xuất), thanh dưới trên điện thoại |
+| `LandingPage`, `SignInPage`, `PreviewFrame`, `PublicControls` | Trang giới thiệu đầy đủ như console Tầng 1 (thanh trên dính, hero kèm hình app, lợi ích, cách hoạt động, dành cho ai, bảo mật, hỏi đáp, kêu gọi, footer) và thẻ đăng nhập giữa trang |
 | `PatientBanner` | Thanh định danh (mục 4.1) |
 | `AllergyStatus` | Bốn trạng thái dị ứng (mục 4.2) |
 | `AlertBanner`, `InlineNotice` | Bốn mức cảnh báo (mục 4.3) |

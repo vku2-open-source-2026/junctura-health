@@ -2,15 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 import { cn } from "../lib/cn";
 
-/** Wordmark with a simple junction glyph. Decorative glyph; the text names the product. */
-export function JuncturaMark({ product, className }: { product?: string; className?: string }) {
+/** The Junctura tile (same mark as Junctura Console) with the product name under the wordmark. The tile is decorative; the text names the product. */
+export function JuncturaMark({ product, size = 32, showText = true, className }: { product?: string; size?: number; showText?: boolean; className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 font-semibold text-ink", className)}>
-      <svg aria-hidden viewBox="0 0 24 24" className="size-6 text-brand" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none" />
-        <path d="M12 9V3M9.4 13.5 4 17M14.6 13.5 20 17" />
+    <span className={cn("inline-flex select-none items-center gap-3", className)}>
+      <svg aria-hidden width={size} height={size} viewBox="0 0 48 48" fill="none" className="shrink-0">
+        <rect width="48" height="48" rx="10" fill="var(--jh-logo-tile)" />
+        <path d="M17 12H34V17H31V27C31 32.5228 26.5228 37 21 37H15V32H21C23.7614 32 26 29.7614 26 27V17H17V12Z" fill="var(--jh-logo-blue)" />
+        <circle cx="28.5" cy="22" r="3.2" fill="var(--jh-logo-green)" />
+        <path d="M17 12H24V17H17V12Z" fill="var(--jh-logo-sand)" />
       </svg>
-      <span>Junctura{product && <span className="font-normal text-muted"> · {product}</span>}</span>
+      {showText ? (
+        <span className="flex flex-col leading-tight">
+          <span className="text-base font-bold tracking-tight text-ink">Junctura</span>
+          {product && <span className="text-xs font-medium uppercase tracking-wider text-muted">{product}</span>}
+        </span>
+      ) : <span className="sr-only">Junctura{product ? ` ${product}` : ""}</span>}
     </span>
   );
 }
