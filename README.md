@@ -136,6 +136,8 @@ npm run check
 npm test
 ```
 
+Hoặc dùng bản phát hành: tải `junctura-health-0.1.0.tar.gz` và `junctura-health-0.1.0.tar.gz.sha256` từ [Releases](https://github.com/vku2-open-source-2026/junctura-health/releases), kiểm tra bằng `sha256sum -c junctura-health-0.1.0.tar.gz.sha256`, giải nén rồi chạy `npm run check` và `npm test` trong thư mục `junctura-health-0.1.0`.
+
 Có sẵn `../junctura-dxos` (hoặc đặt `JUNCTURA_DXOS_DIR`) thì `npm test` còn đối chiếu hợp đồng với bộ kiểm tra của chính Junctura.
 
 ### Dựng môi trường demo
@@ -173,7 +175,7 @@ npm run demo:setup
 | SDK Tầng 1 | [`@junctura/server-client`](https://www.npmjs.com/package/@junctura/server-client) |
 | Đóng gói, CI | npm, GitHub Actions |
 
-Thư viện bên thứ ba được khai trong `package.json` và `package-lock.json`, cài từ registry; không chép mã nguồn của chúng vào repo.
+Thư viện bên thứ ba được khai trong `package.json` và `package-lock.json`, cài từ registry; không chép mã nguồn của chúng vào repo. Phiên bản và giấy phép: [THIRD-PARTY.md](THIRD-PARTY.md).
 
 ## Tài liệu
 
@@ -187,6 +189,9 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 | [seed/README.md](seed/README.md) | Bộ sinh dữ liệu mẫu giả lập |
 | [demo/README.md](demo/README.md) | Môi trường demo, cổng, file sinh ra |
 | [CHANGELOG.md](CHANGELOG.md) | Lịch sử thay đổi |
+| [SECURITY.md](SECURITY.md) | Cách báo lỗ hổng bảo mật |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Quy tắc ứng xử |
+| [THIRD-PARTY.md](THIRD-PARTY.md) | Thư viện bên thứ ba và giấy phép |
 
 ## Cấu trúc thư mục
 
@@ -225,7 +230,7 @@ GitHub Actions chạy cả bốn lệnh ở mỗi Pull Request.
 
 ## Đóng góp
 
-Mọi đóng góp đều được hoan nghênh. Báo lỗi và đề xuất tại [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues); trước khi gửi Pull Request, đọc [CONTRIBUTING.md](CONTRIBUTING.md). Commit theo chuẩn Conventional Commits và không bao giờ commit tệp `.env` hay khóa bí mật. Lịch sử thay đổi: [CHANGELOG.md](CHANGELOG.md).
+Mọi đóng góp đều được hoan nghênh. Báo lỗi và đề xuất tại [Issues](https://github.com/vku2-open-source-2026/junctura-health/issues); lỗ hổng bảo mật báo theo [SECURITY.md](SECURITY.md). Trước khi gửi Pull Request, đọc [CONTRIBUTING.md](CONTRIBUTING.md) và [Quy tắc ứng xử](CODE_OF_CONDUCT.md). Commit theo chuẩn Conventional Commits và không bao giờ commit tệp `.env` hay khóa bí mật. Lịch sử thay đổi: [CHANGELOG.md](CHANGELOG.md).
 
 ## Giấy phép
 
@@ -235,4 +240,4 @@ Junctura Health là phần mềm tự do, phát hành theo [Apache License 2.0](
 - Mỗi tệp mã nguồn đều ghi giấy phép bằng tiêu đề [SPDX](https://spdx.dev/) (`SPDX-License-Identifier: Apache-2.0`); các tệp không chứa được chú thích (JSON, dữ liệu) được khai báo trong [REUSE.toml](REUSE.toml). Dự án tuân thủ chuẩn [REUSE 3.3](https://reuse.software/), kiểm tra bằng `reuse lint`.
 <!-- REUSE-IgnoreEnd -->
 - Toàn văn giấy phép: [LICENSE](LICENSE) · thông báo bản quyền: [NOTICE](NOTICE).
-- Thành phần bên thứ ba giữ giấy phép riêng và đều là giấy phép nguồn mở; chúng được khai trong `package.json`, cài từ registry, không chép hay sửa mã nguồn.
+- Thành phần bên thứ ba giữ giấy phép riêng và đều là giấy phép nguồn mở; chúng được khai trong `package.json`, cài từ registry, không chép hay sửa mã nguồn. Danh sách, phiên bản và giấy phép tại [THIRD-PARTY.md](THIRD-PARTY.md).

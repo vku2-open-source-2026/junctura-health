@@ -9,6 +9,8 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ## Unreleased
 
+## 0.1.0 - 2026-11-12
+
 ### Changed
 
 - **Capability contracts 1.1.0** (`@junctura/health-contracts`): `allergy-list` and `pre-visit-summary` now return `allergyState` (`recorded`, `none-known`, `not-recorded`) next to `allergies`, so a provider can say "not recorded" instead of an empty list that a caller might read as "no allergy". The examples, the seed projections and the tests follow. Providers and callers move to 1.1.0 together (no app consumes 1.0.0 yet).

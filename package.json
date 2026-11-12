@@ -1,6 +1,6 @@
 {
   "name": "junctura-health",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Junctura Health: connected-care demo on Junctura DX-OS (compose bundle, shared capability contracts, synthetic patient data).",
   "license": "Apache-2.0",
