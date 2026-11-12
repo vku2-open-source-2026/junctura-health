@@ -34,8 +34,8 @@ jobs:
           version="${GITHUB_REF_NAME#v}"
           package="$(node -p "require('./package.json').version")"
           if [ "$version" != "$package" ]; then echo "Tag $GITHUB_REF_NAME does not match package.json version $package"; exit 1; fi
-          awk -v v="$version" 'index($0, "## " v) == 1 { found = 1; next } /^## / { found = 0 } found' CHANGELOG.md > release-notes.md
-          if [ ! -s release-notes.md ]; then echo "CHANGELOG.md has no '## $version' section"; exit 1; fi
+          awk -v v="$version" 'index($0, "## " v) == 1 { found = 1; next } /^## / { found = 0 } found' CHANGELOG.md > "$RUNNER_TEMP/release-notes.md"
+          if [ ! -s "$RUNNER_TEMP/release-notes.md" ]; then echo "CHANGELOG.md has no '## $version' section"; exit 1; fi
       - name: Build from source (proves the package builds from a clean checkout)
         run: |
           npm run check
@@ -46,13 +46,13 @@ jobs:
         run: |
           version="${GITHUB_REF_NAME#v}"
           name="junctura-health-$version"
-          git archive --format=tar.gz --prefix="$name/" --output="$name.tar.gz" "$GITHUB_SHA"
-          sha256sum "$name.tar.gz" > "$name.tar.gz.sha256"
+          git archive --format=tar.gz --prefix="$name/" --output="$RUNNER_TEMP/$name.tar.gz" "$GITHUB_SHA"
+          (cd "$RUNNER_TEMP" && sha256sum "$name.tar.gz" > "$name.tar.gz.sha256")
       - name: Publish the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           version="${GITHUB_REF_NAME#v}"
           name="junctura-health-$version"
-          gh release create "$GITHUB_REF_NAME" "$name.tar.gz" "$name.tar.gz.sha256" \
-            --title "Junctura Health $version" --notes-file release-notes.md --verify-tag
+          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/$name.tar.gz" "$RUNNER_TEMP/$name.tar.gz.sha256" \
+            --title "Junctura Health $version" --notes-file "$RUNNER_TEMP/release-notes.md" --verify-tag
