@@ -51,7 +51,7 @@ test("application env files round-trip and reject injected lines", () => {
   assert.equal(env.PROVIDER_HOST, "clinic.provider.internal");
   assert.throws(() => renderAppEnv(APPS[0], { baseUrl: "x", tenant: "t", appId: "a", clientSecret: "s\nEVIL=1" }), TypeError);
   assert.deepEqual(parseEnv("# c\nA=1\n B = \"two words\" \nbad line\n#X=9\r\nC='3'"), { A: "1", B: "two words", C: "3" });
-  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", domain: null, help: false });
+  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", domain: null, isolated: false, help: false });
   assert.equal(parseArgs(["--domain", "junctura.studio"]).domain, "junctura.studio");
   for (const bad of ["", "localhost", "https://junctura.studio", "junctura.studio/", "Junctura.Studio", "-a.studio", "a..studio"]) {
     assert.throws(() => parseArgs(["--domain", bad]), /Invalid --domain/, bad);

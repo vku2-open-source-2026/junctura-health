@@ -4,7 +4,7 @@
 //   npm run demo:seed [-- --tenant production] [--dry-run]
 // Every write goes through the real v1/v2 API of the owning application, using
 // that application's own credentials from .junctura/demo/<app>.env (written by
-// demo:setup). Records are deduplicated by their stable `ma` field, documents
+// demo:setup; with --isolated from .junctura/demo/<tenant>/<app>.env). Records are deduplicated by their stable `ma` field, documents
 // are PUT with a stable UUID and identical bytes, workflow starts carry a
 // stable idempotency key, so reruns never duplicate anything. No secret or
 // token is ever printed; no patient data is printed either, only counts.
@@ -14,30 +14,35 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { loadData, withSubjects } from "../seed/generate.mjs";
-import { parseEnv } from "./plan.mjs";
+import { namesFor, parseEnv } from "./plan.mjs";
 import { DEFAULT_TENANT, SEED_APPS, dryRunPlan, plannedDocuments, plannedRecords, plannedWorkflowItems } from "./seed-plan.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = join(ROOT, ".junctura", "demo");
 const TENANT_PATTERN = /^[a-z][a-z0-9-]{0,62}$/;
 const REQUIRED_ENV_KEYS = ["JUNCTURA_URL", "JUNCTURA_TENANT", "JUNCTURA_APP_CLIENT_ID", "JUNCTURA_APP_CLIENT_SECRET", "JUNCTURA_ISSUER"];
-const USAGE = `Cách dùng: npm run demo:seed [-- --tenant production] [--dry-run]
+const USAGE = `Cách dùng: npm run demo:seed [-- --tenant production] [--isolated] [--dry-run]
 Nạp bản ghi, tệp và hồ sơ quy trình y tế mẫu qua API thật của từng ứng dụng
 (junctura-clinic, junctura-hospital, junctura-insurance), dùng credential riêng
 của từng app trong .junctura/demo/<app>.env do "npm run demo:setup" tạo.
+Với --isolated (bắt buộc kèm --tenant), credential được đọc trong thư mục riêng
+của tenant: .junctura/demo/<tenant>/<app>.env.
 Chạy lại không tạo trùng. Không đụng app pharmacy (đã có dữ liệu riêng).
-  --dry-run   chỉ in kế hoạch số lượng, không gọi mạng, không cần file env
-  --tenant    tenant đích (mặc định production), phải khớp JUNCTURA_TENANT trong file env`;
+  --dry-run     chỉ in kế hoạch số lượng, không gọi mạng, không cần file env
+  --tenant      tenant đích (mặc định production), phải khớp JUNCTURA_TENANT trong file env
+  --isolated    đọc file env trong .junctura/demo/<tenant>/ thay vì thư mục dùng chung`;
 
 export function parseArgs(argv) {
-  const options = { tenant: DEFAULT_TENANT, dryRun: false, help: false };
+  const options = { tenant: DEFAULT_TENANT, dryRun: false, isolated: false, help: false };
+  let tenantGiven = false;
   for (let index = 0; index < argv.length; index++) {
     const arg = argv[index];
-    if (arg === "--tenant") options.tenant = argv[++index];
+    if (arg === "--tenant") { options.tenant = argv[++index]; tenantGiven = true; }
     else if (arg === "--dry-run") options.dryRun = true;
+    else if (arg === "--isolated") options.isolated = true;
     else if (arg === "--help" || arg === "-h") options.help = true;
     else throw new Error(`Unknown argument ${arg}`);
   }
+  if (options.isolated && !tenantGiven) throw new Error("--isolated bắt buộc kèm --tenant <t> (vd --tenant demo)");
   if (!TENANT_PATTERN.test(options.tenant ?? "")) throw new Error("Invalid --tenant");
   return options;
 }
@@ -248,11 +253,12 @@ function printDryRun(datasets, tenant) {
 async function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   if (options.help) { console.log(USAGE); return; }
+  const names = namesFor(options);
   const datasets = { clinic: loadData("clinic.json"), hospital: loadData("hospital.json"), insurance: loadData("insurance.json") };
   if (options.dryRun) { printDryRun(datasets, options.tenant); return; }
 
-  const configs = readAppEnvs(OUT, options.tenant);
-  const mapping = readSubjects(OUT);
+  const configs = readAppEnvs(names.outDir, options.tenant);
+  const mapping = readSubjects(names.outDir);
   if (mapping) {
     console.log("• Dùng ánh xạ subject thật từ subjects.json");
     for (const [name, dataset] of Object.entries(datasets)) datasets[name] = withSubjects(dataset, mapping);

@@ -3,9 +3,16 @@
 // What the demo environment consists of, derived from the shared contracts and the
 // synthetic accounts. Pure data and functions (no network, no files) so the plan is
 // testable; demo/setup.mjs applies it to a running Junctura stack.
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { CONTRACTS } from "../contracts/index.mjs";
 
+// Repository root, so `namesFor` can name the demo output directory. Pure path
+// arithmetic, no file access.
+export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
 export const PROVIDER_PORT = 8443;
+const TENANT = /^[a-z][a-z0-9-]{0,62}$/;
 export const GRANT_DAYS = 90;
 const DOMAIN = /^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
 const LOGOUT_URIS = "post.logout.redirect.uris";
@@ -45,9 +52,43 @@ export const PORTAL_APP = Object.freeze({ ...PORTAL, clientId: "health-portal-ba
 /**
  * Provider origin the portal backend is enrolled with. Junctura only accepts an HTTPS origin
  * with a dotted host, and the portal provides no capability, so it gets an internal name like
- * the provider apps, whatever the domain.
+ * the provider apps, whatever the domain. With a tenant argument (an isolated run) the tenant
+ * goes into the host, e.g. https://health-portal-demo.provider.internal:8443.
  */
-export const portalAppOrigin = () => `https://${PORTAL.key}-portal.provider.internal:${PROVIDER_PORT}`;
+export const portalAppOrigin = tenant => `https://${PORTAL.key}-portal${tenant ? `-${tenant}` : ""}.provider.internal:${PROVIDER_PORT}`;
+
+/**
+ * Names and paths of one demo run. Default (no --isolated): the shared directory,
+ * the plain usernames and the plain client ids, exactly as before. With --isolated
+ * and a tenant, everything the second tenant writes lives under
+ * `.junctura/demo/<tenant>/`, human usernames are prefixed with the tenant and the
+ * backend clients get a `-<tenant>` suffix, so nothing of the first tenant is
+ * touched. `root` is only a parameter for the tests.
+ */
+export function namesFor({ tenant, isolated = false, root = ROOT } = {}) {
+  if (isolated && !tenant) throw new Error("--isolated bắt buộc kèm --tenant <t> (vd --tenant demo)");
+  if (tenant !== undefined && !TENANT.test(tenant)) throw new Error("Invalid --tenant");
+  return {
+    tenant, isolated,
+    outDir: isolated ? join(root, ".junctura", "demo", tenant) : join(root, ".junctura", "demo"),
+    username: account => isolated ? `${tenant}.${account.username}` : account.username,
+    clientId: app => isolated ? `${app.clientId}-${tenant}` : app.clientId,
+  };
+}
+
+/**
+ * Application view of one run: without --isolated the application stays untouched;
+ * with --isolated the backend client and the provider host carry the tenant
+ * (`health-clinic-demo`, `clinic-demo.provider.internal`). The provider origin
+ * identifies one running application instance, so the same host in two tenants
+ * would be ambiguous; the public PKCE web client stays shared between tenants.
+ */
+export function scopedApp(app, names) {
+  if (!names.isolated) return app;
+  return { ...app, clientId: `${app.clientId}-${names.tenant}`,
+    providerHost: `${app.key}-${names.tenant}.provider.internal`,
+    origin: `https://${app.key}-${names.tenant}.provider.internal:${PROVIDER_PORT}` };
+}
 
 /** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
 export const publicOrigin = (key, domain) => `https://${key}.${domain}`;
@@ -81,7 +122,7 @@ export function planGrants(contracts = CONTRACTS) {
 }
 
 /** Exact origins Core must allow as internal providers (C4A_INTERNAL_PROVIDER_ORIGINS). */
-export const internalOrigins = (contracts = CONTRACTS) => providers(contracts).map(app => app.origin);
+export const internalOrigins = (contracts = CONTRACTS, apps = providers(contracts)) => apps.map(app => app.origin);
 
 /** Public PKCE Keycloak client of an application's browser UI, for the given origins. */
 export const webClient = (app, protocolMappers, origins = appWebOrigins(app)) =>
@@ -131,11 +172,14 @@ export function splitName(displayName) {
   return parts.length === 1 ? { firstName: parts[0], lastName: parts[0] } : { firstName: parts.at(-1), lastName: parts.slice(0, -1).join(" ") };
 }
 
-/** Keycloak user representation for one synthetic account; `id` asks for the seeded subject. */
-export function userRepresentation(account, tenant, password) {
+/** Keycloak user representation for one synthetic account. By default it asks for the
+ * seeded subject as the Keycloak user id; an isolated run lets Keycloak issue a fresh
+ * id for the tenant-prefixed username (`fixedId: false`) so realm-wide ids never clash. */
+export function userRepresentation(account, tenant, password, { fixedId = true, username = account.username } = {}) {
   return {
-    id: account.subject, username: account.username, enabled: true, emailVerified: true,
-    email: `${account.username}@junctura.invalid`, ...splitName(account.displayName),
+    ...(fixedId ? { id: account.subject } : {}),
+    username, enabled: true, emailVerified: true,
+    email: `${username}@junctura.invalid`, ...splitName(account.displayName),
     attributes: { tenant_id: [tenant] },
     credentials: [{ type: "password", value: password, temporary: false }],
   };
@@ -175,15 +219,18 @@ export function parseEnv(text) {
 }
 
 export function parseArgs(argv) {
-  const options = { tenant: "tenant-a", domain: null, help: false };
+  const options = { tenant: "tenant-a", domain: null, isolated: false, help: false };
+  let tenantGiven = false;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
-    if (arg === "--tenant") options.tenant = argv[++i];
+    if (arg === "--tenant") { options.tenant = argv[++i]; tenantGiven = true; }
     else if (arg === "--domain") options.domain = argv[++i];
+    else if (arg === "--isolated") options.isolated = true;
     else if (arg === "--help" || arg === "-h") options.help = true;
     else throw new Error(`Unknown argument ${arg}`);
   }
-  if (!/^[a-z][a-z0-9-]{0,62}$/.test(options.tenant ?? "")) throw new Error("Invalid --tenant");
+  if (options.isolated && !tenantGiven) throw new Error("--isolated bắt buộc kèm --tenant <t> (vd --tenant demo)");
+  if (!TENANT.test(options.tenant ?? "")) throw new Error("Invalid --tenant");
   if (options.domain !== null && !DOMAIN.test(options.domain ?? "")) throw new Error("Invalid --domain (expected a host name such as junctura.studio)");
   return options;
 }

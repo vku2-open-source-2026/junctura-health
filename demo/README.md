@@ -102,6 +102,30 @@ npm run provider:pki -- clinic hospital
 docker compose -f compose.yaml -f compose.providers.yaml up -d core
 ```
 
+## Tenant thứ hai (không đụng tenant chính)
+
+Server production đang chạy tenant `production` (`npm run demo:setup -- --tenant production` + `npm run demo:seed`). Để nạp cùng kịch bản y tế vào tenant thứ hai cho khách xem Console, dùng `--isolated` (bắt buộc kèm `--tenant`):
+
+```sh
+npm run demo:setup -- --tenant demo --isolated --domain junctura.studio
+npm run demo:seed -- --tenant demo --isolated
+```
+
+Với `--isolated`, mọi thứ của tenant thứ hai nằm trong không gian tên riêng nên tenant chính không bị đụng tới:
+
+| Thứ | Mặc định (tenant chính) | `--isolated --tenant demo` |
+| --- | --- | --- |
+| Thư mục thông tin | `.junctura/demo/` | `.junctura/demo/demo/` (mode 0700) |
+| Tài khoản người | `bacsi.benhvien` | `demo.bacsi.benhvien` (email tương ứng) |
+| Mã Keycloak user | giữ subject của dữ liệu mẫu | Keycloak tự cấp; `subjects.json` trong thư mục tenant ghi ánh xạ subject mẫu → subject thật để `withSubjects()` dùng khi nạp dữ liệu |
+| Client backend | `health-clinic`, `health-portal-backend` | `health-clinic-demo`, `health-portal-backend-demo` |
+| Host cung cấp năng lực | `clinic.provider.internal` | `clinic-demo.provider.internal` |
+
+- Client web PKCE (`health-<tên>-web`, `health-portal-web`) **dùng chung giữa các tenant**: tenant lấy từ user đăng nhập nên client không cần nhân bản; chạy với `--domain` chỉ hợp nhất (thêm) origin, không xoá origin nào.
+- Host cung cấp năng lực mang tên tenant vì origin định danh một phiên bản ứng dụng đang chạy: cùng một host trong hai tenant sẽ không phân biệt được app nào đang gọi.
+- Principal quản trị/nhân viên được ghi đúng theo tenant đó.
+- Rào chắn: nếu thư mục đích đã có `<app>.env` của tenant khác, lệnh dừng ngay từ đầu (trước mọi thao tác ghi lên Keycloak/DB) và gợi ý `--isolated`; chỉ đọc khoá `JUNCTURA_TENANT` trong file.
+
 ## Lưu ý
 
 - Chỉ dùng cho môi trường local/demo. Tài khoản và mật khẩu demo không được dùng cho hệ thống thật.

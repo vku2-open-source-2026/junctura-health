@@ -9,6 +9,10 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ## Unreleased
 
+### Added
+
+- **Second demo tenant without touching the first** (`demo:setup`, `demo:seed`): `--isolated --tenant demo` puts the second tenant's credentials under `.junctura/demo/<tenant>/` (mode 0700), prefixes human usernames (`demo.bacsi.benhvien`), lets Keycloak issue fresh user ids (recorded as the seeded-subject mapping in that tenant's `subjects.json`, applied by the seed through `withSubjects()`), and gives backend clients and provider hosts a tenant suffix (`health-clinic-demo`, `clinic-demo.provider.internal`). The public PKCE web clients stay shared between tenants. Without the flag, names, paths and behaviour are unchanged; a new guard stops `demo:setup` up front (before any Keycloak or database write) when the target directory already holds `<app>.env` files of another tenant, reading only `JUNCTURA_TENANT`.
+
 ### Changed
 
 - **Cổng Junctura Health is the GUI of Layer 2, the cross-facility health space coordinated by the health department**, not a patient portal. Public pages explain the three layers, the shared contracts, workflows and facilities; the signed-in workspace follows the H-P-D-I spaces of the OLP brief: H (today's work, notices from the health department, cross-facility directory), P (cross-facility cases with a coordination form, steps, notes and scanned attachments on the Layer 1 workflow API) and D (live operations for the health department: waiting cases by facility, processing times, data exchange from the Layer 1 audit chain, a data map of each facility without contents, and data and capability sharing by contract); I comes later. A small backend (`portal/server/`, enrolled as the Junctura application `junctura-health-portal`) keeps notices, notes and attachments in Layer 1 records and objects. Patient consents and the access log move to the MyHealth app of Layer 3.
