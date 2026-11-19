@@ -202,7 +202,7 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 contracts/   hợp đồng năng lực (npm: @junctura/health-contracts)
 workflows/   quy trình y tế BPMN (chuyển tuyến, xác minh đơn thuốc, xác minh chi phí)
 ui/          thư viện giao diện (npm: @junctura/health-ui)
-portal/      cổng người bệnh (GUI Tầng 2 chạy trên lõi, xem portal/README.md)
+portal/      GUI công khai Tầng 2 (trang chỉ đọc, xem portal/README.md)
 seed/        bộ sinh dữ liệu mẫu giả lập, xác định theo seed
 demo/        dựng môi trường demo trên Junctura DX-OS
 docs/        thiết kế, UX, tính năng từng ứng dụng, hướng dẫn dựng app mới

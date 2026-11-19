@@ -27,11 +27,11 @@ export const appByName = name => {
   return app;
 };
 
-// The patient portal of Layer 2: a public browser app of this repository that signs
-// people in with the same realm and lets them manage their own consents and access
-// log through /v1/me. No application enrollment and no backend client are needed.
+// The public portal of Layer 2: a read-only site of this repository that introduces the
+// shared capability space. No sign-in, no Junctura client and no API calls at runtime;
+// patients manage their consents in the MyHealth app. `webPort` is for the docs only.
 export const PORTAL = Object.freeze({
-  name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
+  name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webPort: 5180,
 });
 
 /** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
@@ -42,9 +42,6 @@ const localOrigins = port => [`http://localhost:${port}`, `http://127.0.0.1:${po
 /** Browser origins of an application's web client: its local port, plus its subdomain when a domain is given. */
 export const appWebOrigins = (app, domain) => [...localOrigins(app.webPort), ...(domain ? [publicOrigin(app.key, domain)] : [])];
 
-/** Browser origins of the portal: its local port, plus health.<domain> when a domain is given. */
-export const portalOrigins = domain => appWebOrigins(PORTAL, domain);
-
 function publicWebClient({ clientId, name }, protocolMappers, origins) {
   const bases = origins.map(origin => origin.replace(/\/+$/, ""));
   return {
@@ -54,10 +51,6 @@ function publicWebClient({ clientId, name }, protocolMappers, origins) {
     protocolMappers,
   };
 }
-
-/** Public PKCE Keycloak client of the portal, for the given browser origins. */
-export const portalClient = (protocolMappers, origins = portalOrigins()) =>
-  publicWebClient({ clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)` }, protocolMappers, origins);
 
 /** Applications that publish at least one capability, in a stable order. */
 export const providers = (contracts = CONTRACTS) => APPS.filter(app => contracts.some(c => c.provider === app.name));

@@ -5,7 +5,6 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
-const JUNCTURA_URL = process.env.JUNCTURA_URL ?? "http://127.0.0.1:8080";
 
 // The UI library sources live outside this package and pull React through
 // ../ui/node_modules. To guarantee exactly one React (tests and bundle), pin every
@@ -27,19 +26,19 @@ export default defineConfig({
       { find: "@junctura/health-ui", replacement: fileURLToPath(new URL("../ui/src/index.ts", import.meta.url)) },
       { find: "@junctura/health-contracts", replacement: fileURLToPath(new URL("../contracts/index.mjs", import.meta.url)) },
       { find: "@junctura/health-demo/plan", replacement: fileURLToPath(new URL("../demo/plan.mjs", import.meta.url)) },
+      { find: "@junctura/health-workflows", replacement: fileURLToPath(new URL("../workflows", import.meta.url)) },
     ],
     // Resolution fallback for bare imports from the transformed library tree: force
     // react/react-dom to this package's root node_modules (single copy, see alias above).
     dedupe: ["react", "react-dom", "lucide-react"],
   },
   server: {
+    // Sources used from outside this package; never the whole repository (it holds .junctura/ secrets).
+    fs: { allow: [".", "../ui", "../contracts", "../demo/plan.mjs", "../workflows"].map(path => fileURLToPath(new URL(path, import.meta.url))) },
     port: 5180,
-    proxy: {
-      "/v1": JUNCTURA_URL,
-      "/identity": JUNCTURA_URL,
-    },
   },
-  build: { sourcemap: true },
+  // Never inline assets as data: URIs: the served CSP allows fonts and scripts from 'self' only.
+  build: { sourcemap: true, assetsInlineLimit: 0 },
   test: {
     environment: "jsdom",
     setupFiles: ["tests/setup.ts"],

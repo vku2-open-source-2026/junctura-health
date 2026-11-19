@@ -19,3 +19,6 @@ if (typeof HTMLDialogElement !== "undefined") {
 
 // axe probes canvas for icon-ligature checks; jsdom has none and logs noise.
 if (typeof HTMLCanvasElement !== "undefined") HTMLCanvasElement.prototype.getContext = (() => null) as never;
+
+// jsdom has no scrolling; the app scrolls to the top on route changes.
+window.scrollTo = () => {};

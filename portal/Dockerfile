@@ -13,6 +13,7 @@ COPY ui/src ui/src
 COPY contracts/capabilities contracts/capabilities
 COPY contracts/index.mjs contracts/index.d.ts contracts/package.json contracts/
 COPY demo/plan.mjs demo/
+COPY workflows workflows/
 COPY portal/package.json portal/package-lock.json portal/
 COPY portal/ portal/
 RUN npm --prefix ui ci --ignore-scripts \

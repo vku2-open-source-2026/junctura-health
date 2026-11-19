@@ -1,32 +1,9 @@
 // SPDX-FileCopyrightText: 2026 Junctura Contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Badge, Button, JuncturaMark, PreviewFrame, PublicControls } from "@junctura/health-ui";
+import { Badge, JuncturaMark, PublicControls } from "@junctura/health-ui";
 import { appName, appNames, catalog } from "../catalog";
-import { navigateHash } from "../router";
 import { purposeLabel, strings } from "../strings";
-
-/** Mock picture of the consent screen for the hero; clearly labelled, no real data. */
-function HeroPicture() {
-  const sample = [
-    { name: "Bệnh viện Đà Nẵng", capability: "Danh sách dị ứng", state: strings.consents.stateActive },
-    { name: "Nhà thuốc", capability: "Xác minh đơn thuốc", state: strings.consents.stateRevoked },
-  ];
-  return (
-    <PreviewFrame label={`Minh hoạ màn hình đồng thuận của ${strings.app.name}`} title={`${strings.app.name} · ${strings.nav.consents}`}>
-      <div className="space-y-2">
-        {sample.map(row => (
-          <div key={row.name} className="flex items-center justify-between gap-3 rounded-lg border border-line px-3 py-2">
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.name}</p>
-              <p className="truncate text-xs text-muted">{row.capability}</p>
-            </div>
-            <Badge tone={row.state === strings.consents.stateActive ? "ok" : "neutral"}>{row.state}</Badge>
-          </div>
-        ))}
-      </div>
-    </PreviewFrame>
-  );
-}
+import { SPACE_ROUTES } from "../space";
 
 function SectionHeading({ id, title, lead }: { id: string; title: string; lead?: string }) {
   return (
@@ -37,32 +14,30 @@ function SectionHeading({ id, title, lead }: { id: string; title: string; lead?:
   );
 }
 
-/** Public landing page of the portal: what Layer 2 is, the shared capability catalog, who takes part, and sign-in. */
-export function PublicHome({ onSignIn }: { onSignIn: () => void }) {
+/** Public landing page of the portal: what Layer 2 is, the shared capability catalog and who takes part. */
+export function PublicHome() {
   return (
     <div className="min-h-dvh bg-app text-ink">
       <header className="sticky top-0 z-30 border-b border-line bg-surface/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3">
           <JuncturaMark product={strings.app.shortName} size={30} />
-          <div className="ml-auto flex items-center gap-2">
-            <div className="hidden sm:block"><PublicControls /></div>
-            <Button onClick={onSignIn}>{strings.nav.signIn}</Button>
+          <nav aria-label={strings.app.shortName} className="order-last flex w-full gap-1 sm:order-none sm:ml-auto sm:w-auto">
+            {SPACE_ROUTES.map(route => (
+              <a key={route.path} href={`#${route.path}`} className="rounded-md px-3 py-1.5 text-sm font-medium text-ink-2 hover:text-ink">{route.label}</a>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-2 sm:ml-0">
+            <PublicControls />
           </div>
         </div>
       </header>
 
       <main>
-        <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 lg:grid-cols-[5fr_6fr] lg:py-20">
-          <div>
-            <Badge tone="ok" className="mb-5">{strings.app.shortName}</Badge>
-            <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">{strings.app.tagline}</h1>
-            <p className="mt-6 max-w-xl text-lg text-ink-2">{strings.app.lead}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button size="lg" onClick={onSignIn}>{strings.nav.signIn}</Button>
-            </div>
-            {strings.app.note && <p className="mt-5 text-sm text-muted">{strings.app.note}</p>}
-          </div>
-          <div className="min-w-0"><HeroPicture /></div>
+        <section className="mx-auto max-w-6xl px-5 py-14 lg:py-20">
+          <Badge tone="ok" className="mb-5">{strings.app.shortName}</Badge>
+          <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">{strings.app.tagline}</h1>
+          <p className="mt-6 max-w-xl text-lg text-ink-2">{strings.app.lead}</p>
+          {strings.app.note && <p className="mt-5 text-sm text-muted">{strings.app.note}</p>}
         </section>
 
         <section aria-labelledby="portal-benefits-h" className="border-t border-line">
@@ -101,7 +76,7 @@ export function PublicHome({ onSignIn }: { onSignIn: () => void }) {
               {catalog.map(entry => (
                 <li key={entry.slug} className="rounded-lg border border-line bg-surface p-5 shadow-card">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h3 className="text-lg font-semibold">{entry.title}</h3>
+                    <h3 className="text-lg font-semibold"><a href={`#/hop-dong/${entry.slug}`} className="hover:underline">{entry.title}</a></h3>
                     <Badge tone="brand">{strings.catalog.version} {entry.version}</Badge>
                   </div>
                   <p className="mt-2 text-sm text-ink-2">{entry.description}</p>
@@ -132,11 +107,11 @@ export function PublicHome({ onSignIn }: { onSignIn: () => void }) {
           </div>
         </section>
 
-        <section aria-labelledby="portal-trust-h" className="border-t border-line">
+        <section aria-labelledby="portal-subject-h" className="border-t border-line">
           <div className="mx-auto max-w-6xl px-5 py-16">
-            <SectionHeading id="portal-trust-h" title={strings.landing.trustTitle} />
-            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {strings.landing.trust.map(item => (
+            <SectionHeading id="portal-subject-h" title={strings.landing.subjectTitle} lead={strings.landing.subjectLead} />
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2">
+              {strings.landing.subject.map(item => (
                 <li key={item.title} className="rounded-lg border border-line bg-surface p-5 shadow-card">
                   <h3 className="text-base font-semibold">{item.title}</h3>
                   <p className="mt-1.5 text-sm text-ink-2">{item.text}</p>
@@ -159,23 +134,12 @@ export function PublicHome({ onSignIn }: { onSignIn: () => void }) {
             </div>
           </div>
         </section>
-
-        <section className="border-t border-line bg-[#172F3D] text-white dark:bg-surface dark:text-ink">
-          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-14 sm:flex-row sm:items-center">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{strings.landing.ctaTitle}</h2>
-              <p className="mt-2 max-w-xl text-slate-300 dark:text-ink-2">{strings.landing.ctaLead}</p>
-            </div>
-            <Button size="lg" onClick={onSignIn}>{strings.nav.signIn}</Button>
-          </div>
-        </section>
       </main>
 
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-6 text-sm text-muted">
           <span>© 2026 Junctura Contributors · Apache-2.0</span>
-          <button type="button" onClick={() => navigateHash("/dong-thuan")} className="hover:text-ink hover:underline">{strings.nav.consents}</button>
-          <button type="button" onClick={() => navigateHash("/truy-cap")} className="hover:text-ink hover:underline">{strings.nav.access}</button>
+          <span>{strings.app.name} · trang công khai, chỉ đọc</span>
         </div>
       </footer>
     </div>

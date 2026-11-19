@@ -1,5 +1,0 @@
-{
-  "juncturaUrl": "",
-  "issuer": "http://127.0.0.1:8080/identity/realms/junctura",
-  "clientId": "health-portal-web"
-}
