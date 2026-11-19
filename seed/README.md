@@ -23,6 +23,15 @@ Cùng seed (`junctura-health/v1`) luôn ra các file giống hệt nhau từng b
 
 Mỗi người bệnh có `subject` cố định. Tài khoản Keycloak được tạo với đúng `subject` đó, nên `context.dataSubject` khi gọi năng lực trỏ thẳng tới hồ sơ người bệnh. **Không lưu mật khẩu**: khi dựng hệ thống demo, mật khẩu lấy từ `.env`.
 
+## Nạp vào hệ thống demo
+
+```sh
+npm run demo:setup -- --tenant production
+npm run demo:seed
+```
+
+`demo:setup` đăng ký ứng dụng, công bố năng lực và cấp grant; `demo:seed` nạp bộ dữ liệu ở đây vào đúng app sở hữu (bản ghi `benh-nhan`, `chuyen-tuyen`, `don-thuoc`, `chi-phi-dieu-tri`, `yeu-cau-thanh-toan`, tài liệu và hồ sơ quy trình), chạy lại không tạo trùng. Xem chi tiết ở `demo/README.md`.
+
 ## Hai người bệnh trong kịch bản demo
 
 | Tài khoản | Người bệnh | Dùng trong cảnh |
