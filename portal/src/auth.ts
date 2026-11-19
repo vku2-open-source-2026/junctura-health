@@ -57,10 +57,10 @@ interface Pending {
   returnTo: string;
 }
 
-interface Endpoints {
-  authorization_endpoint: string;
-  token_endpoint: string;
-  end_session_endpoint?: string;
+export interface Endpoints {
+  authorization: string;
+  token: string;
+  endSession: string;
 }
 
 const base64url = (bytes: Uint8Array): string =>
@@ -76,15 +76,19 @@ const randomToken = (bytes = 32): string => base64url(crypto.getRandomValues(new
 
 const redirectUri = (): string => window.location.origin + window.location.pathname;
 
-async function discover(config: PortalConfig): Promise<Endpoints> {
-  const response = await fetch(`${config.issuer}/.well-known/openid-configuration`);
-  if (!response.ok) throw new Error("discovery_failed");
-  const value = (await response.json()) as Record<string, unknown>;
-  if (typeof value.authorization_endpoint !== "string" || typeof value.token_endpoint !== "string") throw new Error("discovery_failed");
+/**
+ * Keycloak endpoints of the Junctura realm, derived from the issuer (no discovery request).
+ * The browser goes to the public issuer to sign in and out (the login page keeps its cookies
+ * on that host), while the code is redeemed through the portal's own origin, where /identity
+ * is proxied: the strict CSP (connect-src 'self') holds and no CORS is involved.
+ */
+export function oidcEndpoints(config: PortalConfig, origin: string = window.location.origin): Endpoints {
+  const realmPath = new URL(config.issuer).pathname.replace(/\/+$/, "");
+  const base = (config.juncturaUrl || origin).replace(/\/+$/, "");
   return {
-    authorization_endpoint: value.authorization_endpoint,
-    token_endpoint: value.token_endpoint,
-    end_session_endpoint: typeof value.end_session_endpoint === "string" ? value.end_session_endpoint : undefined,
+    authorization: `${config.issuer}/protocol/openid-connect/auth`,
+    token: `${base}${realmPath}/protocol/openid-connect/token`,
+    endSession: `${config.issuer}/protocol/openid-connect/logout`,
   };
 }
 
@@ -98,12 +102,12 @@ const jwtName = (idToken: string): string | undefined => {
   }
 };
 
-/** Redirects to the Junctura sign-in page. Throws when the realm cannot be reached. */
+/** Redirects to the Junctura sign-in page. */
 export async function login(config: PortalConfig): Promise<void> {
-  const endpoints = await discover(config);
+  const endpoints = oidcEndpoints(config);
   const pending: Pending = { state: randomToken(16), verifier: randomToken(32), returnTo: readHash() };
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(pending));
-  const url = new URL(endpoints.authorization_endpoint);
+  const url = new URL(endpoints.authorization);
   url.searchParams.set("response_type", "code");
   url.searchParams.set("client_id", config.clientId);
   url.searchParams.set("redirect_uri", redirectUri());
@@ -128,11 +132,11 @@ export async function handleCallback(config: PortalConfig): Promise<string | nul
   let pending: Pending;
   try { pending = JSON.parse(raw ?? "") as Pending; } catch { throw new Error("state_mismatch"); }
   if (!pending || typeof pending.verifier !== "string" || pending.state !== state) throw new Error("state_mismatch");
-  const endpoints = await discover(config);
+  const endpoints = oidcEndpoints(config);
   const body = new URLSearchParams({
     grant_type: "authorization_code", code, redirect_uri: redirectUri(), client_id: config.clientId, code_verifier: pending.verifier,
   });
-  const response = await fetch(endpoints.token_endpoint, {
+  const response = await fetch(endpoints.token, {
     method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body,
   });
   if (!response.ok) throw new Error("token_exchange_failed");
@@ -153,9 +157,7 @@ export async function signOut(config: PortalConfig): Promise<void> {
   const idToken = auth.get()?.idToken;
   auth.clear("logout");
   try {
-    const endpoints = await discover(config);
-    if (!endpoints.end_session_endpoint) return;
-    const url = new URL(endpoints.end_session_endpoint);
+    const url = new URL(oidcEndpoints(config).endSession);
     if (idToken) url.searchParams.set("id_token_hint", idToken);
     url.searchParams.set("post_logout_redirect_uri", redirectUri());
     window.location.assign(url.toString());
