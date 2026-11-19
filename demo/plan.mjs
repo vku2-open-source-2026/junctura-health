@@ -34,6 +34,21 @@ export const PORTAL = Object.freeze({
   name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
 });
 
+/**
+ * Backend of the portal: a real Junctura application (not one of the five Layer 3 apps)
+ * that keeps notices, case notes and attachments in `/v2/data` and `/v2/objects`.
+ * Its own backend client `health-portal-backend`; the web client stays `health-portal-web`.
+ * It publishes no capability and receives no grant.
+ */
+export const PORTAL_APP = Object.freeze({ ...PORTAL, clientId: "health-portal-backend" });
+
+/**
+ * Provider origin the portal backend is enrolled with. Junctura only accepts an HTTPS origin
+ * with a dotted host, and the portal provides no capability, so it gets an internal name like
+ * the provider apps, whatever the domain.
+ */
+export const portalAppOrigin = () => `https://${PORTAL.key}-portal.provider.internal:${PROVIDER_PORT}`;
+
 /** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
 export const publicOrigin = (key, domain) => `https://${key}.${domain}`;
 
@@ -142,9 +157,8 @@ export function renderAppEnv(app, { baseUrl, tenant, appId, clientSecret }) {
     line("JUNCTURA_APP_CLIENT_SECRET", clientSecret),
     line("JUNCTURA_WEB_CLIENT_ID", app.webClientId),
     line("JUNCTURA_ISSUER", `${baseUrl}/identity/realms/junctura`),
-    line("WEB_PORT", app.webPort),
-    line("PROVIDER_HOST", app.providerHost),
-    line("PROVIDER_PORT", PROVIDER_PORT),
+    ...(app.webPort === undefined ? [] : [line("WEB_PORT", app.webPort)]),
+    ...(app.providerHost === undefined ? [] : [line("PROVIDER_HOST", app.providerHost), line("PROVIDER_PORT", PROVIDER_PORT)]),
     "",
   ].join("\n");
 }

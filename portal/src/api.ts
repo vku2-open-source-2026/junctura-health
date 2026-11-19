@@ -48,6 +48,13 @@ export async function getJson<T>(path: string): Promise<T> {
   return (await checked(await request(path))).json() as Promise<T>;
 }
 
+/** GET a binary resource (e.g. an attachment) as a Blob; throws ApiError when refused. */
+export async function getBlob(path: string): Promise<Blob> {
+  const response = await request(path);
+  await checked(response);
+  return response.blob();
+}
+
 /**
  * POST a JSON body to the Junctura API; throws ApiError when refused. A 204 has no
  * body and resolves to null; `Idempotency-Key` is sent when the caller provides one
@@ -64,4 +71,14 @@ export async function postJson<T>(path: string, body?: unknown, opts?: { idempot
   });
   await checked(response);
   return response.status === 204 ? null : (response.json() as Promise<T>);
+}
+
+/**
+ * POST raw bytes with explicit headers (e.g. Content-Type and X-File-Name for an upload);
+ * throws ApiError when refused and resolves to the parsed response body.
+ */
+export async function postBytes<T>(path: string, file: Blob, headers: Record<string, string> = {}): Promise<T> {
+  const response = await request(path, { method: "POST", headers, body: file });
+  await checked(response);
+  return response.json() as Promise<T>;
 }

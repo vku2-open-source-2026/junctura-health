@@ -10,7 +10,7 @@ Tính năng từng app nằm ở [`APPS.md`](APPS.md); phân tích người dùn
 ## 1. Ranh giới ba tầng
 
 - **Tầng 1 (`junctura-dxos`)** không có nghiệp vụ y tế: định danh, đồng thuận, năng lực, vé gọi, bản ghi, lưu trữ, workflow, nhật ký, Console quản trị.
-- **Tầng 2 (repo này — `junctura-health`)** là không gian năng lực y tế dùng chung: hợp đồng năng lực, quy trình y tế BPMN (`workflows/`), thư viện giao diện `@junctura/health-ui`, dữ liệu mẫu, môi trường demo và Cổng Junctura Health (phần công khai và Bàn điều phối liên thông cho nhân viên cơ sở và Sở Y tế). Tầng 2 không giữ bệnh án và không phục vụ người bệnh.
+- **Tầng 2 (repo này — `junctura-health`)** là không gian năng lực y tế dùng chung: hợp đồng năng lực, quy trình y tế BPMN (`workflows/`), thư viện giao diện `@junctura/health-ui`, dữ liệu mẫu, môi trường demo và Cổng Junctura Health (phần công khai và không gian làm việc H · Làm việc, P · Hồ sơ, D · Điều hành cho nhân viên cơ sở và Sở Y tế). Tầng 2 không giữ bệnh án và không phục vụ người bệnh.
 - **Tầng 3 (năm app Clinic, Hospital, MyHealth, Pharmacy, Insurance)** mới có người bệnh, đơn thuốc, chuyển tuyến. Mọi dữ liệu và màn hình y tế nằm ở đây. Các app không gọi nhau qua một trạm trung gian: mỗi app gọi thẳng Tầng 1 bằng định danh riêng; Tầng 1 kiểm consent, cấp vé dùng một lần và ghi audit cho mỗi lần gọi.
 - Giao diện y tế **không** được thêm vào Console. Console tự có thông tin khi các app đăng ký ứng dụng, năng lực và grant qua API của Junctura.
 

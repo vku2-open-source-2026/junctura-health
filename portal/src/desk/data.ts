@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { WORKFLOWS, type Workflow } from "../space/data";
+import type { Facility } from "./context";
 
 /** The three shared medical workflow keys the desk shows; other definitions stay hidden. */
 export const MEDICAL_KEYS: readonly string[] = [
@@ -14,6 +15,46 @@ export const isMedicalKey = (key: string): boolean => MEDICAL_KEYS.includes(key)
 
 /** The parsed BPMN steps of a medical workflow key, or undefined for other keys. */
 export const workflowFor = (key: string): Workflow | undefined => WORKFLOWS.find(workflow => workflow.id === key);
+
+// ---------------------------------------------------------------- urgency of the digital form
+
+/** Urgency levels of the digital form; Vietnamese labels live in strings.ts. */
+export type Urgency = "thuong" | "khan" | "cap-cuu";
+
+export const URGENCIES: readonly Urgency[] = ["thuong", "khan", "cap-cuu"];
+
+export const urgencyOf = (value: unknown): Urgency | null =>
+  URGENCIES.includes(value as Urgency) ? value as Urgency : null;
+
+/** The urgency recorded in a list item's input, when the engine returns the input at all. */
+export const inputUrgency = (item: { input?: { mucKhan?: unknown } }): Urgency | null => urgencyOf(item.input?.mucKhan);
+
+/** Which facility opens which shared workflow; the others open nothing. */
+export const OPENERS: Readonly<Record<string, Facility>> = {
+  junctura_chuyen_tuyen: "tram-y-te",
+  junctura_xac_minh_don_thuoc: "nha-thuoc",
+  junctura_xac_minh_chi_phi: "bao-hiem",
+};
+
+/** Short reference-code prefixes per workflow key, for the generated codes. */
+export const PREFIXES: Readonly<Record<string, string>> = {
+  junctura_chuyen_tuyen: "CT-",
+  junctura_xac_minh_don_thuoc: "DT-",
+  junctura_xac_minh_chi_phi: "CP-",
+};
+
+/** The workflow keys the facility may open. */
+export const openableKeysFor = (facility: Facility): readonly string[] =>
+  Object.keys(OPENERS).filter(key => OPENERS[key] === facility);
+
+/** The facilities that take part in a workflow, from its BPMN candidate groups, in step order. */
+export const participatingFacilities = (key: string): readonly string[] => {
+  const workflow = workflowFor(key);
+  if (!workflow) return [];
+  const seen = new Set<string>();
+  for (const step of workflow.steps) for (const group of step.groups) seen.add(group);
+  return [...seen];
+};
 
 // ---------------------------------------------------------------- shapes from Core
 
@@ -33,6 +74,8 @@ export interface ExecutionItem {
   updatedAt?: string | null;
   title?: string | null;
   currentStep?: CurrentStep | null;
+  /** The engine history list does not return the input; `mucKhan` is read when it ever does. */
+  input?: { mucKhan?: unknown } & Record<string, unknown>;
 }
 
 export interface ExecutionList {
@@ -68,7 +111,62 @@ export interface ExecutionDetail {
   id: string;
   definitionId: string;
   status: "running" | "completed" | "cancelled";
-  input?: { reference?: unknown; openedBy?: unknown } & Record<string, unknown>;
+  input?: {
+    reference?: unknown;
+    openedBy?: unknown;
+    mucKhan?: unknown;
+    coSoNhan?: unknown;
+    ghiChu?: unknown;
+  } & Record<string, unknown>;
+}
+
+// ---------------------------------------------------------------- shapes of the health gateway
+
+/** An author of a notice, note or uploaded file, as the gateway reports it. */
+export interface Author {
+  displayName: string;
+  facility: Facility;
+}
+
+/** One notice of the bulletin board, newest first in the list response. */
+export interface Notice {
+  id: string;
+  title: string;
+  body: string;
+  author: Author;
+  createdAt: string;
+}
+
+export interface NoticeList {
+  items: readonly Notice[];
+}
+
+/** One exchange note of a case, oldest first in the list response. */
+export interface CaseNote {
+  id: string;
+  executionId: string;
+  text: string;
+  author: Author;
+  createdAt: string;
+}
+
+export interface NoteList {
+  items: readonly CaseNote[];
+}
+
+/** Metadata of one attachment of a case, oldest first in the list response. */
+export interface FileMeta {
+  id: string;
+  executionId: string;
+  name: string;
+  type: string;
+  bytes: number;
+  author: Author;
+  createdAt: string;
+}
+
+export interface FileList {
+  items: readonly FileMeta[];
 }
 
 // ---------------------------------------------------------------- helpers

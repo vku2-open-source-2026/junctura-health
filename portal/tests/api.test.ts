@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { auth } from "../src/auth";
-import { ApiError, configureApi, getJson, postJson } from "../src/api";
+import { ApiError, configureApi, getBlob, getJson, postBytes, postJson } from "../src/api";
 
 const json = (status: number, body: unknown): Response =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
@@ -93,6 +93,50 @@ describe("401", () => {
     auth.set({ accessToken: "token-1" });
     stubFetch(() => json(401, { error: "invalid_token" }));
     await expect(postJson("/v1/things", {})).rejects.toMatchObject({ status: 401 });
+    expect(auth.get()).toBeNull();
+  });
+});
+
+describe("getBlob", () => {
+  it("sends the Bearer token and returns the bytes as a Blob", async () => {
+    auth.set({ accessToken: "token-1" });
+    stubFetch(() => new Response("bytes", { status: 200, headers: { "Content-Type": "application/pdf" } }));
+    const blob = await getBlob("/api/tep/r1");
+    expect(blob).toBeInstanceOf(Blob);
+    expect(blob.size).toBe(5);
+    expect(calls[0].url).toBe("/api/tep/r1");
+    expect(new Headers(calls[0].init?.headers).get("Authorization")).toBe("Bearer token-1");
+  });
+  it("clears the session and throws ApiError on 401", async () => {
+    auth.set({ accessToken: "token-1" });
+    stubFetch(() => json(401, { error: "invalid_token" }));
+    await expect(getBlob("/api/tep/r1")).rejects.toMatchObject({ status: 401, code: "invalid_token" });
+    expect(auth.get()).toBeNull();
+  });
+});
+
+describe("postBytes", () => {
+  it("posts the raw bytes with the given headers and the Bearer token", async () => {
+    auth.set({ accessToken: "token-1" });
+    stubFetch(() => json(201, { id: "f1" }));
+    const file = new Blob(["pdf-bytes"], { type: "application/pdf" });
+    await expect(postBytes("/api/ho-so/e1/tep", file, { "Content-Type": "application/pdf", "X-File-Name": "toa%20quy.pdf" }))
+      .resolves.toEqual({ id: "f1" });
+    const headers = new Headers(calls[0].init?.headers);
+    expect(calls[0].init?.method).toBe("POST");
+    expect(headers.get("Content-Type")).toBe("application/pdf");
+    expect(headers.get("X-File-Name")).toBe("toa%20quy.pdf");
+    expect(headers.get("Authorization")).toBe("Bearer token-1");
+    expect(calls[0].init?.body).toBe(file);
+  });
+  it("throws ApiError with the server's error code", async () => {
+    stubFetch(() => json(422, { error: "malware_detected" }));
+    await expect(postBytes("/api/x", new Blob(), {})).rejects.toMatchObject({ status: 422, code: "malware_detected" });
+  });
+  it("clears the session on 401", async () => {
+    auth.set({ accessToken: "token-1" });
+    stubFetch(() => json(401, { error: "invalid_token" }));
+    await expect(postBytes("/api/x", new Blob(), {})).rejects.toMatchObject({ status: 401 });
     expect(auth.get()).toBeNull();
   });
 });

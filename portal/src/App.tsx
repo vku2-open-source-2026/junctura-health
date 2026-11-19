@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 import { SignInPage, Skeleton } from "@junctura/health-ui";
 import { useEffect, useRef, useState } from "react";
-import { configureApi, getJson, postJson } from "./api";
+import { configureApi, getBlob, getJson, postBytes, postJson } from "./api";
 import { auth, handleCallback, login, signOut, useSession } from "./auth";
 import { loadConfig, type PortalConfig } from "./config";
-import { DeskProvider, deskPageFor, type DeskApi } from "./desk";
+import { DeskProvider, deskPageFor, isDeskRoute, type DeskApi } from "./desk";
 import { PublicHome } from "./pages/PublicHome";
 import { useHashRoute } from "./router";
 import { staffFor, usernameOf } from "./session";
@@ -13,8 +13,8 @@ import { ContractDetailPage, ContractsPage, FacilitiesPage, WorkflowsPage } from
 import { strings } from "./strings";
 
 const CONTRACT_DETAIL = /^\/hop-dong\/([a-z][a-z0-9-]{0,62})$/;
-const DESK_HOME = "/dieu-phoi";
-const deskApi: DeskApi = { getJson, postJson };
+const DESK_HOME = "/lam-viec";
+const deskApi: DeskApi = { getJson, postJson, getBlob, postBytes };
 
 /** The public page for a hash route; unknown routes show the home page. */
 export function pageFor(route: string) {
@@ -26,8 +26,6 @@ export function pageFor(route: string) {
   return <PublicHome />;
 }
 
-const isDeskRoute = (route: string) => route === DESK_HOME || route.startsWith(`${DESK_HOME}/`);
-
 function Splash() {
   return (
     <div className="grid min-h-dvh place-items-center bg-app px-4">
@@ -38,8 +36,9 @@ function Splash() {
 
 /**
  * Root of Cổng Junctura Health, the GUI of Layer 2. Public pages explain the shared health
- * space; the coordination desk (#/dieu-phoi) signs facility staff and the health department
- * in with Junctura and works cross-facility cases on Layer 1. Patients never sign in here:
+ * space. The signed-in workspace, in the order of the brief, is H (#/lam-viec: today, notices,
+ * directory), P (#/ho-so: cross-facility cases) and D (#/dieu-hanh: live figures for the health
+ * department); it signs facility staff in with Junctura and works on Layer 1. Patients never sign in here:
  * they use the MyHealth app of Layer 3.
  */
 export function PortalApp() {

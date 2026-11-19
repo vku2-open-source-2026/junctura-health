@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 const JUNCTURA_URL = process.env.JUNCTURA_URL ?? "http://127.0.0.1:8080";
+const PORTAL_API_URL = process.env.PORTAL_API_URL ?? "http://127.0.0.1:5190";
 
 
 // The UI library sources live outside this package and pull React through
@@ -38,10 +39,12 @@ export default defineConfig({
     // Sources used from outside this package; never the whole repository (it holds .junctura/ secrets).
     fs: { allow: [".", "../ui", "../contracts", "../demo/plan.mjs", "../workflows", "../seed/data/accounts.json"].map(path => fileURLToPath(new URL(path, import.meta.url))) },
     port: 5180,
-    // Layer 1 behind the same origin in dev, as the deployed portal proxies /v1 and /identity.
+    // Layer 1 behind the same origin in dev, as the deployed portal proxies /v1 and /identity;
+    // /api goes to the portal backend of portal/server.
     proxy: {
       "/v1": JUNCTURA_URL,
       "/identity": JUNCTURA_URL,
+      "/api": PORTAL_API_URL,
     },
   },
   // Never inline assets as data: URIs: the served CSP allows fonts and scripts from 'self' only.

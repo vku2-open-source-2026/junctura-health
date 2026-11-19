@@ -13,10 +13,14 @@ export interface DeskStaff {
   facility: Facility;
 }
 
-/** Thin JSON transport for the desk pages; wiring lives in the app shell, not here. */
+/** Thin transport for the space pages; wiring lives in the app shell, not here. */
 export interface DeskApi {
   getJson<T>(path: string): Promise<T>;
   postJson<T>(path: string, body?: unknown, opts?: { idempotencyKey?: string }): Promise<T | null>;
+  /** GET a binary resource (e.g. an attachment of a case) as a Blob. */
+  getBlob(path: string): Promise<Blob>;
+  /** POST raw bytes with explicit headers (e.g. Content-Type and X-File-Name for uploads). */
+  postBytes<T>(path: string, file: Blob, headers: Record<string, string>): Promise<T>;
 }
 
 /** API failures are thrown as plain objects carrying the HTTP status and Core error code. */

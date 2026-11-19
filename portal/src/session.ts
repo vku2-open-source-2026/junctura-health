@@ -3,7 +3,7 @@
 import accountsData from "../../seed/data/accounts.json";
 
 /**
- * Staff identity for the coordination desk: which facility a signed-in demo account
+ * Staff identity for the signed-in workspace: which facility a signed-in demo account
  * belongs to. Patients are never staff; anything unknown maps to null.
  */
 

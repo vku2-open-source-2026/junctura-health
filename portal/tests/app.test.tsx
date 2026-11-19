@@ -30,7 +30,7 @@ describe("public landing", () => {
     render(<PortalApp />);
     const links = screen.getAllByRole("link", { name: strings.app.signIn });
     expect(links.length).toBeGreaterThan(0);
-    for (const link of links) expect(link.getAttribute("href")).toBe("#/dieu-phoi");
+    for (const link of links) expect(link.getAttribute("href")).toBe("#/lam-viec");
     expect(screen.queryByText(strings.signIn.subtitle)).toBeNull();
   });
 
@@ -91,20 +91,14 @@ describe("coordination desk gate", () => {
     expect(await screen.findByText(strings.signIn.notStaff)).toBeTruthy();
   });
 
-  it("opens the desk for a staff account and reads the workflows from Layer 1", async () => {
-    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
-      const path = new URL(String(input), "http://localhost:5180").pathname;
-      if (path === "/v1/workflows/summary") return Response.json({ definitions: [], totals: { definitions: 0, running: 0, completed: 0, cancelled: 0 } });
-      if (path === "/v1/workflows/executions") return Response.json({ items: [], limit: 100 });
-      return new Response("{}", { status: 404 });
-    });
+  it("opens the desk for a staff account and redirects the old desk home to the H space", async () => {
+    const fetchMock = vi.fn(async () => new Response("{}", { status: 404 }));
     vi.stubGlobal("fetch", fetchMock);
     auth.set({ accessToken: token("bacsi.benhvien") });
     window.location.hash = "#/dieu-phoi";
     render(<PortalApp />);
     await vi.waitFor(() => {
-      const paths = fetchMock.mock.calls.map(call => new URL(String(call[0]), "http://localhost:5180").pathname);
-      expect(paths).toContain("/v1/workflows/summary");
+      expect(window.location.hash).toBe("#/lam-viec");
     });
     expect(screen.queryByText(strings.signIn.notStaff)).toBeNull();
   });

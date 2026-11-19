@@ -15,6 +15,29 @@ services:
       - "${PORTAL_BIND:-127.0.0.1}:5180:5180"
     environment:
       JUNCTURA_UPSTREAM: ${JUNCTURA_UPSTREAM:-http://host.docker.internal:8080}
+      # The Caddyfile proxies /api/* to the backend service below.
+      PORTAL_API_UPSTREAM: ${PORTAL_API_UPSTREAM:-http://api:5190}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ..
+      dockerfile: portal/server/Dockerfile
+    image: junctura-health-portal-api
+    init: true
+    environment:
+      # The API is only reachable inside the compose network (no published ports).
+      HOST: 0.0.0.0
+      JUNCTURA_URL: ${JUNCTURA_URL:-http://host.docker.internal:8080}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_KEYS_URL: ${OIDC_KEYS_URL:-}
+    env_file:
+      # Demo credentials of the backend application (written by `npm run demo:setup`).
+      # The file wins nothing: real environment variables above take precedence.
+      - path: ../.junctura/demo/junctura-health-portal.env
+        required: false
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped

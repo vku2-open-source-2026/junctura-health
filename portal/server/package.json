@@ -1,0 +1,24 @@
+{
+  "name": "junctura-health-portal-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend của Cổng Junctura Health: lưu bảng tin, ghi chú và tệp đính kèm của hồ sơ liên thông qua Tầng 1 (Junctura DX-OS) cho giao diện Cổng.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "homepage": "https://github.com/vku2-open-source-2026/junctura-health/tree/main/portal/server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vku2-open-source-2026/junctura-health.git",
+    "directory": "portal/server"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node main.mjs",
+    "test": "node --test ../../tests/portal-server.test.mjs"
+  },
+  "dependencies": {
+    "@junctura/server-client": "^0.1.0"
+  }
+}

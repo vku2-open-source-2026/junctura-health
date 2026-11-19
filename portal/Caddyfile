@@ -26,6 +26,15 @@
 		respond 404
 	}
 
+	# The backend API of the portal (portal/server): sign-in JSON routes that
+	# store notice-board entries, notes and attachments on Layer 1. Caddy allows
+	# a bit more than the 5 MiB the backend enforces itself.
+	@api path /api/*
+	handle @api {
+		request_body max_size 6MB
+		reverse_proxy {$PORTAL_API_UPSTREAM}
+	}
+
 	@junctura path /v1/* /identity/*
 	handle @junctura {
 		reverse_proxy {$JUNCTURA_UPSTREAM}

@@ -7,7 +7,7 @@
 
 # Junctura Health
 
-**Không gian y tế liên thông: luật chơi chung để trạm y tế, bệnh viện, nhà thuốc và bảo hiểm trao đổi dữ liệu (chỉ khi người bệnh đồng ý, chỉ phần cần thiết, mọi lần truy cập đều để lại dấu vết), và Bàn điều phối cho những hồ sơ đi qua nhiều cơ sở.**
+**Không gian y tế liên thông: luật chơi chung để trạm y tế, bệnh viện, nhà thuốc và bảo hiểm trao đổi dữ liệu (chỉ khi người bệnh đồng ý, chỉ phần cần thiết, mọi lần truy cập đều để lại dấu vết), và Cổng Junctura Health, nơi các cơ sở cùng làm việc, xử lý hồ sơ liên thông và Sở Y tế điều hành.**
 
 [![Checks](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml/badge.svg)](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@junctura/health-contracts?label=health-contracts&color=176B80)](https://www.npmjs.com/package/@junctura/health-contracts)
@@ -107,7 +107,7 @@ sequenceDiagram
 | --- | --- |
 | [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) | Tầng 1: định danh, đồng thuận, vé gọi, nhật ký chuỗi băm, Console quản trị |
 | **junctura-health** (repo này) | Tầng 2: hợp đồng năng lực, quy trình y tế BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo |
-| `portal/` của repo này | Tầng 2 — Cổng Junctura Health: phần công khai (hợp đồng, quy trình, cơ sở tham gia) và Bàn điều phối liên thông cho nhân viên cơ sở và Sở Y tế, đăng nhập bằng Junctura |
+| `portal/` của repo này | Tầng 2 — Cổng Junctura Health: phần công khai (hợp đồng, quy trình, cơ sở tham gia) và không gian làm việc theo H-P-D-I của đề (H · Làm việc, P · Hồ sơ, D · Điều hành; I làm sau) cho nhân viên cơ sở và Sở Y tế, đăng nhập bằng Junctura, có backend riêng lưu bảng tin, ghi chú và tệp qua Tầng 1 |
 | [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Tầng 3 — Trạm y tế xã: hồ sơ, hàng chờ khám, tiêm chủng, chuyển tuyến |
 | [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Tầng 3 — Bệnh viện: tiếp nhận chuyển tuyến, cảnh báo dị ứng, truy cập cấp cứu |
 | [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Tầng 3 — Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |

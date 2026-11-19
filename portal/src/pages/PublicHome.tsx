@@ -14,7 +14,7 @@ function SectionHeading({ id, title, lead }: { id: string; title: string; lead?:
   );
 }
 
-/** Public landing page of the portal: what Layer 2 is, the shared contracts and workflows, who takes part, and the way into the coordination desk. */
+/** Public landing page of the portal: what Layer 2 is, the shared contracts and workflows, who takes part, and the way into the H-P-D workspace. */
 export function PublicHome() {
   return (
     <div className="min-h-dvh bg-app text-ink">
@@ -27,7 +27,7 @@ export function PublicHome() {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-2 sm:ml-0">
-            <a href="#/dieu-phoi" className="rounded-md border border-line px-3 py-1.5 text-sm font-semibold hover:bg-surface">{strings.app.signIn}</a>
+            <a href="#/lam-viec" className="rounded-md border border-line px-3 py-1.5 text-sm font-semibold hover:bg-surface">{strings.app.signIn}</a>
             <PublicControls />
           </div>
         </div>
@@ -38,7 +38,7 @@ export function PublicHome() {
           <Badge tone="ok" className="mb-5">{strings.app.shortName}</Badge>
           <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">{strings.app.tagline}</h1>
           <p className="mt-6 max-w-xl text-lg text-ink-2">{strings.app.lead}</p>
-          <p className="mt-8"><a href="#/dieu-phoi" className="inline-flex items-center rounded-md bg-brand px-5 py-2.5 font-semibold text-on-brand hover:opacity-90">{strings.app.signIn}</a></p>
+          <p className="mt-8"><a href="#/lam-viec" className="inline-flex items-center rounded-md bg-brand px-5 py-2.5 font-semibold text-on-brand hover:opacity-90">{strings.app.signIn}</a></p>
           {strings.app.note && <p className="mt-5 text-sm text-muted">{strings.app.note}</p>}
         </section>
 

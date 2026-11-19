@@ -28,6 +28,7 @@ Cần Docker đang chạy vì lệnh dùng công cụ vận hành của Junctura
 | --- | --- |
 | Tài khoản | 55 tài khoản từ `seed/data/accounts.json` (5 nhân viên, 50 người bệnh), cùng một mật khẩu demo |
 | Ứng dụng | 5 ứng dụng (`health-clinic`, `health-hospital`, `health-myhealth`, `health-pharmacy`, `health-insurance`), mỗi ứng dụng có client backend và client web (PKCE) `health-<tên>-web` |
+| Cổng (backend) | `junctura-health-portal` với client backend `health-portal-backend` (lưu bảng tin, ghi chú, tệp của Cổng qua `/v2/data` và `/v2/objects`); dùng lại client web `health-portal-web`, không tạo client web mới, không công bố năng lực, không grant |
 | Năng lực | 6 năng lực từ `contracts/`, đã kiểm tra, duyệt và công bố |
 | Grant | 7 grant theo đúng bảng bên cung cấp / bên gọi của hợp đồng, hạn 90 ngày |
 | Quản trị | `quantri.soyte` được quyền duyệt và rà soát trong Console |
