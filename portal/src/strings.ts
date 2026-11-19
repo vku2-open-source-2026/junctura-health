@@ -115,6 +115,7 @@ export const strings = {
     columns: {
       time: "Thời điểm",
       consumer: "Ứng dụng gọi",
+      provider: "Nơi lưu dữ liệu",
       capability: "Năng lực",
       purpose: "Mục đích",
       state: "Trạng thái",

@@ -59,7 +59,12 @@ describe("public landing", () => {
 });
 
 describe("consents page", () => {
-  const consent = { consentId: "c1", consumer: { appId: "junctura-hospital" }, capabilityId: CAPABILITY_ID, purposes: ["treatment"], expiresAt: "2027-01-01T00:00:00.000Z", state: "active" };
+  // Shape of GET /v1/me/consents: the consumer is a Junctura application id with its display name.
+  const HOSPITAL = "e6eb1df8-547c-4a2b-a4ea-614f3ee96f2f";
+  const consent = {
+    consentId: "c1", consumer: { appId: HOSPITAL, displayName: "Bệnh viện Đà Nẵng" }, capabilityId: CAPABILITY_ID, capabilityTitle: "Danh sách dị ứng",
+    purposes: ["treatment"], expiresAt: "2027-01-01T00:00:00.000Z", state: "active",
+  };
   const rows = { consents: [consent] };
 
   it("lists consents and revokes after confirmation", async () => {
@@ -103,7 +108,7 @@ describe("consents page", () => {
     await waitFor(() => expect(screen.getByText(strings.consents.done)).toBeTruthy());
     const grant = calls.find(call => call.method === "POST" && call.path === "/v1/me/consents");
     expect(grant?.body).toEqual({
-      consumerAppId: "junctura-hospital",
+      consumerAppId: HOSPITAL,
       capabilityId: CAPABILITY_ID,
       purposes: ["treatment"],
       expiresAt: expect.any(String),
@@ -147,12 +152,20 @@ describe("access page", () => {
   it("renders one row per access entry with the emergency flag", async () => {
     stubFetch([{
       match: "/v1/me/data-access",
-      body: { entries: [{ at: "2026-11-19T10:15:00.000Z", consumerAppId: "junctura-hospital", capabilityId: CAPABILITY_ID, purpose: "treatment", state: "succeeded", emergency: true }] },
+      // Shape of GET /v1/me/data-access (020-subject-access.sql in junctura-dxos).
+      body: { entries: [{
+        executionId: "x1", accessedAt: "2026-11-19T10:15:00.000Z", purpose: "treatment", state: "succeeded", emergency: true, review: null,
+        consumer: { appId: "e6eb1df8-547c-4a2b-a4ea-614f3ee96f2f", displayName: "Bệnh viện Đà Nẵng" },
+        provider: { appId: "294a737f-8ea7-4de3-bfc7-cbd0dce91004", displayName: "Trạm Y tế phường Hòa Khánh Bắc" },
+        capability: { capabilityId: CAPABILITY_ID, title: "Danh sách dị ứng", version: "1.1.0" },
+      }], truncated: false },
     }]);
     auth.set({ accessToken: "token" });
     render(<AccessPage />);
     expect(await screen.findByText("Bệnh viện Đà Nẵng")).toBeTruthy();
+    expect(screen.getByText("Trạm Y tế phường Hòa Khánh Bắc")).toBeTruthy();
     expect(screen.getByText("Danh sách dị ứng")).toBeTruthy();
+    expect(screen.queryByText("Chưa rõ")).toBeNull();
     expect(screen.getByText("Điều trị")).toBeTruthy();
     expect(screen.getByText(strings.access.emergency)).toBeTruthy();
     expect(screen.getByText(strings.access.stateSucceeded)).toBeTruthy();

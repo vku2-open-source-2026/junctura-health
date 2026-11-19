@@ -8,40 +8,44 @@ import { purposeLabel, strings } from "../strings";
 
 const DATA_ACCESS_PATH = "/v1/me/data-access";
 
-type Entry = Record<string, unknown>;
-
-const first = (entry: Entry, keys: string[]): unknown => {
-  for (const key of keys) if (entry[key] !== undefined && entry[key] !== null) return entry[key];
-  return undefined;
-};
-
-const asText = (value: unknown): string | undefined => (typeof value === "string" && value ? value : undefined);
-
-/** Either an application id or a `consumer`/`provider` object carrying an `appId`. */
-const asApp = (value: unknown): string | undefined => {
-  if (typeof value === "string" && value) return value;
-  if (value && typeof value === "object" && typeof (value as Entry).appId === "string") return (value as Entry).appId as string;
-  return undefined;
-};
+/** One entry of GET /v1/me/data-access (junctura-dxos infra/postgres/020-subject-access.sql). */
+interface ApiApp { appId?: string; displayName?: string | null }
+interface ApiEntry {
+  executionId?: string;
+  accessedAt?: string;
+  consumer?: ApiApp;
+  provider?: ApiApp;
+  capability?: { capabilityId?: string; title?: string | null; version?: string };
+  purpose?: string;
+  state?: string;
+  emergency?: boolean;
+}
 
 interface AccessRow {
+  key: string;
   time?: string;
   consumer?: string;
+  provider?: string;
   capability?: string;
   purpose?: string;
   state?: string;
   emergency: boolean;
 }
 
-function mapEntry(entry: Entry): AccessRow {
-  const emergencyValue = first(entry, ["emergency", "emergencyFlag"]);
+/** Names come from Junctura; the demo catalog is only a fallback for a missing display name. */
+const appLabel = (app?: ApiApp): string | undefined => app?.displayName || (app?.appId ? appName(app.appId) : undefined);
+
+function mapEntry(entry: ApiEntry, index: number): AccessRow {
+  const capability = entry.capability;
   return {
-    time: asText(first(entry, ["at", "time", "occurredAt", "timestamp", "createdAt"])),
-    consumer: asApp(first(entry, ["consumerAppId", "consumer", "callerAppId"])),
-    capability: asText(first(entry, ["capabilityId", "capability"])),
-    purpose: asText(first(entry, ["purpose"])),
-    state: asText(first(entry, ["state", "status"])),
-    emergency: emergencyValue === true || emergencyValue === "true",
+    key: entry.executionId ?? `row-${index}`,
+    time: entry.accessedAt,
+    consumer: appLabel(entry.consumer),
+    provider: appLabel(entry.provider),
+    capability: capability?.title || (capability?.capabilityId ? capabilityTitle(capability.capabilityId) : undefined),
+    purpose: entry.purpose,
+    state: entry.state,
+    emergency: entry.emergency === true,
   };
 }
 
@@ -66,9 +70,9 @@ export function AccessPage() {
     setRows(null);
     setError(false);
     try {
-      const value = await requestJson<{ entries?: Entry[] }>(DATA_ACCESS_PATH);
+      const value = await requestJson<{ entries?: ApiEntry[] }>(DATA_ACCESS_PATH);
       const entries = Array.isArray(value.entries) ? value.entries : [];
-      setRows(entries.map(entry => mapEntry(entry as Entry)));
+      setRows(entries.map(mapEntry));
     } catch { setError(true); }
   }, []);
 
@@ -91,11 +95,12 @@ export function AccessPage() {
       <DataTable
         caption={strings.access.title}
         rows={rows}
-        rowKey={row => `${row.time ?? ""}-${row.consumer ?? ""}-${rows.indexOf(row)}`}
+        rowKey={row => row.key}
         columns={[
           { key: "time", header: strings.access.columns.time, sortValue: row => row.time ?? "", render: row => formatDateTime(row.time) },
-          { key: "consumer", header: strings.access.columns.consumer, render: row => (row.consumer ? appName(row.consumer) : "Chưa rõ") },
-          { key: "capability", header: strings.access.columns.capability, render: row => (row.capability ? capabilityTitle(row.capability) : "Chưa rõ") },
+          { key: "consumer", header: strings.access.columns.consumer, render: row => row.consumer ?? "Chưa rõ" },
+          { key: "provider", header: strings.access.columns.provider, render: row => row.provider ?? "Chưa rõ" },
+          { key: "capability", header: strings.access.columns.capability, render: row => row.capability ?? "Chưa rõ" },
           { key: "purpose", header: strings.access.columns.purpose, render: row => (row.purpose ? purposeLabel(row.purpose) : "—") },
           { key: "state", header: strings.access.columns.state, render: row => stateLabel(row.state) },
           {
