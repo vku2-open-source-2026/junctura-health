@@ -82,7 +82,9 @@ export function CaseDetailPage({ id }: { id: string }) {
 
   const workflow = workflowFor(item?.definition.key ?? "");
   const currentName = item?.currentStep?.name ?? null;
-  const currentIndex = currentName === null || !workflow ? -1 : workflow.steps.findIndex(step => step.name === currentName);
+  // Only the user tasks are steps people work on; start and end events are not shown.
+  const taskSteps = workflow ? workflow.steps.filter(step => step.kind === "userTask") : [];
+  const currentIndex = currentName === null || !workflow ? -1 : taskSteps.findIndex(step => step.name === currentName);
   const canComplete = item != null && waitsForFacility(item, staff.facility);
   const openedBy = typeof detail.input?.openedBy === "string" ? detail.input.openedBy : null;
   const reference = typeof detail.input?.reference === "string" ? detail.input.reference : null;
@@ -114,7 +116,7 @@ export function CaseDetailPage({ id }: { id: string }) {
           </div>
           <div>
             <dt className="text-xs uppercase tracking-wide text-muted">{s.detail.updated}</dt>
-            <dd className="mt-0.5 text-sm">{item?.updatedAt ?? "—"}</dd>
+            <dd className="mt-0.5 text-sm">{item?.updatedAt ? new Date(item.updatedAt).toLocaleString("vi-VN", { hour12: false }) : "—"}</dd>
           </div>
         </dl>
         {item?.currentStep && (
@@ -156,7 +158,7 @@ export function CaseDetailPage({ id }: { id: string }) {
         <div className="mt-6 rounded-lg border border-line bg-surface p-5 shadow-card">
           <h3 className="text-base font-semibold">{s.detail.steps}</h3>
           <ol className="mt-4 space-y-3">
-            {workflow.steps.map((step, index) => {
+            {taskSteps.map((step, index) => {
               const done = detail.status === "completed" || (currentIndex >= 0 && index < currentIndex);
               const current = detail.status === "running" && index === currentIndex;
               return (
@@ -175,13 +177,13 @@ export function CaseDetailPage({ id }: { id: string }) {
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">
-                      {step.name || step.id}
+                      {step.name}
                       {done && <span className="ml-2 text-xs font-normal text-ok">{s.detail.stepDone}</span>}
                       {current && <span className="ml-2 text-xs font-normal text-brand">{s.detail.stepCurrent}</span>}
                       {!done && !current && <span className="ml-2 text-xs font-normal text-muted">{s.detail.stepFuture}</span>}
                     </p>
                     <p className="mt-0.5 text-xs text-muted">
-                      <span className="sr-only">{s.detail.currentStep}: </span>
+                      <span className="sr-only">{s.detail.responsible}: </span>
                       {step.groups.length > 0 ? step.groups.map(facilityLabel).join(", ") : s.detail.stepNoGroups}
                     </p>
                   </div>

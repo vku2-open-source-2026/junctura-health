@@ -130,6 +130,7 @@ export const deskStrings = {
     stepCurrent: "Đang ở bước này",
     stepFuture: "Chưa tới",
     stepNoGroups: "Không có cơ sở phụ trách",
+    responsible: "Cơ sở phụ trách",
     currentStep: "Bước hiện tại",
     completeStep: "Hoàn tất bước",
     confirmTitle: "Hoàn tất bước này?",

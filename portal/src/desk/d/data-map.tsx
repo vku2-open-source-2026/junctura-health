@@ -71,11 +71,10 @@ const ApplicationCard = ({ application, api }: { application: StorageApplication
       className="mt-4"
       actions={<Badge tone={application.state === "active" ? "ok" : "neutral"}>{appStateLabel(application.state)}</Badge>}
     >
-      <p className="text-xs text-muted">{d.dataMap.explanation}</p>
 
       <h3 className="mt-4 text-sm font-semibold">{d.dataMap.collectionsTitle}</h3>
       {application.collections.length === 0 ? (
-        <p className="mt-2 text-sm text-ink-2">{d.dataMap.fieldsNone}</p>
+        <p className="mt-2 text-sm text-ink-2">{d.dataMap.collectionsNone}</p>
       ) : (
         <ul className="mt-2 divide-y divide-line">
           {application.collections.map(collection => <CollectionRow key={collection.name} collection={collection} />)}

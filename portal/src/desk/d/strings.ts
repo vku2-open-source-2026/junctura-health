@@ -88,6 +88,7 @@ export const dataStrings = {
     lead: "Mỗi ứng dụng cơ sở giữ dữ liệu của mình trên Tầng 1; trang này chỉ thấy tên và số đếm.",
     explanation: "Dữ liệu nằm ở cơ sở sở hữu; Tầng 2 chỉ thấy bản đồ, không đọc nội dung.",
     collectionsTitle: "Bộ sưu tập",
+    collectionsNone: "Chưa có dữ liệu.",
     columnCollection: "Bộ sưu tập",
     columnRecords: "Số bản ghi",
     columnUpdated: "Cập nhật",
