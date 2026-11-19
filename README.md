@@ -109,6 +109,7 @@ sequenceDiagram
 | [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |
 | [junctura-pharmacy](https://github.com/vku2-open-source-2026/junctura-pharmacy) | Nhà thuốc: xác minh đơn thuốc trước khi phát |
 | [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Bảo hiểm: xác minh chi phí, chỉ nhận có/không |
+| `portal/` của repo này | Cổng người bệnh: đăng nhập qua Junctura, quản lý đồng thuận, xem ai đã truy cập dữ liệu của mình |
 
 ## Hợp đồng năng lực
 
@@ -198,6 +199,7 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 ```text
 contracts/   hợp đồng năng lực (npm: @junctura/health-contracts)
 ui/          thư viện giao diện (npm: @junctura/health-ui)
+portal/      cổng người bệnh (GUI Tầng 2 chạy trên lõi, xem portal/README.md)
 seed/        bộ sinh dữ liệu mẫu giả lập, xác định theo seed
 demo/        dựng môi trường demo trên Junctura DX-OS
 docs/        thiết kế, UX, tính năng từng ứng dụng, hướng dẫn dựng app mới

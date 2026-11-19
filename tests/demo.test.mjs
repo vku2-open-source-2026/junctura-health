@@ -6,8 +6,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { APPS as CONTRACT_APPS, CONTRACTS, getContract } from "../contracts/index.mjs";
-import { APPS, existingGrant, internalOrigins, parseArgs, parseEnv, planGrants, providers, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
-import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, resolveDxos } from "../demo/setup.mjs";
+import { APPS, existingGrant, internalOrigins, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
+import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensurePortalClient, resolveDxos } from "../demo/setup.mjs";
 import { loadData, withSubjects } from "../seed/generate.mjs";
 
 const reply = (status, body, headers = {}) => new Response(body === undefined ? null : JSON.stringify(body), { status, headers });
@@ -74,6 +74,40 @@ test("the Junctura DX-OS checkout is required and never guessed", () => {
   writeFileSync(join(root, "junctura-dxos", ".env"), "");
   assert.equal(resolveDxos({}, join(root, "health")).directory, join(root, "junctura-dxos"));
   assert.equal(resolveDxos({ JUNCTURA_DXOS_DIR: join(root, "junctura-dxos") }, "/elsewhere").directory, join(root, "junctura-dxos"));
+});
+
+test("the portal is a public PKCE client on its own port, not a Junctura application", () => {
+  assert.deepEqual(PORTAL, { name: "junctura-health-portal", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180 });
+  assert.deepEqual(portalOrigins(), ["http://localhost:5180", "http://127.0.0.1:5180"]);
+  assert.ok(!APPS.some(app => app.webClientId === PORTAL.webClientId), "the portal client is not one of the five applications");
+  const mappers = [{ name: "tenant" }];
+  const client = portalClient(mappers, ["http://localhost:5180/", "https://portal.example.org"]);
+  assert.equal(client.clientId, "health-portal-web");
+  assert.equal(client.name, "Cổng Junctura Health (web)");
+  assert.equal(client.publicClient, true);
+  assert.equal(client.directAccessGrantsEnabled, false);
+  assert.equal(client.attributes["pkce.code.challenge.method"], "S256");
+  assert.deepEqual(client.redirectUris, ["http://localhost:5180/*", "https://portal.example.org/*"]);
+  assert.deepEqual(client.webOrigins, ["http://localhost:5180", "https://portal.example.org"]);
+  assert.deepEqual(client.attributes["post.logout.redirect.uris"], "http://localhost:5180/*##https://portal.example.org/*");
+  assert.equal(client.protocolMappers, mappers);
+});
+
+test("the portal client is created once with the realm mappers", async () => {
+  const mappers = [{ name: "tenant" }];
+  const calls = [];
+  const stack = {
+    admin: async (path, body) => {
+      calls.push(body === undefined ? `GET ${path}` : `POST ${path}`);
+      if (path === "clients?clientId=health-portal-web") return reply(200, calls.length > 2 ? [{ id: "c1" }] : []);
+      return reply(201);
+    },
+    must: async (response, expected, what) => { assert.ok(expected.includes(response.status), what); return response; },
+    mappersFor: async () => mappers,
+  };
+  await ensurePortalClient(stack);
+  await ensurePortalClient(stack);
+  assert.deepEqual(calls, ["GET clients?clientId=health-portal-web", "POST clients", "GET clients?clientId=health-portal-web"]);
 });
 
 function fakeIdentity({ honorIds = true, existing = {} } = {}) {

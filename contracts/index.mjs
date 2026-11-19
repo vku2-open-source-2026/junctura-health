@@ -3,10 +3,16 @@
 // Shared capability contracts of Junctura Health. One JSON file per capability in
 // capabilities/; the provider application turns it into a Junctura manifest with
 // its own enrolled application ID (buildManifest), and both sides validate payloads
-// and invocation context against the same definition.
-import { readFileSync, readdirSync } from "node:fs";
+// and invocation context against the same definition. The list is imported
+// statically (sorted by slug, same order as a sorted directory listing), so the
+// module stays dependency-free and runs both in Node and in a browser bundle.
+import allergyList from "./capabilities/allergy-list.json" with { type: "json" };
+import claimVerify from "./capabilities/claim-verify.json" with { type: "json" };
+import preVisitSummary from "./capabilities/pre-visit-summary.json" with { type: "json" };
+import prescriptionVerify from "./capabilities/prescription-verify.json" with { type: "json" };
+import referralSummary from "./capabilities/referral-summary.json" with { type: "json" };
+import vaccinationHistory from "./capabilities/vaccination-history.json" with { type: "json" };
 
-const HERE = new URL("./capabilities/", import.meta.url);
 const SLUG = /^[a-z][a-z0-9-]{0,62}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 export const PURPOSE = /^[a-z][a-z0-9_]{1,62}$/;
@@ -18,8 +24,7 @@ const deepFreeze = value => {
   return value;
 };
 
-export const CONTRACTS = deepFreeze(readdirSync(HERE).filter(name => name.endsWith(".json")).sort()
-  .map(name => JSON.parse(readFileSync(new URL(name, HERE), "utf8"))));
+export const CONTRACTS = deepFreeze([allergyList, claimVerify, preVisitSummary, prescriptionVerify, referralSummary, vaccinationHistory]);
 
 export function getContract(slug) {
   const contract = CONTRACTS.find(item => item.slug === slug);
