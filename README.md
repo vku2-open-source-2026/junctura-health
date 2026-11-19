@@ -24,7 +24,7 @@
 
 Một người bệnh khám ở trạm y tế xã rồi được chuyển lên bệnh viện. Bệnh viện hỏi lại tiền sử, dị ứng, tiêm chủng; giấy chuyển tuyến đi bằng tay; nhà thuốc không biết đơn có xung đột dị ứng hay không; bảo hiểm phải xin cả hồ sơ để kiểm tra một khoản chi. Dữ liệu nằm rải rác, hoặc bị chia sẻ nhiều hơn mức cần thiết.
 
-**Junctura Health** là Tầng 2 (lĩnh vực y tế) xây trên [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos). Mỗi bên giữ dữ liệu của mình và chỉ trả lời khi được hỏi qua Junctura, theo một **hợp đồng năng lực** định nghĩa trước dữ liệu vào, dữ liệu ra, bên được gọi và mục đích được phép. Repo này là **repo tổng hợp** của bộ năm ứng dụng: hợp đồng dùng chung, thư viện giao diện dùng chung, dữ liệu mẫu giả lập và công cụ dựng môi trường demo.
+**Junctura Health** là **Tầng 2** trong mô hình ba tầng của Junctura: [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos) là **Tầng 1**, lõi trung lập giữ định danh, đồng thuận, vé gọi, bản ghi, lưu trữ, workflow, nhật ký và Console quản trị; Tầng 2 là **không gian năng lực y tế dùng chung** (hợp đồng năng lực, quy trình y tế BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo); **Tầng 3** là năm ứng dụng Clinic, Hospital, Pharmacy, Insurance, MyHealth. Mỗi bên giữ dữ liệu của mình và chỉ trả lời khi được hỏi, theo một **hợp đồng năng lực** định nghĩa trước dữ liệu vào, dữ liệu ra, bên được gọi và mục đích được phép. Các ứng dụng không gọi nhau qua một trạm trung gian: mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình; Tầng 1 kiểm tra đồng thuận, cấp vé dùng một lần và ghi audit cho mỗi lần gọi.
 
 ### Ai làm gì trong luồng này
 
@@ -48,6 +48,7 @@ Một người bệnh khám ở trạm y tế xã rồi được chuyển lên b
 **Trong repo này**
 - Sáu hợp đồng năng lực, phát hành trên npm thành [`@junctura/health-contracts`](https://www.npmjs.com/package/@junctura/health-contracts).
 - Thư viện giao diện React dùng chung cho cả năm ứng dụng, phát hành thành [`@junctura/health-ui`](https://www.npmjs.com/package/@junctura/health-ui).
+- Quy trình y tế BPMN dùng chung trong [`workflows/`](workflows/README.md): chuyển tuyến, xác minh đơn thuốc, xác minh chi phí — Tầng 1 nạp và thực thi qua chính sách nghiêm của nó.
 - Bộ sinh dữ liệu mẫu: 50 người bệnh giả lập ở Đà Nẵng, cùng seed luôn cho cùng kết quả.
 - Công cụ dựng môi trường demo: một lệnh tạo 55 tài khoản, đăng ký 5 ứng dụng, công bố 6 năng lực và cấp quyền.
 
@@ -55,7 +56,7 @@ Một người bệnh khám ở trạm y tế xã rồi được chuyển lên b
 
 ```mermaid
 flowchart TB
-  subgraph APPS["Ứng dụng Tầng 2"]
+  subgraph APPS["Ứng dụng Tầng 3"]
     CL["Clinic<br/>trạm y tế"]
     HO["Hospital<br/>bệnh viện"]
     MH["MyHealth<br/>người bệnh"]
@@ -63,8 +64,9 @@ flowchart TB
     IN["Insurance<br/>bảo hiểm"]
   end
 
-  subgraph SHARED["Repo này: junctura-health"]
+  subgraph SHARED["Tầng 2 · repo này: junctura-health"]
     CT["contracts<br/>hợp đồng năng lực"]
+    WF["workflows<br/>quy trình y tế BPMN"]
     UI["ui<br/>thư viện giao diện"]
     SD["seed · demo<br/>dữ liệu mẫu, dựng demo"]
   end
@@ -77,7 +79,7 @@ flowchart TB
   SD -. nạp dữ liệu .-> APPS
 ```
 
-Các ứng dụng không gọi thẳng nhau và không đọc cơ sở dữ liệu của nhau. Bên gọi xin vé từ Junctura; bên cung cấp đổi vé, kiểm tra đồng thuận và mục đích, rồi mới trả dữ liệu.
+Các ứng dụng (Tầng 3) không gọi thẳng nhau và không đọc cơ sở dữ liệu của nhau; cũng không có một trạm trung gian chung nào đứng giữa chúng. Mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình: Tầng 1 kiểm tra đồng thuận, cấp vé dùng một lần và ghi audit; bên cung cấp đổi vé, kiểm tra mục đích và người bệnh, rồi mới trả dữ liệu.
 
 ### Một lần chia sẻ dữ liệu diễn ra thế nào
 
@@ -103,13 +105,13 @@ sequenceDiagram
 | Repo | Vai trò |
 | --- | --- |
 | [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) | Tầng 1: định danh, đồng thuận, vé gọi, nhật ký chuỗi băm, Console quản trị |
-| **junctura-health** (repo này) | Hợp đồng năng lực, thư viện giao diện, dữ liệu mẫu, môi trường demo |
-| [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Trạm y tế xã: hồ sơ, hàng chờ khám, tiêm chủng, chuyển tuyến |
-| [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Bệnh viện: tiếp nhận chuyển tuyến, cảnh báo dị ứng, truy cập cấp cứu |
-| [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |
-| [junctura-pharmacy](https://github.com/vku2-open-source-2026/junctura-pharmacy) | Nhà thuốc: xác minh đơn thuốc trước khi phát |
-| [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Bảo hiểm: xác minh chi phí, chỉ nhận có/không |
-| `portal/` của repo này | Cổng người bệnh: đăng nhập qua Junctura, quản lý đồng thuận, xem ai đã truy cập dữ liệu của mình |
+| **junctura-health** (repo này) | Tầng 2: hợp đồng năng lực, quy trình y tế BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo |
+| `portal/` của repo này | Tầng 2 — Cổng Junctura Health: giới thiệu công khai hợp đồng năng lực, quy trình nghiệp vụ và các cơ sở tham gia |
+| [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Tầng 3 — Trạm y tế xã: hồ sơ, hàng chờ khám, tiêm chủng, chuyển tuyến |
+| [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Tầng 3 — Bệnh viện: tiếp nhận chuyển tuyến, cảnh báo dị ứng, truy cập cấp cứu |
+| [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Tầng 3 — Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |
+| [junctura-pharmacy](https://github.com/vku2-open-source-2026/junctura-pharmacy) | Tầng 3 — Nhà thuốc: xác minh đơn thuốc trước khi phát |
+| [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Tầng 3 — Bảo hiểm: xác minh chi phí, chỉ nhận có/không |
 
 ## Hợp đồng năng lực
 
@@ -182,7 +184,7 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 
 | | |
 | --- | --- |
-| [docs/new-app.md](docs/new-app.md) | Dựng một ứng dụng Tầng 2 mới, từng bước |
+| [docs/new-app.md](docs/new-app.md) | Dựng một ứng dụng Tầng 3 mới, từng bước |
 | [docs/APPS.md](docs/APPS.md) | Tính năng và dữ liệu của từng ứng dụng; ranh giới phần AI |
 | [docs/DESIGN.md](docs/DESIGN.md) | Nguyên tắc thiết kế, quy tắc an toàn hiển thị |
 | [docs/UX.md](docs/UX.md) | Người dùng, luồng việc, bố cục |
@@ -198,6 +200,7 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 
 ```text
 contracts/   hợp đồng năng lực (npm: @junctura/health-contracts)
+workflows/   quy trình y tế BPMN (chuyển tuyến, xác minh đơn thuốc, xác minh chi phí)
 ui/          thư viện giao diện (npm: @junctura/health-ui)
 portal/      cổng người bệnh (GUI Tầng 2 chạy trên lõi, xem portal/README.md)
 seed/        bộ sinh dữ liệu mẫu giả lập, xác định theo seed

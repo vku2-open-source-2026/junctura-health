@@ -3,7 +3,7 @@
 
 # Hợp đồng năng lực Junctura Health
 
-Nguồn duy nhất cho các năng lực mà ứng dụng Tầng 2 cung cấp và gọi qua Junctura. Bên cung cấp và bên gọi cùng dùng một định nghĩa, nên không lệch nhau.
+Nguồn duy nhất cho các năng lực mà ứng dụng Tầng 3 cung cấp và gọi qua Tầng 1 (Junctura). Bên cung cấp và bên gọi cùng dùng một định nghĩa, nên không lệch nhau.
 
 ## Cấu trúc
 
