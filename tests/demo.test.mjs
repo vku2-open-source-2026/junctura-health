@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { APPS as CONTRACT_APPS, CONTRACTS, getContract } from "../contracts/index.mjs";
-import { APPS, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, PORTAL, providers, publicOrigin, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
+import { APPS, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, publicOrigin, renderAppEnv, splitName, staffPrincipals, userRepresentation, webClient } from "../demo/plan.mjs";
 import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensureWebClient, resolveDxos } from "../demo/setup.mjs";
 import { loadData, withSubjects } from "../seed/generate.mjs";
 
@@ -81,10 +81,40 @@ test("the Junctura DX-OS checkout is required and never guessed", () => {
   assert.equal(resolveDxos({ JUNCTURA_DXOS_DIR: join(root, "junctura-dxos") }, "/elsewhere").directory, join(root, "junctura-dxos"));
 });
 
-test("the portal is a public read-only site on its own port, not a Junctura application", () => {
-  assert.deepEqual(PORTAL, { name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webPort: 5180 });
+test("the portal is a public PKCE client on its own port, not a Junctura application", () => {
+  assert.deepEqual(PORTAL, { name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180 });
+  assert.deepEqual(portalOrigins(), ["http://localhost:5180", "http://127.0.0.1:5180"]);
+  assert.deepEqual(portalOrigins("junctura.studio"), ["http://localhost:5180", "http://127.0.0.1:5180", "https://health.junctura.studio"]);
   assert.ok(!APPS.some(app => app.key === PORTAL.key), "the portal subdomain is not one of the applications");
-  assert.ok(!APPS.some(app => app.webPort === PORTAL.webPort), "the portal port is not one of the five applications");
+  assert.ok(!APPS.some(app => app.webClientId === PORTAL.webClientId), "the portal client is not one of the five applications");
+  const mappers = [{ name: "tenant" }];
+  const client = portalClient(mappers, ["http://localhost:5180/", "https://portal.example.org"]);
+  assert.equal(client.clientId, "health-portal-web");
+  assert.equal(client.name, "Cổng Junctura Health (web)");
+  assert.equal(client.publicClient, true);
+  assert.equal(client.directAccessGrantsEnabled, false);
+  assert.equal(client.attributes["pkce.code.challenge.method"], "S256");
+  assert.deepEqual(client.redirectUris, ["http://localhost:5180/*", "https://portal.example.org/*"]);
+  assert.deepEqual(client.webOrigins, ["http://localhost:5180", "https://portal.example.org"]);
+  assert.deepEqual(client.attributes["post.logout.redirect.uris"], "http://localhost:5180/*##https://portal.example.org/*");
+  assert.equal(client.protocolMappers, mappers);
+});
+
+test("every staff account gets a portal principal with audit.read; patients never do", () => {
+  const accounts = loadData("accounts.json").users;
+  const principals = staffPrincipals(accounts);
+  assert.equal(principals.length, accounts.filter(account => account.role !== "patient").length);
+  for (const principal of principals) {
+    const account = accounts.find(item => item.subject === principal.subject);
+    assert.ok(account, "a principal carries the seeded subject of its account");
+    assert.notEqual(account.role, "patient");
+    assert.equal(principal.username, account.username);
+    assert.equal(principal.managementClient, "health-portal-web");
+    assert.deepEqual(principal.permissions, ["audit.read"]);
+  }
+  assert.ok(principals.every(principal => !principal.username.startsWith("benhnhan.")), "no patient principal");
+  assert.deepEqual(principals.map(principal => principal.username),
+    ["ysi.tramyte", "bacsi.benhvien", "duocsi.nhathuoc", "giamdinh.baohiem", "quantri.soyte"]);
 });
 
 test("web clients gain the subdomain origin of --domain", () => {

@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Junctura Contributors
 # SPDX-License-Identifier: Apache-2.0
-# The public, read-only portal: only static files, no proxying and no API calls to Junctura.
+# Static portal + same-origin reverse proxy to the Junctura stack. JUNCTURA_UPSTREAM is
+# the base URL of the running stack, e.g. http://core:8080 in a compose network.
 
 {
 	admin off
@@ -19,6 +20,19 @@
 
 	root * /srv/portal
 
-	try_files {path} /index.html
-	file_server
+	# The Keycloak admin console is never reachable through the portal.
+	@kcadmin path /identity/admin /identity/admin/*
+	handle @kcadmin {
+		respond 404
+	}
+
+	@junctura path /v1/* /identity/*
+	handle @junctura {
+		reverse_proxy {$JUNCTURA_UPSTREAM}
+	}
+
+	handle {
+		try_files {path} /index.html
+		file_server
+	}
 }

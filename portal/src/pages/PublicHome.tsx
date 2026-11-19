@@ -14,7 +14,7 @@ function SectionHeading({ id, title, lead }: { id: string; title: string; lead?:
   );
 }
 
-/** Public landing page of the portal: what Layer 2 is, the shared capability catalog and who takes part. */
+/** Public landing page of the portal: what Layer 2 is, the shared contracts and workflows, who takes part, and the way into the coordination desk. */
 export function PublicHome() {
   return (
     <div className="min-h-dvh bg-app text-ink">
@@ -27,6 +27,7 @@ export function PublicHome() {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-2 sm:ml-0">
+            <a href="#/dieu-phoi" className="rounded-md border border-line px-3 py-1.5 text-sm font-semibold hover:bg-surface">{strings.app.signIn}</a>
             <PublicControls />
           </div>
         </div>
@@ -37,13 +38,28 @@ export function PublicHome() {
           <Badge tone="ok" className="mb-5">{strings.app.shortName}</Badge>
           <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">{strings.app.tagline}</h1>
           <p className="mt-6 max-w-xl text-lg text-ink-2">{strings.app.lead}</p>
+          <p className="mt-8"><a href="#/dieu-phoi" className="inline-flex items-center rounded-md bg-brand px-5 py-2.5 font-semibold text-on-brand hover:opacity-90">{strings.app.signIn}</a></p>
           {strings.app.note && <p className="mt-5 text-sm text-muted">{strings.app.note}</p>}
+        </section>
+
+        <section aria-labelledby="portal-layers-h" className="border-t border-line">
+          <div className="mx-auto max-w-6xl px-5 py-16">
+            <SectionHeading id="portal-layers-h" title={strings.landing.layersTitle} lead={strings.landing.layersLead} />
+            <ul className="mt-10 grid gap-5 lg:grid-cols-3">
+              {strings.landing.layers.map(item => (
+                <li key={item.title} className="rounded-lg border border-line bg-surface p-5 shadow-card">
+                  <h3 className="text-base font-semibold">{item.title}</h3>
+                  <p className="mt-1.5 text-sm text-ink-2">{item.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <section aria-labelledby="portal-benefits-h" className="border-t border-line">
           <div className="mx-auto max-w-6xl px-5 py-16">
             <SectionHeading id="portal-benefits-h" title={strings.landing.benefitsTitle} lead={strings.landing.benefitsLead} />
-            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {strings.landing.benefits.map(item => (
                 <li key={item.title} className="rounded-lg border border-line bg-surface p-5 shadow-card">
                   <h3 className="text-base font-semibold">{item.title}</h3>
@@ -102,20 +118,6 @@ export function PublicHome() {
             <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {[...appNames.values()].map(name => (
                 <li key={name} className="rounded-lg border border-line bg-surface px-4 py-3 text-sm font-medium shadow-card">{name}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section aria-labelledby="portal-subject-h" className="border-t border-line">
-          <div className="mx-auto max-w-6xl px-5 py-16">
-            <SectionHeading id="portal-subject-h" title={strings.landing.subjectTitle} lead={strings.landing.subjectLead} />
-            <ul className="mt-10 grid gap-5 sm:grid-cols-2">
-              {strings.landing.subject.map(item => (
-                <li key={item.title} className="rounded-lg border border-line bg-surface p-5 shadow-card">
-                  <h3 className="text-base font-semibold">{item.title}</h3>
-                  <p className="mt-1.5 text-sm text-ink-2">{item.text}</p>
-                </li>
               ))}
             </ul>
           </div>

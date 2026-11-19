@@ -1,2 +1,4 @@
 # SPDX-FileCopyrightText: 2026 Junctura Contributors
 # SPDX-License-Identifier: Apache-2.0
+# Local runtime configuration of the portal (never commit the real one; see config.example.json).
+config.json

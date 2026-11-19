@@ -5,6 +5,8 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
+const JUNCTURA_URL = process.env.JUNCTURA_URL ?? "http://127.0.0.1:8080";
+
 
 // The UI library sources live outside this package and pull React through
 // ../ui/node_modules. To guarantee exactly one React (tests and bundle), pin every
@@ -34,8 +36,13 @@ export default defineConfig({
   },
   server: {
     // Sources used from outside this package; never the whole repository (it holds .junctura/ secrets).
-    fs: { allow: [".", "../ui", "../contracts", "../demo/plan.mjs", "../workflows"].map(path => fileURLToPath(new URL(path, import.meta.url))) },
+    fs: { allow: [".", "../ui", "../contracts", "../demo/plan.mjs", "../workflows", "../seed/data/accounts.json"].map(path => fileURLToPath(new URL(path, import.meta.url))) },
     port: 5180,
+    // Layer 1 behind the same origin in dev, as the deployed portal proxies /v1 and /identity.
+    proxy: {
+      "/v1": JUNCTURA_URL,
+      "/identity": JUNCTURA_URL,
+    },
   },
   // Never inline assets as data: URIs: the served CSP allows fonts and scripts from 'self' only.
   build: { sourcemap: true, assetsInlineLimit: 0 },

@@ -64,7 +64,7 @@ Khi các web app chạy trên subdomain riêng (ví dụ `*.junctura.studio`), t
 npm run demo:setup -- --tenant production --domain junctura.studio
 ```
 
-- Mỗi web client `health-<app>-web` nhận thêm origin `https://<app>.<domain>` (`clinic`, `hospital`, `myhealth`, `pharmacy`, `insurance`). Cổng Junctura Health là trang công khai, chỉ đọc, nên không có client đăng nhập nào.
+- Mỗi web client `health-<app>-web` nhận thêm origin `https://<app>.<domain>` (`clinic`, `hospital`, `myhealth`, `pharmacy`, `insurance`). Client `health-portal-web` của Cổng Junctura Health nhận origin `https://health.<domain>`; mỗi tài khoản nhân viên được một quyền `audit.read` trên client này để Bàn điều phối liệt kê được hồ sơ liên thông.
 - Client đã có được **cập nhật tại chỗ** qua Keycloak Admin API: chỉ thêm redirect URI, web origin và post-logout URI còn thiếu, không xoá cái nào (origin `localhost` vẫn dùng được khi dev). Chạy lại lần nữa không đổi gì.
 - `--domain` chỉ nhận tên host (`junctura.studio`), không nhận `https://` hay dấu `/`.
 - Đăng nhập trên subdomain cần Junctura công bố issuer bằng URL công khai (`PUBLIC_URL=https://<domain>` trong `.env` của Junctura DX-OS), nếu không trang đăng nhập Keycloak sẽ trỏ về `127.0.0.1`.

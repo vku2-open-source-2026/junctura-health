@@ -16,7 +16,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { CONTRACTS, buildManifest } from "../contracts/index.mjs";
 import { loadData } from "../seed/generate.mjs";
-import { APPS, appByName, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, providers, publicOrigin, renderAppEnv, userRepresentation, webClient } from "./plan.mjs";
+import { APPS, appByName, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, publicOrigin, renderAppEnv, staffPrincipals, userRepresentation, webClient } from "./plan.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, ".junctura", "demo");
@@ -159,6 +159,11 @@ export async function ensureWebClient(stack, desired) {
   return "updated";
 }
 
+/** The portal's public web client, with the tenant mapper of the realm. */
+export async function ensurePortalClient(stack, origins = portalOrigins()) {
+  return ensureWebClient(stack, portalClient(await stack.mappersFor(), origins));
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   if (options.help) { console.log("Usage: npm run demo:setup [-- --tenant tenant-a] [--domain junctura.studio]\nSee demo/README.md."); return; }
@@ -187,9 +192,19 @@ async function main() {
   await stack.sql(`INSERT INTO app_private.principals(tenant_id,issuer,subject,management_client,permissions)
     VALUES(${lib.q(options.tenant)},${lib.q(stack.issuer)},${lib.q(subjects[administrator.subject])},${lib.q(CONSOLE_CLIENT)},ARRAY[${lib.APPROVER_PERMISSIONS.map(lib.q).join(",")}]::text[])
     ON CONFLICT (tenant_id,issuer,subject,management_client) DO UPDATE SET permissions=EXCLUDED.permissions, enabled=true;`);
+  // Staff accounts open the coordination desk of the portal (patients never do there):
+  // one principal per staff account on the portal's web client, audit.read only.
+  for (const principal of staffPrincipals(accounts)) {
+    await stack.sql(`INSERT INTO app_private.principals(tenant_id,issuer,subject,management_client,permissions)
+      VALUES(${lib.q(options.tenant)},${lib.q(stack.issuer)},${lib.q(subjects[principal.subject])},${lib.q(principal.managementClient)},ARRAY[${principal.permissions.map(lib.q).join(",")}]::text[])
+      ON CONFLICT (tenant_id,issuer,subject,management_client) DO UPDATE SET permissions=EXCLUDED.permissions, enabled=true;`);
+  }
 
   const enrolled = {};
   for (const app of APPS) enrolled[app.name] = await ensureApplication(stack, lib, app, owner, approver, OUT, options.domain);
+  // The portal signs staff in with the realm but is not a Junctura application.
+  step(PORTAL.displayName);
+  await ensurePortalClient(stack, portalOrigins(options.domain));
   const published = {};
   for (const contract of CONTRACTS) published[contract.slug] = await ensureCapability(stack, contract, enrolled[contract.provider].appId, owner, approver);
   const graph = await (await stack.must(await stack.api("/v1/trust/graph", approver.token), [200], "Read trust graph")).json();
@@ -198,7 +213,7 @@ async function main() {
   console.log(`\n✔ Junctura Health demo is ready on ${stack.base} (${options.tenant}).`);
   console.log(`  Accounts: ${accounts.length} (${created} new). Shared password: ${local.DEMO_PASSWORD ? "DEMO_PASSWORD from your environment" : join(OUT, "accounts.env")}`);
   console.log(`  Application credentials: ${join(OUT, "<app>.env")} (private)`);
-  console.log(`  Portal: ${options.domain ? publicOrigin("health", options.domain) : "http://localhost:5180"} - public, read-only site of Layer 2 (no sign-in)`);
+  console.log(`  Portal: ${options.domain ? publicOrigin(PORTAL.key, options.domain) : `http://localhost:${PORTAL.webPort}`} - sign in with a demo staff account (config: portal/public/config.json)`);
   console.log(`  Subjects: ${join(OUT, "subjects.json")}${moved ? ` - ${moved} differ from the seed; load data with withSubjects()` : " - identical to the seed"}`);
   console.log("\n  To let Junctura call the provider applications, in the Junctura DX-OS directory:");
   console.log(`    npm run provider:pki -- ${providers().map(app => app.key).join(" ")}`);

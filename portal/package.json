@@ -2,7 +2,7 @@
   "name": "junctura-health-portal",
   "version": "0.1.0",
   "private": true,
-  "description": "Cổng Junctura Health: public web app where people manage their consents and see who accessed their data.",
+  "description": "Cổng Junctura Health, the GUI of Layer 2: public pages of the shared health space and the coordination desk where facility staff and the health department work cross-facility cases on Junctura.",
   "license": "Apache-2.0",
   "type": "module",
   "homepage": "https://github.com/vku2-open-source-2026/junctura-health/tree/main/portal",

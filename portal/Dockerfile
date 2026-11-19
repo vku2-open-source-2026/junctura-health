@@ -3,7 +3,7 @@
 # Build the portal from the repository root (the bundle aliases ../ui and ../contracts):
 #   docker build -f portal/Dockerfile -t junctura-health-portal .
 # Run it (see portal/compose.yaml): the container serves the static app and proxies
-# /v1/*, /v2/* and /identity/* to the Junctura stack, so the browser only talks to
+# /v1/* and /identity/* to the Junctura stack, so the browser only talks to
 # one origin and no CORS is needed.
 
 FROM node:24-alpine AS build
@@ -14,6 +14,7 @@ COPY contracts/capabilities contracts/capabilities
 COPY contracts/index.mjs contracts/index.d.ts contracts/package.json contracts/
 COPY demo/plan.mjs demo/
 COPY workflows workflows/
+COPY seed/data/accounts.json seed/data/
 COPY portal/package.json portal/package-lock.json portal/
 COPY portal/ portal/
 RUN npm --prefix ui ci --ignore-scripts \

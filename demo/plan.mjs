@@ -27,11 +27,11 @@ export const appByName = name => {
   return app;
 };
 
-// The public portal of Layer 2: a read-only site of this repository that introduces the
-// shared capability space. No sign-in, no Junctura client and no API calls at runtime;
-// patients manage their consents in the MyHealth app. `webPort` is for the docs only.
+// The public portal of Layer 2: a browser app of this repository that staff of the
+// facilities and of the health department sign in to (PKCE, no application enrollment
+// and no backend client). Patients use the MyHealth app instead.
 export const PORTAL = Object.freeze({
-  name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webPort: 5180,
+  name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
 });
 
 /** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
@@ -41,6 +41,9 @@ const localOrigins = port => [`http://localhost:${port}`, `http://127.0.0.1:${po
 
 /** Browser origins of an application's web client: its local port, plus its subdomain when a domain is given. */
 export const appWebOrigins = (app, domain) => [...localOrigins(app.webPort), ...(domain ? [publicOrigin(app.key, domain)] : [])];
+
+/** Browser origins of the portal: its local port, plus health.<domain> when a domain is given. */
+export const portalOrigins = domain => appWebOrigins(PORTAL, domain);
 
 function publicWebClient({ clientId, name }, protocolMappers, origins) {
   const bases = origins.map(origin => origin.replace(/\/+$/, ""));
@@ -68,6 +71,24 @@ export const internalOrigins = (contracts = CONTRACTS) => providers(contracts).m
 /** Public PKCE Keycloak client of an application's browser UI, for the given origins. */
 export const webClient = (app, protocolMappers, origins = appWebOrigins(app)) =>
   publicWebClient({ clientId: app.webClientId, name: `${app.displayName} (web)` }, protocolMappers, origins);
+
+/** Public PKCE Keycloak client of the portal, for the given browser origins. */
+export const portalClient = (protocolMappers, origins = portalOrigins()) =>
+  publicWebClient({ clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)` }, protocolMappers, origins);
+
+/**
+ * One portal principal per staff account (every role except patient): the desk reads
+ * the audit trail through the portal's web client, so it needs `audit.read` there.
+ * Patients never sign in to the portal and get no principal.
+ */
+export function staffPrincipals(accounts) {
+  return accounts.filter(account => account.role !== "patient").map(account => ({
+    username: account.username,
+    subject: account.subject,
+    managementClient: PORTAL.webClientId,
+    permissions: ["audit.read"],
+  }));
+}
 
 /**
  * Adds the redirect URIs, web origins and post-logout URIs of `desired` that an existing

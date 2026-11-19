@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Junctura Contributors
 # SPDX-License-Identifier: Apache-2.0
 # Sample compose for the portal: docker compose -f portal/compose.yaml up -d --build
+# Set JUNCTURA_UPSTREAM to the base URL of the running Junctura stack.
 
 services:
   portal:
@@ -12,4 +13,8 @@ services:
     ports:
       # Loopback by default: put a TLS reverse proxy in front (see portal/README.md).
       - "${PORTAL_BIND:-127.0.0.1}:5180:5180"
+    environment:
+      JUNCTURA_UPSTREAM: ${JUNCTURA_UPSTREAM:-http://host.docker.internal:8080}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
