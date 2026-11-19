@@ -7,7 +7,9 @@ import { existsSync } from "node:fs";
 assert.ok(existsSync("REUSE.toml"), "REUSE.toml missing");
 assert.ok(existsSync("LICENSES/Apache-2.0.txt"), "LICENSES/Apache-2.0.txt missing");
 
-const result = spawnSync("python", ["-m", "reuse", "lint"], {
+// python3 first: Debian/Ubuntu no longer ship a "python" alias.
+const python = spawnSync("python3", ["-c", "import reuse"]).status === 0 ? "python3" : "python";
+const result = spawnSync(python, ["-m", "reuse", "lint"], {
   encoding: "utf8",
   stdio: ["ignore", "pipe", "pipe"],
 });
