@@ -140,3 +140,35 @@ describe("postBytes", () => {
     expect(auth.get()).toBeNull();
   });
 });
+
+describe("session renewal", () => {
+  afterEach(() => configureApi(""));
+
+  it("renews the access token shortly before it expires, once for concurrent calls", async () => {
+    auth.set({ accessToken: "old", refreshToken: "r1", expiresAt: Date.now() + 5_000 });
+    const refresh = vi.fn(async () => { auth.set({ accessToken: "new", refreshToken: "r2", expiresAt: Date.now() + 300_000 }); return true; });
+    configureApi("", refresh);
+    stubFetch(() => json(200, {}));
+    await Promise.all([getJson("/v1/a"), getJson("/v1/b")]);
+    expect(refresh).toHaveBeenCalledTimes(1);
+    for (const call of calls) expect(new Headers(call.init?.headers).get("Authorization")).toBe("Bearer new");
+  });
+
+  it("renews and retries once after a 401, keeping the session", async () => {
+    auth.set({ accessToken: "old", refreshToken: "r1", expiresAt: Date.now() + 300_000 });
+    configureApi("", async () => { auth.set({ accessToken: "new", refreshToken: "r2", expiresAt: Date.now() + 300_000 }); return true; });
+    stubFetch(call => new Headers(call.init?.headers).get("Authorization") === "Bearer new" ? json(200, { ok: true }) : json(401, {}));
+    await expect(getJson("/v1/a")).resolves.toEqual({ ok: true });
+    expect(calls).toHaveLength(2);
+    expect(auth.get()?.accessToken).toBe("new");
+  });
+
+  it("ends the session when the renewal is refused", async () => {
+    auth.set({ accessToken: "old", refreshToken: "r1", expiresAt: Date.now() + 300_000 });
+    configureApi("", async () => false);
+    stubFetch(() => json(401, { error: "unauthorized" }));
+    await expect(getJson("/v1/a")).rejects.toBeInstanceOf(ApiError);
+    expect(auth.get()).toBeNull();
+    expect(auth.clearedBy()).toBe("unauthorized");
+  });
+});

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Junctura Contributors
 // SPDX-License-Identifier: Apache-2.0
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ReactElement } from "react";
 import {
@@ -150,15 +150,13 @@ const DEFINITIONS = {
 // ---------------------------------------------------------------- navigation frame
 
 describe("space navigation", () => {
-  it("lists the three spaces in the order H, P, D with letters, full names and an intro", () => {
-    expect(DESK_ROUTES.map(space => [space.letter, space.path, space.label])).toEqual([
-      ["H", "/lam-viec", s.nav.work],
-      ["P", "/ho-so", s.nav.profile],
-      ["D", "/dieu-hanh", s.nav.operate],
+  it("groups the side menu as work, cases, then operations, without space letters", () => {
+    expect(DESK_ROUTES.map(space => [space.path, space.label])).toEqual([
+      ["/lam-viec", s.nav.work],
+      ["/ho-so", s.nav.profile],
+      ["/dieu-hanh", s.nav.operate],
     ]);
-    for (const space of DESK_ROUTES) {
-      expect(space.intro).toContain("năng lực");
-    }
+    for (const space of DESK_ROUTES) expect(space.label).not.toMatch(/^[HPD] ·/);
     expect(DESK_ROUTES[0].children.map(child => child.label)).toEqual([s.nav.today, s.nav.notices, s.nav.directory]);
     expect(DESK_ROUTES[1].children.map(child => child.label)).toEqual([s.nav.caseList, s.nav.openCase]);
   });
@@ -388,8 +386,8 @@ describe("case detail page", () => {
     renderDesk(<CaseDetailPage id={DETAIL_ID} />, "tram-y-te", api.api);
     expect(api.gets.slice(0, 2)).toEqual([`/v1/workflows/executions/${DETAIL_ID}`, "/v1/workflows/executions?limit=100"]);
     await screen.findAllByText("CT-123456");
-    expect(screen.getAllByText("Trạm y tế").length).toBe(2); // openedBy + first step group
-    expect(screen.getAllByText("Bệnh viện").length).toBe(3); // coSoNhan + current + next step groups
+    expect(within(screen.getByRole("main")).getAllByText("Trạm y tế").length).toBe(2); // openedBy + first step group
+    expect(within(screen.getByRole("main")).getAllByText("Bệnh viện").length).toBe(3); // coSoNhan + current + next step groups
     expect(screen.getByText(s.detail.stepCurrent)).toBeTruthy();
     expect(screen.getAllByText(s.detail.stepFuture).length).toBeGreaterThan(0);
   });
@@ -400,7 +398,7 @@ describe("case detail page", () => {
     await screen.findByText(s.detail.form.title);
     expect(screen.getByText(s.urgency.khan)).toBeTruthy();
     expect(screen.getByText(s.detail.form.ghiChu).nextElementSibling?.textContent).toBe("Mời bệnh viện duyệt sớm.");
-    expect(screen.getAllByText("Bệnh viện").length).toBeGreaterThanOrEqual(2);
+    expect(within(screen.getByRole("main")).getAllByText("Bệnh viện").length).toBeGreaterThanOrEqual(2);
   });
 
   it("shows the complete button only to the facility of the current step", async () => {

@@ -8,23 +8,18 @@ import type { Urgency } from "./data";
 export const deskStrings = {
   product: "Cổng Junctura Health",
   nav: {
-    desk: "Không gian năng lực số",
+    desk: "Không gian làm việc",
     spaces: "Không gian",
     work: "Làm việc",
     today: "Hôm nay",
     notices: "Bảng tin",
     directory: "Danh bạ",
-    profile: "Hồ sơ",
-    caseList: "Danh sách",
-    openCase: "Mở hồ sơ",
+    profile: "Hồ sơ liên thông",
+    caseList: "Danh sách hồ sơ",
+    openCase: "Mở hồ sơ mới",
     operate: "Điều hành",
     signedInAs: "Nhân viên",
     signOut: "Đăng xuất",
-  },
-  spaces: {
-    h: "Không gian H (Làm việc) thuộc năng lực Con người số: nơi từng người trong cơ sở thấy việc của mình hôm nay.",
-    p: "Không gian P (Hồ sơ) thuộc năng lực Quy trình số: nơi cơ sở mở và theo dõi hồ sơ liên thông chạy qua nhiều cơ sở.",
-    d: "Không gian D (Điều hành) thuộc năng lực Dữ liệu số: đang được nối, sẽ là nơi cơ sở xem số liệu điều hành của mình.",
   },
   today: {
     title: "Hôm nay",

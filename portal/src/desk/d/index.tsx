@@ -8,20 +8,7 @@ import { DataMapPage } from "./data-map";
 import { DataOverviewPage } from "./overview";
 import { CatalogRedirect, DataSharingPage } from "./sharing";
 
-/** One page of space D, with its route path and hash link, for the app nav to wire in. */
-export interface DataRoute {
-  path: string;
-  hash: string;
-  label: string;
-}
-
-/** The sub-pages of space D (Điều hành), in menu order. */
-export const DATA_ROUTES: readonly DataRoute[] = [
-  { path: "/dieu-hanh", hash: "#/dieu-hanh", label: d.overview.title },
-  { path: "/dieu-hanh/trao-doi", hash: "#/dieu-hanh/trao-doi", label: d.exchange.title },
-  { path: "/dieu-hanh/du-lieu", hash: "#/dieu-hanh/du-lieu", label: d.dataMap.title },
-  { path: "/dieu-hanh/chia-se", hash: "#/dieu-hanh/chia-se", label: d.sharing.title },
-];
+export { DATA_ROUTES, type DataRoute } from "./routes";
 
 /** Small not-found page for unknown `/dieu-hanh/…` routes. */
 function DataNotFound() {

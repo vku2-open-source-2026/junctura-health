@@ -14,7 +14,7 @@ function SectionHeading({ id, title, lead }: { id: string; title: string; lead?:
   );
 }
 
-/** Public landing page of the portal: what Layer 2 is, the shared contracts and workflows, who takes part, and the way into the H-P-D workspace. */
+/** Public landing page of the portal: what Layer 2 is, the shared contracts and workflows, who takes part, and the way into the signed-in workspace. */
 export function PublicHome() {
   return (
     <div className="min-h-dvh bg-app text-ink">

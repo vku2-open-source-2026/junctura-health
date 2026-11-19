@@ -3,7 +3,7 @@
 import { SignInPage, Skeleton } from "@junctura/health-ui";
 import { useEffect, useRef, useState } from "react";
 import { configureApi, getBlob, getJson, postBytes, postJson } from "./api";
-import { auth, handleCallback, login, signOut, useSession } from "./auth";
+import { auth, handleCallback, login, refreshSession, signOut, useSession } from "./auth";
 import { loadConfig, type PortalConfig } from "./config";
 import { DeskProvider, deskPageFor, isDeskRoute, type DeskApi } from "./desk";
 import { PublicHome } from "./pages/PublicHome";
@@ -51,7 +51,7 @@ export function PortalApp() {
 
   useEffect(() => {
     void loadConfig().then(loaded => {
-      configureApi(loaded.juncturaUrl);
+      configureApi(loaded.juncturaUrl, () => refreshSession(loaded));
       setConfig(loaded);
     });
   }, []);

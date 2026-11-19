@@ -105,7 +105,7 @@ export const dataStrings = {
     loadingFields: "Đang tải tên trường…",
   },
   notFound: {
-    title: "Trang không tồn tại trong không gian Điều hành",
+    title: "Trang không tồn tại",
     action: "Về Tổng quan điều hành",
   },
 } as const;
