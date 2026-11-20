@@ -160,8 +160,15 @@ function sessionFrom(value: Record<string, unknown>, previous?: Session): Sessio
     idToken,
     name: idToken ? jwtName(idToken) : previous?.name,
     refreshToken: typeof value.refresh_token === "string" ? value.refresh_token : previous?.refreshToken,
-    expiresAt: typeof value.expires_in === "number" ? Date.now() + value.expires_in * 1000 : undefined,
+    expiresAt: expiryOf(value),
   };
+}
+
+/** When to renew: the earlier of the access and refresh token expiries (Keycloak's idle timeout can be the shorter one). */
+export function expiryOf(value: Record<string, unknown>): number | undefined {
+  const seconds = [value.expires_in, value.refresh_expires_in]
+    .filter((item): item is number => typeof item === "number" && Number.isFinite(item) && item > 0);
+  return seconds.length ? Date.now() + Math.min(...seconds) * 1000 : undefined;
 }
 
 /** Renews the access token with the refresh token; false when there is none or Junctura refuses. */
