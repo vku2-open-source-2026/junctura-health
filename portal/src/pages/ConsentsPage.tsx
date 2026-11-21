@@ -8,9 +8,10 @@ import { purposeLabel, strings } from "../strings";
 
 interface ConsentRow {
   consentId: string;
-  consumer?: { appId?: string };
+  consumer?: { appId?: string; displayName?: string | null };
   consumerAppId?: string;
   capabilityId: string;
+  capabilityTitle?: string | null;
   purposes?: string[];
   expiresAt?: string;
   state?: string;
@@ -38,7 +39,9 @@ const STATE_BADGE: Record<DisplayState, { label: string; tone: Tone }> = {
   unknown: { label: strings.consents.stateUnknown, tone: "neutral" },
 };
 
-const consumerName = (row: ConsentRow): string => appName(row.consumer?.appId ?? row.consumerAppId ?? "");
+// Names come from Junctura (GET /v1/me/consents); the demo catalog is only a fallback.
+const consumerName = (row: ConsentRow): string => row.consumer?.displayName || appName(row.consumer?.appId ?? row.consumerAppId ?? "");
+const capabilityName = (row: ConsentRow): string => row.capabilityTitle || capabilityTitle(row.capabilityId);
 
 /** The signed-in person's consents, one card per consent, mobile first. */
 export function ConsentsPage() {
@@ -102,7 +105,7 @@ export function ConsentsPage() {
           const state = displayState(row, now);
           const badge = STATE_BADGE[state];
           const consumer = consumerName(row);
-          const capability = capabilityTitle(row.capabilityId);
+          const capability = capabilityName(row);
           return (
             <li key={row.consentId} className="rounded-lg border border-line bg-surface shadow-card">
                 <div className="flex flex-wrap items-center justify-between gap-2 px-5 pt-4">
@@ -135,7 +138,7 @@ export function ConsentsPage() {
       <ConfirmDialog
         open={confirming?.action === "revoke"}
         title={strings.consents.revokeTitle}
-        description={confirming ? strings.consents.revokeDescription(consumerName(confirming.row), capabilityTitle(confirming.row.capabilityId)) : ""}
+        description={confirming ? strings.consents.revokeDescription(consumerName(confirming.row), capabilityName(confirming.row)) : ""}
         confirmLabel={strings.consents.confirmRevoke}
         danger
         loading={working}
@@ -145,7 +148,7 @@ export function ConsentsPage() {
       <ConfirmDialog
         open={confirming?.action === "grant"}
         title={strings.consents.grantAgainTitle}
-        description={confirming ? strings.consents.grantAgainDescription(consumerName(confirming.row), capabilityTitle(confirming.row.capabilityId)) : ""}
+        description={confirming ? strings.consents.grantAgainDescription(consumerName(confirming.row), capabilityName(confirming.row)) : ""}
         confirmLabel={strings.consents.confirmGrant}
         loading={working}
         onConfirm={() => confirming && void act(confirming.row, "grant")}

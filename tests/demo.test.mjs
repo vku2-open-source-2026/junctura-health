@@ -6,8 +6,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { APPS as CONTRACT_APPS, CONTRACTS, getContract } from "../contracts/index.mjs";
-import { APPS, existingGrant, internalOrigins, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
-import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensurePortalClient, resolveDxos } from "../demo/setup.mjs";
+import { APPS, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, publicOrigin, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
+import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensurePortalClient, ensureWebClient, resolveDxos } from "../demo/setup.mjs";
 import { loadData, withSubjects } from "../seed/generate.mjs";
 
 const reply = (status, body, headers = {}) => new Response(body === undefined ? null : JSON.stringify(body), { status, headers });
@@ -51,7 +51,12 @@ test("application env files round-trip and reject injected lines", () => {
   assert.equal(env.PROVIDER_HOST, "clinic.provider.internal");
   assert.throws(() => renderAppEnv(APPS[0], { baseUrl: "x", tenant: "t", appId: "a", clientSecret: "s\nEVIL=1" }), TypeError);
   assert.deepEqual(parseEnv("# c\nA=1\n B = \"two words\" \nbad line\n#X=9\r\nC='3'"), { A: "1", B: "two words", C: "3" });
-  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", help: false });
+  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", domain: null, help: false });
+  assert.equal(parseArgs(["--domain", "junctura.studio"]).domain, "junctura.studio");
+  for (const bad of ["", "localhost", "https://junctura.studio", "junctura.studio/", "Junctura.Studio", "-a.studio", "a..studio"]) {
+    assert.throws(() => parseArgs(["--domain", bad]), /Invalid --domain/, bad);
+  }
+  assert.throws(() => parseArgs(["--domain"]), /Invalid --domain/);
   assert.throws(() => parseArgs(["--tenant", "Bad Tenant"]), /Invalid/);
   assert.throws(() => parseArgs(["--nope"]), /Unknown/);
 });
@@ -77,8 +82,10 @@ test("the Junctura DX-OS checkout is required and never guessed", () => {
 });
 
 test("the portal is a public PKCE client on its own port, not a Junctura application", () => {
-  assert.deepEqual(PORTAL, { name: "junctura-health-portal", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180 });
+  assert.deepEqual(PORTAL, { name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180 });
   assert.deepEqual(portalOrigins(), ["http://localhost:5180", "http://127.0.0.1:5180"]);
+  assert.deepEqual(portalOrigins("junctura.studio"), ["http://localhost:5180", "http://127.0.0.1:5180", "https://health.junctura.studio"]);
+  assert.ok(!APPS.some(app => app.key === PORTAL.key), "the portal subdomain is not one of the applications");
   assert.ok(!APPS.some(app => app.webClientId === PORTAL.webClientId), "the portal client is not one of the five applications");
   const mappers = [{ name: "tenant" }];
   const client = portalClient(mappers, ["http://localhost:5180/", "https://portal.example.org"]);
@@ -96,18 +103,70 @@ test("the portal is a public PKCE client on its own port, not a Junctura applica
 test("the portal client is created once with the realm mappers", async () => {
   const mappers = [{ name: "tenant" }];
   const calls = [];
+  let stored = null;
   const stack = {
-    admin: async (path, body) => {
-      calls.push(body === undefined ? `GET ${path}` : `POST ${path}`);
-      if (path === "clients?clientId=health-portal-web") return reply(200, calls.length > 2 ? [{ id: "c1" }] : []);
-      return reply(201);
+    admin: async (path, body, method = body === undefined ? "GET" : "POST") => {
+      calls.push(`${method} ${path}`);
+      if (path === "clients?clientId=health-portal-web") return reply(200, stored ? [stored] : []);
+      if (path === "clients") { stored = { ...body, id: "c1" }; return reply(201); }
+      throw new Error(`unexpected ${method} ${path}`);
     },
     must: async (response, expected, what) => { assert.ok(expected.includes(response.status), what); return response; },
     mappersFor: async () => mappers,
   };
-  await ensurePortalClient(stack);
-  await ensurePortalClient(stack);
+  assert.equal(await ensurePortalClient(stack), "created");
+  assert.equal(stored.protocolMappers, mappers);
+  assert.equal(await ensurePortalClient(stack), "unchanged");
   assert.deepEqual(calls, ["GET clients?clientId=health-portal-web", "POST clients", "GET clients?clientId=health-portal-web"]);
+});
+
+test("web clients gain the subdomain origin of --domain", () => {
+  const clinic = APPS.find(app => app.key === "clinic");
+  assert.equal(publicOrigin("clinic", "junctura.studio"), "https://clinic.junctura.studio");
+  assert.deepEqual(appWebOrigins(clinic), ["http://localhost:5181", "http://127.0.0.1:5181"]);
+  assert.deepEqual(appWebOrigins(clinic, "junctura.studio"), ["http://localhost:5181", "http://127.0.0.1:5181", "https://clinic.junctura.studio"]);
+  const client = webClient(clinic, [], appWebOrigins(clinic, "junctura.studio"));
+  assert.deepEqual(client.redirectUris, ["http://localhost:5181/*", "http://127.0.0.1:5181/*", "https://clinic.junctura.studio/*"]);
+  assert.equal(client.attributes["post.logout.redirect.uris"], "http://localhost:5181/*##http://127.0.0.1:5181/*##https://clinic.junctura.studio/*");
+  assert.deepEqual(webClient(clinic, []).webOrigins, ["http://localhost:5181", "http://127.0.0.1:5181"], "local only without a domain");
+});
+
+test("merging a web client only adds what is missing and keeps everything else", () => {
+  const existing = {
+    id: "c1", clientId: "health-portal-web", publicClient: true, redirectUris: ["http://localhost:5180/*", "https://old.example.org/*"],
+    webOrigins: ["http://localhost:5180", "https://old.example.org"], protocolMappers: [{ name: "kept" }],
+    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": "http://localhost:5180/*##https://old.example.org/*", other: "x" },
+  };
+  const desired = portalClient([{ name: "ignored" }], portalOrigins("junctura.studio"));
+  const merged = mergeWebClient(existing, desired);
+  assert.deepEqual(merged.redirectUris, ["http://localhost:5180/*", "https://old.example.org/*", "http://127.0.0.1:5180/*", "https://health.junctura.studio/*"]);
+  assert.deepEqual(merged.webOrigins, ["http://localhost:5180", "https://old.example.org", "http://127.0.0.1:5180", "https://health.junctura.studio"]);
+  assert.equal(merged.attributes["post.logout.redirect.uris"],
+    "http://localhost:5180/*##https://old.example.org/*##http://127.0.0.1:5180/*##https://health.junctura.studio/*");
+  assert.equal(merged.attributes.other, "x");
+  assert.equal(merged.id, "c1");
+  assert.deepEqual(merged.protocolMappers, [{ name: "kept" }], "mappers of an existing client are left alone");
+  assert.equal(mergeWebClient(merged, desired), null, "nothing missing the second time");
+  assert.equal(existing.redirectUris.length, 2, "the input is not mutated");
+});
+
+test("an existing web client is updated in place with PUT, never recreated", async () => {
+  const calls = [];
+  let stored = { id: "c9", clientId: "health-clinic-web", redirectUris: ["http://localhost:5181/*"], webOrigins: ["http://localhost:5181"], attributes: {} };
+  const stack = {
+    admin: async (path, body, method = body === undefined ? "GET" : "POST") => {
+      calls.push(`${method} ${path}`);
+      if (path === "clients?clientId=health-clinic-web") return reply(200, [stored]);
+      if (path === "clients/c9" && method === "PUT") { stored = body; return reply(204); }
+      throw new Error(`unexpected ${method} ${path}`);
+    },
+    must: async (response, expected, what) => { assert.ok(expected.includes(response.status), what); return response; },
+  };
+  const clinic = APPS.find(app => app.key === "clinic");
+  assert.equal(await ensureWebClient(stack, webClient(clinic, [], appWebOrigins(clinic, "junctura.studio"))), "updated");
+  assert.ok(stored.redirectUris.includes("https://clinic.junctura.studio/*"));
+  assert.equal(await ensureWebClient(stack, webClient(clinic, [], appWebOrigins(clinic, "junctura.studio"))), "unchanged");
+  assert.deepEqual(calls, ["GET clients?clientId=health-clinic-web", "PUT clients/c9", "GET clients?clientId=health-clinic-web"]);
 });
 
 function fakeIdentity({ honorIds = true, existing = {} } = {}) {

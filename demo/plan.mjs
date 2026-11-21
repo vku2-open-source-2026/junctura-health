@@ -7,6 +7,8 @@ import { CONTRACTS } from "../contracts/index.mjs";
 
 export const PROVIDER_PORT = 8443;
 export const GRANT_DAYS = 90;
+const DOMAIN = /^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
+const LOGOUT_URIS = "post.logout.redirect.uris";
 
 // One Junctura application per repository. `clientId` is the backend (service
 // account) client, `webClientId` the public PKCE client its browser UI signs in with.
@@ -29,22 +31,33 @@ export const appByName = name => {
 // people in with the same realm and lets them manage their own consents and access
 // log through /v1/me. No application enrollment and no backend client are needed.
 export const PORTAL = Object.freeze({
-  name: "junctura-health-portal", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
+  name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
 });
 
-/** Local browser origins of the portal (same shape as the web clients of APPS). */
-export const portalOrigins = (port = PORTAL.webPort) => [`http://localhost:${port}`, `http://127.0.0.1:${port}`];
+/** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
+export const publicOrigin = (key, domain) => `https://${key}.${domain}`;
 
-/** Public PKCE Keycloak client of the portal, for the given browser origins. */
-export function portalClient(protocolMappers, origins = portalOrigins()) {
+const localOrigins = port => [`http://localhost:${port}`, `http://127.0.0.1:${port}`];
+
+/** Browser origins of an application's web client: its local port, plus its subdomain when a domain is given. */
+export const appWebOrigins = (app, domain) => [...localOrigins(app.webPort), ...(domain ? [publicOrigin(app.key, domain)] : [])];
+
+/** Browser origins of the portal: its local port, plus health.<domain> when a domain is given. */
+export const portalOrigins = domain => appWebOrigins(PORTAL, domain);
+
+function publicWebClient({ clientId, name }, protocolMappers, origins) {
   const bases = origins.map(origin => origin.replace(/\/+$/, ""));
   return {
-    clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)`, enabled: true, protocol: "openid-connect", publicClient: true,
+    clientId, name, enabled: true, protocol: "openid-connect", publicClient: true,
     standardFlowEnabled: true, directAccessGrantsEnabled: false, redirectUris: bases.map(base => `${base}/*`), webOrigins: bases,
-    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": bases.map(base => `${base}/*`).join("##") },
+    attributes: { "pkce.code.challenge.method": "S256", [LOGOUT_URIS]: bases.map(base => `${base}/*`).join("##") },
     protocolMappers,
   };
 }
+
+/** Public PKCE Keycloak client of the portal, for the given browser origins. */
+export const portalClient = (protocolMappers, origins = portalOrigins()) =>
+  publicWebClient({ clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)` }, protocolMappers, origins);
 
 /** Applications that publish at least one capability, in a stable order. */
 export const providers = (contracts = CONTRACTS) => APPS.filter(app => contracts.some(c => c.provider === app.name));
@@ -59,14 +72,28 @@ export function planGrants(contracts = CONTRACTS) {
 /** Exact origins Core must allow as internal providers (C4A_INTERNAL_PROVIDER_ORIGINS). */
 export const internalOrigins = (contracts = CONTRACTS) => providers(contracts).map(app => app.origin);
 
-export function webClient(app, protocolMappers) {
-  const bases = [`http://localhost:${app.webPort}`, `http://127.0.0.1:${app.webPort}`];
-  return {
-    clientId: app.webClientId, name: `${app.displayName} (web)`, enabled: true, protocol: "openid-connect", publicClient: true,
-    standardFlowEnabled: true, directAccessGrantsEnabled: false, redirectUris: bases.map(base => `${base}/*`), webOrigins: bases,
-    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": bases.map(base => `${base}/*`).join("##") },
-    protocolMappers,
+/** Public PKCE Keycloak client of an application's browser UI, for the given origins. */
+export const webClient = (app, protocolMappers, origins = appWebOrigins(app)) =>
+  publicWebClient({ clientId: app.webClientId, name: `${app.displayName} (web)` }, protocolMappers, origins);
+
+/**
+ * Adds the redirect URIs, web origins and post-logout URIs of `desired` that an existing
+ * Keycloak client lacks, and never removes any (other environments may still use them).
+ * Returns the updated representation, or null when nothing is missing.
+ */
+export function mergeWebClient(existing, desired) {
+  const logout = client => String(client.attributes?.[LOGOUT_URIS] ?? "").split("##").filter(Boolean);
+  let changed = false;
+  const union = (have = [], want = []) => {
+    const out = [...have];
+    for (const value of want) if (!out.includes(value)) { out.push(value); changed = true; }
+    return out;
   };
+  const redirectUris = union(existing.redirectUris, desired.redirectUris);
+  const webOrigins = union(existing.webOrigins, desired.webOrigins);
+  const logoutUris = union(logout(existing), logout(desired));
+  if (!changed) return null;
+  return { ...existing, redirectUris, webOrigins, attributes: { ...existing.attributes, [LOGOUT_URIS]: logoutUris.join("##") } };
 }
 
 // "BS. Phạm Minh Quang" -> first name "Quang", last name "BS. Phạm Minh" (Vietnamese order).
@@ -120,14 +147,16 @@ export function parseEnv(text) {
 }
 
 export function parseArgs(argv) {
-  const options = { tenant: "tenant-a", help: false };
+  const options = { tenant: "tenant-a", domain: null, help: false };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === "--tenant") options.tenant = argv[++i];
+    else if (arg === "--domain") options.domain = argv[++i];
     else if (arg === "--help" || arg === "-h") options.help = true;
     else throw new Error(`Unknown argument ${arg}`);
   }
   if (!/^[a-z][a-z0-9-]{0,62}$/.test(options.tenant ?? "")) throw new Error("Invalid --tenant");
+  if (options.domain !== null && !DOMAIN.test(options.domain ?? "")) throw new Error("Invalid --domain (expected a host name such as junctura.studio)");
   return options;
 }
 
