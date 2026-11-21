@@ -9,6 +9,11 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ## Unreleased
 
+### Changed
+
+- **Cổng Junctura Health is the GUI of Layer 2, the cross-facility health space coordinated by the health department**, not a patient portal. Public pages explain the three layers, the shared contracts, workflows and facilities; the signed-in workspace follows the H-P-D-I spaces of the OLP brief: H (today's work, notices from the health department, cross-facility directory), P (cross-facility cases with a coordination form, steps, notes and scanned attachments on the Layer 1 workflow API) and D (live operations for the health department: waiting cases by facility, processing times, data exchange from the Layer 1 audit chain, a data map of each facility without contents, and data and capability sharing by contract); I comes later. A small backend (`portal/server/`, enrolled as the Junctura application `junctura-health-portal`) keeps notices, notes and attachments in Layer 1 records and objects. Patient consents and the access log move to the MyHealth app of Layer 3.
+- `demo:setup` gives each staff account `audit.read` on the `health-portal-web` client, and the portal proxies only `/v1` and `/identity` (never the Keycloak admin console).
+
 ## 0.1.0 - 2026-11-12
 
 ### Changed
@@ -19,7 +24,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Added
 
-- **Guide to building a new Layer 2 app** (`docs/new-app.md`): what to reuse from Junctura DX-OS and what an app writes itself, environment and credentials from `demo:setup`, the app skeleton to copy from Clinic, sign-in and role checks, providing and calling capabilities with `@junctura/server-client` and `@junctura/health-contracts`, the shared UI, workflow rules and a pre-PR checklist.
+- **Guide to building a new Layer 3 app** (`docs/new-app.md`): what to reuse from Junctura DX-OS and what an app writes itself, environment and credentials from `demo:setup`, the app skeleton to copy from Clinic, sign-in and role checks, providing and calling capabilities with `@junctura/server-client` and `@junctura/health-contracts`, the shared UI, workflow rules and a pre-PR checklist.
 - **`@junctura/health-contracts` on npm**: a tag-triggered publish workflow (`contracts-vX.Y.Z`, with provenance, same pattern as the UI library), an install section in the contracts README, and a CI step that checks the package would contain the code, the schemas and the license files.
 - `LandingPage` in the Console structure (sticky bar with section links, headline with a picture of the app, benefits, how it works, who it is for, trust, questions, call to action, footer), `PreviewFrame` for that picture, `SignInPage` (centred card on the pattern background, message, text size and theme, back link) and `PublicControls`.
 

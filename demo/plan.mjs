@@ -27,12 +27,27 @@ export const appByName = name => {
   return app;
 };
 
-// The patient portal of Layer 2: a public browser app of this repository that signs
-// people in with the same realm and lets them manage their own consents and access
-// log through /v1/me. No application enrollment and no backend client are needed.
+// The public portal of Layer 2: a browser app of this repository that staff of the
+// facilities and of the health department sign in to (PKCE, no application enrollment
+// and no backend client). Patients use the MyHealth app instead.
 export const PORTAL = Object.freeze({
   name: "junctura-health-portal", key: "health", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
 });
+
+/**
+ * Backend of the portal: a real Junctura application (not one of the five Layer 3 apps)
+ * that keeps notices, case notes and attachments in `/v2/data` and `/v2/objects`.
+ * Its own backend client `health-portal-backend`; the web client stays `health-portal-web`.
+ * It publishes no capability and receives no grant.
+ */
+export const PORTAL_APP = Object.freeze({ ...PORTAL, clientId: "health-portal-backend" });
+
+/**
+ * Provider origin the portal backend is enrolled with. Junctura only accepts an HTTPS origin
+ * with a dotted host, and the portal provides no capability, so it gets an internal name like
+ * the provider apps, whatever the domain.
+ */
+export const portalAppOrigin = () => `https://${PORTAL.key}-portal.provider.internal:${PROVIDER_PORT}`;
 
 /** Public HTTPS origin of a browser app on its own subdomain, e.g. https://clinic.junctura.studio. */
 export const publicOrigin = (key, domain) => `https://${key}.${domain}`;
@@ -55,10 +70,6 @@ function publicWebClient({ clientId, name }, protocolMappers, origins) {
   };
 }
 
-/** Public PKCE Keycloak client of the portal, for the given browser origins. */
-export const portalClient = (protocolMappers, origins = portalOrigins()) =>
-  publicWebClient({ clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)` }, protocolMappers, origins);
-
 /** Applications that publish at least one capability, in a stable order. */
 export const providers = (contracts = CONTRACTS) => APPS.filter(app => contracts.some(c => c.provider === app.name));
 
@@ -75,6 +86,24 @@ export const internalOrigins = (contracts = CONTRACTS) => providers(contracts).m
 /** Public PKCE Keycloak client of an application's browser UI, for the given origins. */
 export const webClient = (app, protocolMappers, origins = appWebOrigins(app)) =>
   publicWebClient({ clientId: app.webClientId, name: `${app.displayName} (web)` }, protocolMappers, origins);
+
+/** Public PKCE Keycloak client of the portal, for the given browser origins. */
+export const portalClient = (protocolMappers, origins = portalOrigins()) =>
+  publicWebClient({ clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)` }, protocolMappers, origins);
+
+/**
+ * One portal principal per staff account (every role except patient): the desk reads
+ * the audit trail through the portal's web client, so it needs `audit.read` there.
+ * Patients never sign in to the portal and get no principal.
+ */
+export function staffPrincipals(accounts) {
+  return accounts.filter(account => account.role !== "patient").map(account => ({
+    username: account.username,
+    subject: account.subject,
+    managementClient: PORTAL.webClientId,
+    permissions: ["audit.read"],
+  }));
+}
 
 /**
  * Adds the redirect URIs, web origins and post-logout URIs of `desired` that an existing
@@ -128,9 +157,8 @@ export function renderAppEnv(app, { baseUrl, tenant, appId, clientSecret }) {
     line("JUNCTURA_APP_CLIENT_SECRET", clientSecret),
     line("JUNCTURA_WEB_CLIENT_ID", app.webClientId),
     line("JUNCTURA_ISSUER", `${baseUrl}/identity/realms/junctura`),
-    line("WEB_PORT", app.webPort),
-    line("PROVIDER_HOST", app.providerHost),
-    line("PROVIDER_PORT", PROVIDER_PORT),
+    ...(app.webPort === undefined ? [] : [line("WEB_PORT", app.webPort)]),
+    ...(app.providerHost === undefined ? [] : [line("PROVIDER_HOST", app.providerHost), line("PROVIDER_PORT", PROVIDER_PORT)]),
     "",
   ].join("\n");
 }

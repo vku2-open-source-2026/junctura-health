@@ -15,3 +15,11 @@ path = [
 ]
 SPDX-FileCopyrightText = "2026 Junctura Contributors"
 SPDX-License-Identifier = "Apache-2.0"
+
+# Installed dependencies are never committed; git's --no-empty-directory quirk
+# makes reuse walk portal/server/node_modules anyway (see reuse vcs.py), so the
+# third-party NOTICE of the SDK is annotated instead of edited in node_modules.
+[[annotations]]
+path = ["portal/server/node_modules/**"]
+SPDX-FileCopyrightText = "2026 Junctura Contributors"
+SPDX-License-Identifier = "Apache-2.0"

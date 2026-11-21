@@ -7,7 +7,7 @@
 
 # Junctura Health
 
-**Trao đổi dữ liệu y tế giữa trạm y tế, bệnh viện, nhà thuốc và bảo hiểm — chỉ khi người bệnh đồng ý, chỉ phần cần thiết, và mọi lần truy cập đều để lại dấu vết.**
+**Không gian y tế liên thông: luật chơi chung để trạm y tế, bệnh viện, nhà thuốc và bảo hiểm trao đổi dữ liệu (chỉ khi người bệnh đồng ý, chỉ phần cần thiết, mọi lần truy cập đều để lại dấu vết), và Cổng Junctura Health, nơi các cơ sở cùng làm việc, xử lý hồ sơ liên thông và Sở Y tế điều hành.**
 
 [![Checks](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml/badge.svg)](https://github.com/vku2-open-source-2026/junctura-health/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@junctura/health-contracts?label=health-contracts&color=176B80)](https://www.npmjs.com/package/@junctura/health-contracts)
@@ -24,12 +24,13 @@
 
 Một người bệnh khám ở trạm y tế xã rồi được chuyển lên bệnh viện. Bệnh viện hỏi lại tiền sử, dị ứng, tiêm chủng; giấy chuyển tuyến đi bằng tay; nhà thuốc không biết đơn có xung đột dị ứng hay không; bảo hiểm phải xin cả hồ sơ để kiểm tra một khoản chi. Dữ liệu nằm rải rác, hoặc bị chia sẻ nhiều hơn mức cần thiết.
 
-**Junctura Health** là **Tầng 2** trong mô hình ba tầng của Junctura: [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos) là **Tầng 1**, lõi trung lập giữ định danh, đồng thuận, vé gọi, bản ghi, lưu trữ, workflow, nhật ký và Console quản trị; Tầng 2 là **không gian năng lực y tế dùng chung** (hợp đồng năng lực, quy trình y tế BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo); **Tầng 3** là năm ứng dụng Clinic, Hospital, Pharmacy, Insurance, MyHealth. Mỗi bên giữ dữ liệu của mình và chỉ trả lời khi được hỏi, theo một **hợp đồng năng lực** định nghĩa trước dữ liệu vào, dữ liệu ra, bên được gọi và mục đích được phép. Các ứng dụng không gọi nhau qua một trạm trung gian: mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình; Tầng 1 kiểm tra đồng thuận, cấp vé dùng một lần và ghi audit cho mỗi lần gọi.
+**Junctura Health** là **Tầng 2** trong mô hình ba tầng của Junctura: [Junctura DX-OS](https://github.com/vku2-open-source-2026/junctura-dxos) là **Tầng 1**, lõi trung lập giữ định danh, đồng thuận, vé gọi, bản ghi, lưu trữ, workflow, nhật ký và Console quản trị; Tầng 2 là **không gian y tế liên thông** do Sở Y tế điều phối: đặt luật chơi chung (hợp đồng năng lực, quy trình liên thông BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo) và chạy **Cổng Junctura Health**, nơi nhân viên các cơ sở mở và xử lý hồ sơ liên thông như chuyển tuyến, xác minh đơn thuốc, xác minh chi phí, còn Sở Y tế theo dõi hồ sơ đang chờ ở đâu. Tầng 2 không giữ bệnh án và không phục vụ người bệnh; **Tầng 3** là năm ứng dụng Clinic, Hospital, Pharmacy, Insurance, MyHealth. Mỗi bên giữ dữ liệu của mình và chỉ trả lời khi được hỏi, theo một **hợp đồng năng lực** định nghĩa trước dữ liệu vào, dữ liệu ra, bên được gọi và mục đích được phép. Các ứng dụng không gọi nhau qua một trạm trung gian: mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình; Tầng 1 kiểm tra đồng thuận, cấp vé dùng một lần và ghi audit cho mỗi lần gọi.
 
 ### Ai làm gì trong luồng này
 
 | Bối cảnh | Ứng dụng | Junctura Health giúp gì |
 | --- | --- | --- |
+| **Sở Y tế** | Cổng Junctura Health (Tầng 2) | Điều phối hồ sơ liên thông giữa các cơ sở, duyệt quyền dùng hợp đồng trong Console |
 | **Trạm y tế xã** | Clinic | Giữ hồ sơ ban đầu, tiêm chủng, lập phiếu chuyển tuyến; chỉ trả lời khi người bệnh đồng ý |
 | **Bệnh viện** | Hospital | Tiếp nhận chuyển tuyến với hồ sơ tóm tắt và cảnh báo dị ứng; truy cập cấp cứu có ghi lý do và hậu kiểm |
 | **Người bệnh** | MyHealth | Cấp và thu hồi đồng thuận, xem ai đã truy cập dữ liệu của mình |
@@ -106,12 +107,12 @@ sequenceDiagram
 | --- | --- |
 | [junctura-dxos](https://github.com/vku2-open-source-2026/junctura-dxos) | Tầng 1: định danh, đồng thuận, vé gọi, nhật ký chuỗi băm, Console quản trị |
 | **junctura-health** (repo này) | Tầng 2: hợp đồng năng lực, quy trình y tế BPMN, thư viện giao diện, dữ liệu mẫu, môi trường demo |
+| `portal/` của repo này | Tầng 2 — Cổng Junctura Health: phần công khai (hợp đồng, quy trình, cơ sở tham gia) và không gian làm việc theo H-P-D-I của đề (H · Làm việc, P · Hồ sơ, D · Điều hành; I làm sau) cho nhân viên cơ sở và Sở Y tế, đăng nhập bằng Junctura, có backend riêng lưu bảng tin, ghi chú và tệp qua Tầng 1 |
 | [junctura-clinic](https://github.com/vku2-open-source-2026/junctura-clinic) | Tầng 3 — Trạm y tế xã: hồ sơ, hàng chờ khám, tiêm chủng, chuyển tuyến |
 | [junctura-hospital](https://github.com/vku2-open-source-2026/junctura-hospital) | Tầng 3 — Bệnh viện: tiếp nhận chuyển tuyến, cảnh báo dị ứng, truy cập cấp cứu |
 | [junctura-myhealth](https://github.com/vku2-open-source-2026/junctura-myhealth) | Tầng 3 — Sổ sức khỏe: cấp và thu hồi đồng thuận, xem ai đã truy cập |
 | [junctura-pharmacy](https://github.com/vku2-open-source-2026/junctura-pharmacy) | Tầng 3 — Nhà thuốc: xác minh đơn thuốc trước khi phát |
 | [junctura-insurance](https://github.com/vku2-open-source-2026/junctura-insurance) | Tầng 3 — Bảo hiểm: xác minh chi phí, chỉ nhận có/không |
-| `portal/` của repo này | Tầng 2 — Cổng Junctura Health: đăng nhập qua Junctura, quản lý đồng thuận, xem ai đã truy cập dữ liệu của mình |
 
 ## Hợp đồng năng lực
 
@@ -202,7 +203,7 @@ Thư viện bên thứ ba được khai trong `package.json` và `package-lock.j
 contracts/   hợp đồng năng lực (npm: @junctura/health-contracts)
 workflows/   quy trình y tế BPMN (chuyển tuyến, xác minh đơn thuốc, xác minh chi phí)
 ui/          thư viện giao diện (npm: @junctura/health-ui)
-portal/      cổng người bệnh (GUI Tầng 2 chạy trên lõi, xem portal/README.md)
+portal/      Cổng Junctura Health, GUI của Tầng 2 (xem portal/README.md)
 seed/        bộ sinh dữ liệu mẫu giả lập, xác định theo seed
 demo/        dựng môi trường demo trên Junctura DX-OS
 docs/        thiết kế, UX, tính năng từng ứng dụng, hướng dẫn dựng app mới

@@ -6,8 +6,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { APPS as CONTRACT_APPS, CONTRACTS, getContract } from "../contracts/index.mjs";
-import { APPS, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, publicOrigin, renderAppEnv, splitName, userRepresentation, webClient } from "../demo/plan.mjs";
-import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensurePortalClient, ensureWebClient, resolveDxos } from "../demo/setup.mjs";
+import { APPS, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, publicOrigin, renderAppEnv, splitName, staffPrincipals, userRepresentation, webClient } from "../demo/plan.mjs";
+import { demoPassword, ensureAccounts, ensureApplication, ensureCapability, ensureGrant, ensureWebClient, resolveDxos } from "../demo/setup.mjs";
 import { loadData, withSubjects } from "../seed/generate.mjs";
 
 const reply = (status, body, headers = {}) => new Response(body === undefined ? null : JSON.stringify(body), { status, headers });
@@ -100,24 +100,21 @@ test("the portal is a public PKCE client on its own port, not a Junctura applica
   assert.equal(client.protocolMappers, mappers);
 });
 
-test("the portal client is created once with the realm mappers", async () => {
-  const mappers = [{ name: "tenant" }];
-  const calls = [];
-  let stored = null;
-  const stack = {
-    admin: async (path, body, method = body === undefined ? "GET" : "POST") => {
-      calls.push(`${method} ${path}`);
-      if (path === "clients?clientId=health-portal-web") return reply(200, stored ? [stored] : []);
-      if (path === "clients") { stored = { ...body, id: "c1" }; return reply(201); }
-      throw new Error(`unexpected ${method} ${path}`);
-    },
-    must: async (response, expected, what) => { assert.ok(expected.includes(response.status), what); return response; },
-    mappersFor: async () => mappers,
-  };
-  assert.equal(await ensurePortalClient(stack), "created");
-  assert.equal(stored.protocolMappers, mappers);
-  assert.equal(await ensurePortalClient(stack), "unchanged");
-  assert.deepEqual(calls, ["GET clients?clientId=health-portal-web", "POST clients", "GET clients?clientId=health-portal-web"]);
+test("every staff account gets a portal principal with audit.read; patients never do", () => {
+  const accounts = loadData("accounts.json").users;
+  const principals = staffPrincipals(accounts);
+  assert.equal(principals.length, accounts.filter(account => account.role !== "patient").length);
+  for (const principal of principals) {
+    const account = accounts.find(item => item.subject === principal.subject);
+    assert.ok(account, "a principal carries the seeded subject of its account");
+    assert.notEqual(account.role, "patient");
+    assert.equal(principal.username, account.username);
+    assert.equal(principal.managementClient, "health-portal-web");
+    assert.deepEqual(principal.permissions, ["audit.read"]);
+  }
+  assert.ok(principals.every(principal => !principal.username.startsWith("benhnhan.")), "no patient principal");
+  assert.deepEqual(principals.map(principal => principal.username),
+    ["ysi.tramyte", "bacsi.benhvien", "duocsi.nhathuoc", "giamdinh.baohiem", "quantri.soyte"]);
 });
 
 test("web clients gain the subdomain origin of --domain", () => {
@@ -132,17 +129,18 @@ test("web clients gain the subdomain origin of --domain", () => {
 });
 
 test("merging a web client only adds what is missing and keeps everything else", () => {
+  const clinic = APPS.find(app => app.key === "clinic");
   const existing = {
-    id: "c1", clientId: "health-portal-web", publicClient: true, redirectUris: ["http://localhost:5180/*", "https://old.example.org/*"],
-    webOrigins: ["http://localhost:5180", "https://old.example.org"], protocolMappers: [{ name: "kept" }],
-    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": "http://localhost:5180/*##https://old.example.org/*", other: "x" },
+    id: "c1", clientId: "health-clinic-web", publicClient: true, redirectUris: ["http://localhost:5181/*", "https://old.example.org/*"],
+    webOrigins: ["http://localhost:5181", "https://old.example.org"], protocolMappers: [{ name: "kept" }],
+    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": "http://localhost:5181/*##https://old.example.org/*", other: "x" },
   };
-  const desired = portalClient([{ name: "ignored" }], portalOrigins("junctura.studio"));
+  const desired = webClient(clinic, [{ name: "ignored" }], appWebOrigins(clinic, "junctura.studio"));
   const merged = mergeWebClient(existing, desired);
-  assert.deepEqual(merged.redirectUris, ["http://localhost:5180/*", "https://old.example.org/*", "http://127.0.0.1:5180/*", "https://health.junctura.studio/*"]);
-  assert.deepEqual(merged.webOrigins, ["http://localhost:5180", "https://old.example.org", "http://127.0.0.1:5180", "https://health.junctura.studio"]);
+  assert.deepEqual(merged.redirectUris, ["http://localhost:5181/*", "https://old.example.org/*", "http://127.0.0.1:5181/*", "https://clinic.junctura.studio/*"]);
+  assert.deepEqual(merged.webOrigins, ["http://localhost:5181", "https://old.example.org", "http://127.0.0.1:5181", "https://clinic.junctura.studio"]);
   assert.equal(merged.attributes["post.logout.redirect.uris"],
-    "http://localhost:5180/*##https://old.example.org/*##http://127.0.0.1:5180/*##https://health.junctura.studio/*");
+    "http://localhost:5181/*##https://old.example.org/*##http://127.0.0.1:5181/*##https://clinic.junctura.studio/*");
   assert.equal(merged.attributes.other, "x");
   assert.equal(merged.id, "c1");
   assert.deepEqual(merged.protocolMappers, [{ name: "kept" }], "mappers of an existing client are left alone");

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { useCallback, useEffect, useState } from "react";
 
-/** Minimal hash router: the portal uses only `#/`, `#/dong-thuan` and `#/truy-cap`. */
+/** Minimal hash router: the public portal renders the home page for every hash route. */
 
 export const readHash = (): string => {
   const raw = window.location.hash.replace(/^#/, "");

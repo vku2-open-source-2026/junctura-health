@@ -6,7 +6,7 @@ import { readHash } from "./router";
 
 /**
  * Sign-in with Junctura: OIDC Authorization Code + PKCE (S256), written small on purpose.
- * The access token lives in memory only; state and verifier live in sessionStorage just
+ * Tokens live in memory only (the refresh token renews the short-lived access token); state and verifier live in sessionStorage just
  * long enough to survive the redirect, and are removed as soon as they are used.
  */
 
@@ -15,6 +15,10 @@ export interface Session {
   idToken?: string;
   /** Display name decoded from the id token (not verified again; display only). */
   name?: string;
+  /** Keycloak refresh token, used to renew the access token before it expires. */
+  refreshToken?: string;
+  /** When the access token expires, in epoch milliseconds. */
+  expiresAt?: number;
 }
 
 type Reason = "unauthorized" | "logout";
@@ -142,14 +146,41 @@ export async function handleCallback(config: PortalConfig): Promise<string | nul
   if (!response.ok) throw new Error("token_exchange_failed");
   const value = (await response.json()) as Record<string, unknown>;
   if (typeof value.access_token !== "string") throw new Error("token_exchange_failed");
-  auth.set({
-    accessToken: value.access_token,
-    idToken: typeof value.id_token === "string" ? value.id_token : undefined,
-    name: typeof value.id_token === "string" ? jwtName(value.id_token) : undefined,
-  });
+  auth.set(sessionFrom(value));
   // Drop the OIDC query from the address, keep the hash the user started from.
   window.history.replaceState(null, "", window.location.pathname + window.location.hash);
   return pending.returnTo || null;
+}
+
+/** A session from a token response, keeping what a refresh response leaves out. */
+function sessionFrom(value: Record<string, unknown>, previous?: Session): Session {
+  const idToken = typeof value.id_token === "string" ? value.id_token : previous?.idToken;
+  return {
+    accessToken: value.access_token as string,
+    idToken,
+    name: idToken ? jwtName(idToken) : previous?.name,
+    refreshToken: typeof value.refresh_token === "string" ? value.refresh_token : previous?.refreshToken,
+    expiresAt: typeof value.expires_in === "number" ? Date.now() + value.expires_in * 1000 : undefined,
+  };
+}
+
+/** Renews the access token with the refresh token; false when there is none or Junctura refuses. */
+export async function refreshSession(config: PortalConfig): Promise<boolean> {
+  const current = auth.get();
+  if (!current?.refreshToken) return false;
+  const body = new URLSearchParams({ grant_type: "refresh_token", refresh_token: current.refreshToken, client_id: config.clientId });
+  try {
+    const response = await fetch(oidcEndpoints(config).token, {
+      method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body,
+    });
+    if (!response.ok) return false;
+    const value = (await response.json()) as Record<string, unknown>;
+    if (typeof value.access_token !== "string" || auth.get() !== current) return false;
+    auth.set(sessionFrom(value, current));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /** Signs out in Junctura (end_session) and forgets the in-memory token. */

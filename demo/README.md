@@ -29,6 +29,7 @@ Cần Docker đang chạy vì lệnh dùng công cụ vận hành của Junctura
 | --- | --- |
 | Tài khoản | 55 tài khoản từ `seed/data/accounts.json` (5 nhân viên, 50 người bệnh), cùng một mật khẩu demo |
 | Ứng dụng | 5 ứng dụng (`health-clinic`, `health-hospital`, `health-myhealth`, `health-pharmacy`, `health-insurance`), mỗi ứng dụng có client backend và client web (PKCE) `health-<tên>-web` |
+| Cổng (backend) | `junctura-health-portal` với client backend `health-portal-backend` (lưu bảng tin, ghi chú, tệp của Cổng qua `/v2/data` và `/v2/objects`); dùng lại client web `health-portal-web`, không tạo client web mới, không công bố năng lực, không grant |
 | Năng lực | 6 năng lực từ `contracts/`, đã kiểm tra, duyệt và công bố |
 | Grant | 7 grant theo đúng bảng bên cung cấp / bên gọi của hợp đồng, hạn 90 ngày |
 | Quản trị | `quantri.soyte` được quyền duyệt và rà soát trong Console |
@@ -78,13 +79,13 @@ Lệnh yêu cầu Keycloak giữ đúng `subject` của dữ liệu mẫu. Nếu
 
 ## Chạy trên tên miền thật
 
-Khi các web app và cổng chạy trên subdomain riêng (ví dụ `*.junctura.studio`), thêm `--domain`:
+Khi các web app chạy trên subdomain riêng (ví dụ `*.junctura.studio`), thêm `--domain`:
 
 ```sh
 npm run demo:setup -- --tenant production --domain junctura.studio
 ```
 
-- Mỗi web client `health-<app>-web` nhận thêm origin `https://<app>.<domain>` (`clinic`, `hospital`, `myhealth`, `pharmacy`, `insurance`); client của cổng `health-portal-web` nhận `https://health.<domain>`.
+- Mỗi web client `health-<app>-web` nhận thêm origin `https://<app>.<domain>` (`clinic`, `hospital`, `myhealth`, `pharmacy`, `insurance`). Client `health-portal-web` của Cổng Junctura Health nhận origin `https://health.<domain>`; mỗi tài khoản nhân viên được một quyền `audit.read` trên client này để Bàn điều phối liệt kê được hồ sơ liên thông.
 - Client đã có được **cập nhật tại chỗ** qua Keycloak Admin API: chỉ thêm redirect URI, web origin và post-logout URI còn thiếu, không xoá cái nào (origin `localhost` vẫn dùng được khi dev). Chạy lại lần nữa không đổi gì.
 - `--domain` chỉ nhận tên host (`junctura.studio`), không nhận `https://` hay dấu `/`.
 - Đăng nhập trên subdomain cần Junctura công bố issuer bằng URL công khai (`PUBLIC_URL=https://<domain>` trong `.env` của Junctura DX-OS), nếu không trang đăng nhập Keycloak sẽ trỏ về `127.0.0.1`.
