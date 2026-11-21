@@ -7,10 +7,11 @@ Tài liệu này là nguồn chung cho giao diện của cả năm ứng dụng 
 
 Tính năng từng app nằm ở [`APPS.md`](APPS.md); phân tích người dùng và bố cục màn hình ở [`UX.md`](UX.md). Thành phần dùng chung nằm ở thư viện `@junctura/health-ui` (xây theo các tài liệu này).
 
-## 1. Ranh giới hai tầng
+## 1. Ranh giới ba tầng
 
-- **Tầng 1 (`junctura-dxos`)** không có nghiệp vụ y tế: định danh, đồng thuận, năng lực, nhật ký, Console quản trị.
-- **Tầng 2 (repo này và bốn repo app)** mới có người bệnh, đơn thuốc, chuyển tuyến. Mọi dữ liệu và màn hình y tế nằm ở đây.
+- **Tầng 1 (`junctura-dxos`)** không có nghiệp vụ y tế: định danh, đồng thuận, năng lực, vé gọi, bản ghi, lưu trữ, workflow, nhật ký, Console quản trị.
+- **Tầng 2 (repo này — `junctura-health`)** là không gian năng lực y tế dùng chung: hợp đồng năng lực, quy trình y tế BPMN (`workflows/`), thư viện giao diện `@junctura/health-ui`, dữ liệu mẫu và môi trường demo. Tầng 2 không giữ dữ liệu người bệnh thật.
+- **Tầng 3 (năm app Clinic, Hospital, MyHealth, Pharmacy, Insurance)** mới có người bệnh, đơn thuốc, chuyển tuyến. Mọi dữ liệu và màn hình y tế nằm ở đây. Các app không gọi nhau qua một trạm trung gian: mỗi app gọi thẳng Tầng 1 bằng định danh riêng; Tầng 1 kiểm consent, cấp vé dùng một lần và ghi audit cho mỗi lần gọi.
 - Giao diện y tế **không** được thêm vào Console. Console tự có thông tin khi các app đăng ký ứng dụng, năng lực và grant qua API của Junctura.
 
 ## 2. Người dùng và bối cảnh
@@ -98,7 +99,7 @@ Thu hồi đồng thuận, huỷ đơn, gửi phiếu chuyển tuyến: hộp x�
 
 ## 5. Nhận diện thị giác
 
-Lấy từ Junctura Console (`junctura-dxos`, `console/src/index.css` và `docs/CONSOLE.md`) để hai tầng trông cùng một sản phẩm. Nếu Console đổi, đổi theo.
+Lấy từ Junctura Console (`junctura-dxos`, `console/src/index.css` và `docs/CONSOLE.md`) để ba tầng trông cùng một sản phẩm. Nếu Console đổi, đổi theo.
 
 | Token | Giá trị sáng | Dùng cho |
 | --- | --- | --- |
