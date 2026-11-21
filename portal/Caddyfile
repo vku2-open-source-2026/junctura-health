@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2026 Junctura Contributors
+# SPDX-License-Identifier: Apache-2.0
+# Static portal + same-origin reverse proxy to the Junctura stack. JUNCTURA_UPSTREAM is
+# the base URL of the running stack, e.g. http://core:8080 in a compose network.
+
+{
+	admin off
+}
+
+:5180 {
+	encode zstd gzip
+
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+	}
+
+	root * /srv/portal
+
+	@junctura path /v1/* /v2/* /identity/*
+	handle @junctura {
+		reverse_proxy {$JUNCTURA_UPSTREAM}
+	}
+
+	handle {
+		try_files {path} /index.html
+		file_server
+	}
+}

@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2026 Junctura Contributors
+# SPDX-License-Identifier: Apache-2.0
+# Keep the build context small and free of local secrets (portal/Dockerfile builds from the root).
+**/node_modules
+**/dist
+**/coverage
+.git
+.env
+.env.*
+.junctura/
+.junctura-dxos/
+.orchestrator/
+portal/public/config.json
+portal/config.json
+release/

@@ -1,0 +1,12 @@
+/* SPDX-FileCopyrightText: 2026 Junctura Contributors */
+/* SPDX-License-Identifier: Apache-2.0 */
+
+/*
+ * The portal builds its own Tailwind stylesheet on the shared tokens and components of
+ * @junctura/health-ui, whose sources are aliased into the build (no copied components).
+ * The shared styles.css brings Tailwind (auto sources disabled) and the token theme and
+ * scans ui/src; the @source below adds the portal's own files to the scan.
+ */
+@import "../../ui/src/styles.css";
+@import "../../ui/src/fonts.css";
+@source "./";

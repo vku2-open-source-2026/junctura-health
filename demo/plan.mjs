@@ -25,6 +25,27 @@ export const appByName = name => {
   return app;
 };
 
+// The patient portal of Layer 2: a public browser app of this repository that signs
+// people in with the same realm and lets them manage their own consents and access
+// log through /v1/me. No application enrollment and no backend client are needed.
+export const PORTAL = Object.freeze({
+  name: "junctura-health-portal", displayName: "Cổng Junctura Health", webClientId: "health-portal-web", webPort: 5180,
+});
+
+/** Local browser origins of the portal (same shape as the web clients of APPS). */
+export const portalOrigins = (port = PORTAL.webPort) => [`http://localhost:${port}`, `http://127.0.0.1:${port}`];
+
+/** Public PKCE Keycloak client of the portal, for the given browser origins. */
+export function portalClient(protocolMappers, origins = portalOrigins()) {
+  const bases = origins.map(origin => origin.replace(/\/+$/, ""));
+  return {
+    clientId: PORTAL.webClientId, name: `${PORTAL.displayName} (web)`, enabled: true, protocol: "openid-connect", publicClient: true,
+    standardFlowEnabled: true, directAccessGrantsEnabled: false, redirectUris: bases.map(base => `${base}/*`), webOrigins: bases,
+    attributes: { "pkce.code.challenge.method": "S256", "post.logout.redirect.uris": bases.map(base => `${base}/*`).join("##") },
+    protocolMappers,
+  };
+}
+
 /** Applications that publish at least one capability, in a stable order. */
 export const providers = (contracts = CONTRACTS) => APPS.filter(app => contracts.some(c => c.provider === app.name));
 

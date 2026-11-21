@@ -16,7 +16,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { CONTRACTS, buildManifest } from "../contracts/index.mjs";
 import { loadData } from "../seed/generate.mjs";
-import { APPS, appByName, existingGrant, internalOrigins, parseArgs, parseEnv, planGrants, providers, renderAppEnv, userRepresentation, webClient } from "./plan.mjs";
+import { APPS, appByName, existingGrant, internalOrigins, parseArgs, parseEnv, planGrants, portalClient, portalOrigins, PORTAL, providers, renderAppEnv, userRepresentation, webClient } from "./plan.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, ".junctura", "demo");
@@ -139,6 +139,17 @@ export async function ensureGrant(stack, grant, enrolled, published, edges, owne
     { "If-Match": created.headers.get("etag") }), [200], `Activate grant ${label}`);
 }
 
+/** Creates the portal's public web client once, with the tenant mapper of the realm. */
+export async function ensurePortalClient(stack, origins = portalOrigins()) {
+  const { admin, must } = stack;
+  if ((await (await admin(`clients?clientId=${PORTAL.webClientId}`)).json()).length) {
+    step(`${PORTAL.webClientId} already present`);
+    return;
+  }
+  await must(await admin("clients", portalClient(await stack.mappersFor(), origins)), [201], `Create ${PORTAL.webClientId}`);
+  step(`${PORTAL.webClientId} created for ${PORTAL.displayName}`);
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   if (options.help) { console.log("Usage: npm run demo:setup [-- --tenant tenant-a]\nSee demo/README.md."); return; }
@@ -170,6 +181,9 @@ async function main() {
 
   const enrolled = {};
   for (const app of APPS) enrolled[app.name] = await ensureApplication(stack, lib, app, owner, approver);
+  // The portal signs people in with the realm but is not a Junctura application.
+  step(PORTAL.displayName);
+  await ensurePortalClient(stack);
   const published = {};
   for (const contract of CONTRACTS) published[contract.slug] = await ensureCapability(stack, contract, enrolled[contract.provider].appId, owner, approver);
   const graph = await (await stack.must(await stack.api("/v1/trust/graph", approver.token), [200], "Read trust graph")).json();
@@ -178,6 +192,7 @@ async function main() {
   console.log(`\n✔ Junctura Health demo is ready on ${stack.base} (${options.tenant}).`);
   console.log(`  Accounts: ${accounts.length} (${created} new). Shared password: ${local.DEMO_PASSWORD ? "DEMO_PASSWORD from your environment" : join(OUT, "accounts.env")}`);
   console.log(`  Application credentials: ${join(OUT, "<app>.env")} (private)`);
+  console.log(`  Portal: http://localhost:${PORTAL.webPort} - sign in as a demo patient (config: portal/public/config.json)`);
   console.log(`  Subjects: ${join(OUT, "subjects.json")}${moved ? ` - ${moved} differ from the seed; load data with withSubjects()` : " - identical to the seed"}`);
   console.log("\n  To let Junctura call the provider applications, in the Junctura DX-OS directory:");
   console.log(`    npm run provider:pki -- ${providers().map(app => app.key).join(" ")}`);
