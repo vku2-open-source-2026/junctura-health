@@ -1,9 +1,11 @@
 <!-- SPDX-FileCopyrightText: 2026 Junctura Contributors -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# Dựng một ứng dụng Tầng 2 mới
+# Dựng một ứng dụng Tầng 3 mới
 
 Hướng dẫn cho người làm một ứng dụng Junctura Health mới (Hospital, Pharmacy, MyHealth, Insurance hoặc ứng dụng khác). Làm theo thứ tự;  mỗi bước nói rõ **dùng lại gì** và **tự viết gì**.
+
+Ứng dụng ở **Tầng 3**: giữ nghiệp vụ, dữ liệu và màn hình y tế của mình; mọi trao đổi giữa các app đi qua **Tầng 1** (`junctura-dxos`) — không app nào gọi app khác, và không có một trạm trung gian chung nào đứng giữa các app.
 
 ## 1. Nguyên tắc: dùng lại Tầng 1, không viết lại
 
@@ -24,7 +26,7 @@ Hướng dẫn cho người làm một ứng dụng Junctura Health mới (Hospi
 
 Hai lưu ý:
 
-- **Không gọi thẳng app khác và không đọc database của app khác.** Mọi trao đổi đi qua Junctura.
+- **Không gọi thẳng app khác và không đọc database của app khác.** Mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình (`JUNCTURA_APP_ID`, client riêng): Tầng 1 kiểm consent, cấp vé dùng một lần và ghi audit cho mỗi lần gọi. Không có một trạm trung gian chung nào đứng giữa các app.
 - **Kho bản ghi của Tầng 1 (`createRecord`, `getRecord`) là kho JSON đơn giản**: mỗi bản ghi tối đa 64 KiB, danh sách tối đa 100 dòng, không lọc, không tìm kiếm. Dữ liệu đơn giản thì dùng kho này. Nếu app cần tìm, lọc, sắp xếp, đếm (ví dụ tìm người bệnh không dấu) mà phải dùng cơ sở dữ liệu riêng, hãy ghi lý do ngắn vào README của app. Clinic làm theo cách này.
 
 ## 2. Chuẩn bị môi trường
