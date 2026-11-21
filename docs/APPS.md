@@ -3,7 +3,7 @@
 
 # Tính năng các ứng dụng Junctura Health
 
-Mỗi ứng dụng là một **sản phẩm làm việc** của đúng nghề đó, dùng được độc lập. Junctura là lớp liên thông chạy bên dưới: các app chỉ trao đổi dữ liệu với nhau qua [hợp đồng năng lực](../contracts/README.md). Cách thiết kế giao diện nằm ở [`DESIGN.md`](DESIGN.md).
+Mỗi ứng dụng là một **sản phẩm làm việc** của đúng nghề đó, dùng được độc lập. Junctura (Tầng 1) là lớp liên thông chạy bên dưới: các app không gọi nhau qua một trạm trung gian; mỗi app gọi thẳng Tầng 1 bằng định danh riêng của mình — Tầng 1 kiểm consent, cấp vé dùng một lần, ghi audit — và chỉ trao đổi dữ liệu với nhau theo [hợp đồng năng lực](../contracts/README.md). Cách thiết kế giao diện nằm ở [`DESIGN.md`](DESIGN.md).
 
 ## 1. Nguyên tắc chung
 
