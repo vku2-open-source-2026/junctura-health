@@ -27,6 +27,7 @@
     "ui:preview": "npm --prefix ui run preview",
     "seed:generate": "node seed/generate.mjs",
     "seed:check": "node seed/generate.mjs --check",
-    "demo:setup": "node demo/setup.mjs"
+    "demo:setup": "node demo/setup.mjs",
+    "demo:seed": "node demo/seed.mjs"
   }
 }

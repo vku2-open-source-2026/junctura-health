@@ -17,7 +17,8 @@
 2. Trong repo này:
 
    ```sh
-   npm run demo:setup
+   npm run demo:setup -- --tenant production
+   npm run demo:seed
    ```
 
 Cần Docker đang chạy vì lệnh dùng công cụ vận hành của Junctura DX-OS (`scripts/lib/demo-stack.mjs`) từ thư mục bên cạnh; không có mã nào được chép sang repo này.
@@ -33,6 +34,25 @@ Cần Docker đang chạy vì lệnh dùng công cụ vận hành của Junctura
 | Quản trị | `quantri.soyte` được quyền duyệt và rà soát trong Console |
 
 Chạy lại bao nhiêu lần cũng được: cái gì đã có thì giữ nguyên.
+
+## Nạp dữ liệu demo
+
+`npm run demo:seed` nạp dữ liệu y tế mẫu (từ `seed/data/`) vào hệ thống đang chạy, sau khi `npm run demo:setup` đã xong:
+
+```sh
+npm run demo:seed -- --tenant production   # tenant phải khớp JUNCTURA_TENANT trong file env
+npm run demo:seed -- --dry-run             # chỉ in kế hoạch số lượng, không gọi mạng, không cần file env
+```
+
+Lệnh đọc credential riêng của từng ứng dụng trong `.junctura/demo/<app>.env`, tự lấy token bằng `client_credentials` và ghi mọi thứ qua API thật của Tầng 1 bằng đúng định danh của app sở hữu:
+
+| Ứng dụng | Bản ghi | Tệp | Quy trình |
+| --- | --- | --- | --- |
+| junctura-clinic | `benh-nhan`, `chuyen-tuyen` | giấy chuyển tuyến + 1 tệp thử bị cách ly (EICAR) | `junctura_chuyen_tuyen` |
+| junctura-hospital | `don-thuoc`, `chi-phi-dieu-tri` | đơn thuốc, kết quả xét nghiệm | `junctura_xac_minh_don_thuoc` |
+| junctura-insurance | `yeu-cau-thanh-toan` | yêu cầu thanh toán | `junctura_xac_minh_chi_phi` |
+
+Mỗi bản ghi có trường `ma` ổn định, mỗi tệp có UUID suy ra từ (tenant, app, mã tài liệu), mỗi lần chạy quy trình có `Idempotency-Key` cố định — chạy lại không tạo trùng. Không đụng app pharmacy (đã có dữ liệu riêng). Không có định nghĩa quy trình nào thì lệnh báo rõ và bỏ qua phần quy trình. Không in secret, token hay dữ liệu người bệnh; cuối lệnh chỉ in bảng tổng kết theo app.
 
 ## File sinh ra (không commit)
 
