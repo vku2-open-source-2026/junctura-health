@@ -252,10 +252,10 @@ test("env files must exist, carry the required keys and match the requested tena
 });
 
 test("arguments: tenant default production, dry-run, help, unknown rejected", () => {
-  assert.deepEqual(parseArgs([]), { tenant: "production", dryRun: false, help: false });
-  assert.deepEqual(parseArgs(["--dry-run"]), { tenant: "production", dryRun: true, help: false });
-  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", dryRun: false, help: false });
-  assert.deepEqual(parseArgs(["--help"]), { tenant: "production", dryRun: false, help: true });
+  assert.deepEqual(parseArgs([]), { tenant: "production", dryRun: false, isolated: false, help: false });
+  assert.deepEqual(parseArgs(["--dry-run"]), { tenant: "production", dryRun: true, isolated: false, help: false });
+  assert.deepEqual(parseArgs(["--tenant", "tenant-b"]), { tenant: "tenant-b", dryRun: false, isolated: false, help: false });
+  assert.deepEqual(parseArgs(["--help"]), { tenant: "production", dryRun: false, isolated: false, help: true });
   assert.throws(() => parseArgs(["--tenant", "Bad Tenant"]), /Invalid/);
   assert.throws(() => parseArgs(["--nope"]), /Unknown/);
 });

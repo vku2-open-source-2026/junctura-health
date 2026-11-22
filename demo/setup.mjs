@@ -16,7 +16,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { CONTRACTS, buildManifest } from "../contracts/index.mjs";
 import { loadData } from "../seed/generate.mjs";
-import { APPS, appByName, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, parseArgs, parseEnv, planGrants, portalAppOrigin, PORTAL, portalClient, portalOrigins, PORTAL_APP, providers, publicOrigin, renderAppEnv, staffPrincipals, userRepresentation, webClient } from "./plan.mjs";
+import { APPS, appByName, appWebOrigins, existingGrant, internalOrigins, mergeWebClient, namesFor, parseArgs, parseEnv, planGrants, portalAppOrigin, PORTAL, portalClient, portalOrigins, PORTAL_APP, providers, publicOrigin, renderAppEnv, scopedApp, staffPrincipals, userRepresentation, webClient } from "./plan.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, ".junctura", "demo");
@@ -44,28 +44,55 @@ export function demoPassword(env, file) {
   return generated;
 }
 
-export async function ensureAccounts(stack, accounts, password) {
+const TENANT_LINE = /^JUNCTURA_TENANT=(.*)$/m;
+
+/** Reads only the JUNCTURA_TENANT line of an env file; no other key is looked at or printed. */
+export function envTenant(file) {
+  const match = readFileSync(file, "utf8").match(TENANT_LINE);
+  return match ? match[1].trim().replace(/^["']|["']$/g, "") : undefined;
+}
+
+/**
+ * Guard against mixing tenants in one output directory: when an application env file is
+ * already there and belongs to another tenant, stop with a clear message (suggesting
+ * --isolated) before anything is written to Keycloak or the database. Runs without
+ * --isolated keep their behaviour when the directory matches the requested tenant.
+ */
+export function guardOutDir(directory, tenant) {
+  for (const app of [...APPS, PORTAL_APP]) {
+    const file = join(directory, `${app.name}.env`);
+    if (!existsSync(file)) continue;
+    const existing = envTenant(file);
+    if (existing && existing !== tenant) {
+      throw new Error(`${file} thuộc tenant "${existing}" trong khi lệnh chạy cho tenant "${tenant}": dùng --isolated (kèm --tenant ${tenant}) để nạp tenant thứ hai vào thư mục riêng, hoặc chạy lại với --tenant ${existing}`);
+    }
+  }
+}
+
+export async function ensureAccounts(stack, accounts, password, names = namesFor({})) {
   const { admin, must, group, roles, tenant } = stack;
   const subjects = {};
   let created = 0;
   for (const account of accounts) {
-    const find = async () => (await (await admin(`users?username=${encodeURIComponent(account.username)}&exact=true`)).json())[0]?.id;
+    const username = names.username(account);
+    const find = async () => (await (await admin(`users?username=${encodeURIComponent(username)}&exact=true`)).json())[0]?.id;
     let id = await find();
     if (!id) {
-      const user = userRepresentation(account, tenant, password);
-      // A partial import keeps the seeded subject as the Keycloak user id.
+      // Without --isolated a partial import keeps the seeded subject as the Keycloak user
+      // id; with --isolated Keycloak issues a fresh id for the tenant-prefixed username.
+      const user = userRepresentation(account, tenant, password, { fixedId: !names.isolated, username });
       const imported = await admin("partialImport", { ifResourceExists: "SKIP", users: [user] });
       id = imported.ok ? await find() : undefined;
       if (!id) {
         const { id: _seeded, ...plain } = user;
-        id = stack.idFrom(await must(await admin("users", plain), [201], `Create ${account.username}`));
+        id = stack.idFrom(await must(await admin("users", plain), [201], `Create ${username}`));
       }
       created++;
     } else {
-      await must(await admin(`users/${id}/reset-password`, { type: "password", value: password, temporary: false }, "PUT"), [204], `Set password of ${account.username}`);
+      await must(await admin(`users/${id}/reset-password`, { type: "password", value: password, temporary: false }, "PUT"), [204], `Set password of ${username}`);
     }
-    await must(await admin(`users/${id}/groups/${group.id}`, undefined, "PUT"), [204], `Add ${account.username} to ${tenant}`);
-    await must(await admin(`users/${id}/role-mappings/realm`, roles), [204], `Assign roles to ${account.username}`);
+    await must(await admin(`users/${id}/groups/${group.id}`, undefined, "PUT"), [204], `Add ${username} to ${tenant}`);
+    await must(await admin(`users/${id}/role-mappings/realm`, roles), [204], `Assign roles to ${username}`);
     subjects[account.subject] = id;
   }
   return { subjects, created };
@@ -166,12 +193,15 @@ export async function ensurePortalClient(stack, origins = portalOrigins()) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  if (options.help) { console.log("Usage: npm run demo:setup [-- --tenant tenant-a] [--domain junctura.studio]\nSee demo/README.md."); return; }
+  if (options.help) { console.log("Usage: npm run demo:setup [-- --tenant tenant-a] [--isolated] [--domain junctura.studio]\nSee demo/README.md."); return; }
+  const names = namesFor(options);
   const local = { ...readEnv(join(ROOT, ".env")), ...process.env };
   const dxos = resolveDxos(local);
   for (const [key, value] of Object.entries(readEnv(join(dxos.directory, ".env")))) process.env[key] ??= value;
-  mkdirSync(OUT, { recursive: true, mode: 0o700 });
-  const password = demoPassword(local, join(OUT, "accounts.env"));
+  mkdirSync(names.outDir, { recursive: true, mode: 0o700 });
+  // Before anything is written to Keycloak or the database: refuse to mix tenants.
+  guardOutDir(names.outDir, options.tenant);
+  const password = demoPassword(local, join(names.outDir, "accounts.env"));
 
   // The operator helper talks to the stack's own database container, so run from its directory.
   process.chdir(dxos.directory);
@@ -184,9 +214,9 @@ async function main() {
 
   const accounts = loadData("accounts.json").users;
   step(`Demo accounts (${accounts.length})`);
-  const { subjects, created } = await ensureAccounts(stack, accounts, password);
+  const { subjects, created } = await ensureAccounts(stack, accounts, password, names);
   const moved = Object.entries(subjects).filter(([seeded, actual]) => seeded !== actual).length;
-  writeFileSync(join(OUT, "subjects.json"), `${JSON.stringify(subjects, null, 2)}\n`);
+  writeFileSync(join(names.outDir, "subjects.json"), `${JSON.stringify(subjects, null, 2)}\n`);
   // The health administrator reviews grants and emergency access in the Console.
   const administrator = accounts.find(account => account.role === "health-admin");
   await stack.sql(`INSERT INTO app_private.principals(tenant_id,issuer,subject,management_client,permissions)
@@ -200,8 +230,9 @@ async function main() {
       ON CONFLICT (tenant_id,issuer,subject,management_client) DO UPDATE SET permissions=EXCLUDED.permissions, enabled=true;`);
   }
 
+  const apps = APPS.map(app => scopedApp(app, names));
   const enrolled = {};
-  for (const app of APPS) enrolled[app.name] = await ensureApplication(stack, lib, app, owner, approver, OUT, options.domain);
+  for (const app of apps) enrolled[app.name] = await ensureApplication(stack, lib, app, owner, approver, names.outDir, options.domain);
   // The portal signs staff in with the realm but is not a Junctura application.
   step(PORTAL.displayName);
   await ensurePortalClient(stack, portalOrigins(options.domain));
@@ -210,21 +241,22 @@ async function main() {
   // /v2/objects. It reuses the portal web client, publishes no capability and
   // needs no grant; the web client of the portal stays untouched.
   step(`${PORTAL_APP.displayName} (backend)`);
-  enrolled[PORTAL_APP.name] = await ensureApplication(stack, lib, { ...PORTAL_APP, origin: portalAppOrigin() }, owner, approver, OUT, options.domain);
+  enrolled[PORTAL_APP.name] = await ensureApplication(stack, lib, { ...PORTAL_APP, clientId: names.clientId(PORTAL_APP), origin: portalAppOrigin(names.isolated ? names.tenant : undefined) }, owner, approver, names.outDir, options.domain);
   const published = {};
   for (const contract of CONTRACTS) published[contract.slug] = await ensureCapability(stack, contract, enrolled[contract.provider].appId, owner, approver);
   const graph = await (await stack.must(await stack.api("/v1/trust/graph", approver.token), [200], "Read trust graph")).json();
   for (const grant of planGrants()) await ensureGrant(stack, grant, enrolled, published, graph.edges, owner, approver);
 
-  console.log(`\n✔ Junctura Health demo is ready on ${stack.base} (${options.tenant}).`);
-  console.log(`  Accounts: ${accounts.length} (${created} new). Shared password: ${local.DEMO_PASSWORD ? "DEMO_PASSWORD from your environment" : join(OUT, "accounts.env")}`);
-  console.log(`  Application credentials: ${join(OUT, "<app>.env")} (private)`);
+  console.log(`\n✔ Junctura Health demo is ready on ${stack.base} (${options.tenant}${names.isolated ? ", isolated" : ""}).`);
+  console.log(`  Accounts: ${accounts.length} (${created} new). Shared password: ${local.DEMO_PASSWORD ? "DEMO_PASSWORD from your environment" : join(names.outDir, "accounts.env")}`);
+  console.log(`  Application credentials: ${join(names.outDir, "<app>.env")} (private)`);
   console.log(`  Portal: ${options.domain ? publicOrigin(PORTAL.key, options.domain) : `http://localhost:${PORTAL.webPort}`} - sign in with a demo staff account (config: portal/public/config.json)`);
-  console.log(`  Subjects: ${join(OUT, "subjects.json")}${moved ? ` - ${moved} differ from the seed; load data with withSubjects()` : " - identical to the seed"}`);
+  console.log(`  Subjects: ${join(names.outDir, "subjects.json")}${moved ? ` - ${moved} differ from the seed; load data with withSubjects()` : " - identical to the seed"}`);
   console.log("\n  To let Junctura call the provider applications, in the Junctura DX-OS directory:");
   console.log(`    npm run provider:pki -- ${providers().map(app => app.key).join(" ")}`);
   console.log(`    add to .env:  C4A_ENABLED=true`);
-  console.log(`                  C4A_INTERNAL_PROVIDER_ORIGINS=${JSON.stringify(internalOrigins())}`);
+  console.log(`                  C4A_INTERNAL_PROVIDER_ORIGINS=${JSON.stringify(internalOrigins(undefined, apps))}`);
+  if (names.isolated) console.log(`  Isolated tenant: provider hosts carry the tenant (${apps.map(app => app.providerHost).join(", ")}); make sure the provider PKI issues a certificate for each of them.`);
   console.log("    docker compose -f compose.yaml -f compose.providers.yaml up -d core");
 }
 

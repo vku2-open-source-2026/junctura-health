@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { codeChallenge, oidcEndpoints } from "../src/auth";
+import { codeChallenge, expiryOf, oidcEndpoints } from "../src/auth";
 
 describe("PKCE", () => {
   it("computes the S256 challenge: base64url of the SHA-256 digest of the verifier", async () => {
@@ -31,5 +31,16 @@ describe("OIDC endpoints", () => {
   it("uses juncturaUrl for the token request when the API is on another origin", () => {
     const config = { juncturaUrl: "http://127.0.0.1:8080/", issuer: "http://127.0.0.1:8080/identity/realms/junctura", clientId: "health-portal-web" };
     expect(oidcEndpoints(config, "http://localhost:5180").token).toBe("http://127.0.0.1:8080/identity/realms/junctura/protocol/openid-connect/token");
+  });
+});
+
+describe("session expiry", () => {
+  it("renews by the earlier of the access and refresh token expiries", () => {
+    const now = Date.now();
+    const at = expiryOf({ expires_in: 3600, refresh_expires_in: 1800 }) ?? 0;
+    expect(at - now).toBeGreaterThanOrEqual(1800 * 1000 - 50);
+    expect(at - now).toBeLessThan(1801 * 1000);
+    expect((expiryOf({ expires_in: 300 }) ?? 0) - now).toBeLessThan(301 * 1000);
+    expect(expiryOf({})).toBeUndefined();
   });
 });
