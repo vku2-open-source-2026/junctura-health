@@ -11,6 +11,7 @@ All notable changes to Junctura Health are recorded here. The format follows
 
 ### Changed
 
+- The seed vocabulary moves from `seed/catalog.mjs` into topic files under `seed/catalog/`, and the scenario patients An and Binh move to `seed/scenario.mjs`. Generated data is unchanged byte for byte; `seed/catalog.mjs` stays as a re-export because Hospital imports it at runtime.
 - **Cổng Junctura Health is the GUI of Layer 2, the cross-facility health space coordinated by the health department**, not a patient portal. Public pages explain the three layers, the shared contracts, workflows and facilities; the signed-in workspace follows the H-P-D-I spaces of the OLP brief: H (today's work, notices from the health department, cross-facility directory), P (cross-facility cases with a coordination form, steps, notes and scanned attachments on the Layer 1 workflow API) and D (live operations for the health department: waiting cases by facility, processing times, data exchange from the Layer 1 audit chain, a data map of each facility without contents, and data and capability sharing by contract); I comes later. A small backend (`portal/server/`, enrolled as the Junctura application `junctura-health-portal`) keeps notices, notes and attachments in Layer 1 records and objects. Patient consents and the access log move to the MyHealth app of Layer 3.
 - `demo:setup` gives each staff account `audit.read` on the `health-portal-web` client, and the portal proxies only `/v1` and `/identity` (never the Keycloak admin console).
 

@@ -3,7 +3,7 @@
 
 # Dữ liệu mẫu giả lập
 
-Toàn bộ dữ liệu ở đây là **giả lập**, do bộ sinh của dự án (`generate.mjs`) tạo ra từ bộ từ vựng nhóm tự viết (`catalog.mjs`). Không có người thật, không dùng bộ dữ liệu hay công cụ bên ngoài. Mã chẩn đoán theo ICD-10 (WHO), mã vắc xin theo CVX.
+Toàn bộ dữ liệu ở đây là **giả lập**, do bộ sinh của dự án (`generate.mjs`) tạo ra từ bộ từ vựng nhóm tự viết (`catalog/`). Không có người thật, không dùng bộ dữ liệu hay công cụ bên ngoài. Mã chẩn đoán theo ICD-10 (WHO), mã vắc xin theo CVX.
 
 ```sh
 npm run seed:generate   # ghi lại seed/data/*.json
