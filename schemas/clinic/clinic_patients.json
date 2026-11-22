@@ -1,0 +1,81 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "patientName",
+      "birthYear",
+      "sex",
+      "ward"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subject": {
+        "type": "string"
+      },
+      "patientName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "birthYear": {
+        "type": "integer",
+        "minimum": 1900,
+        "maximum": 2100
+      },
+      "sex": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female",
+          "unknown"
+        ]
+      },
+      "ward": {
+        "type": "string",
+        "maxLength": 160
+      },
+      "phone": {
+        "type": "string",
+        "maxLength": 32
+      },
+      "insuranceNo": {
+        "type": "string",
+        "maxLength": 32
+      },
+      "noKnownAllergies": {
+        "type": "boolean"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "vaccinationsUpdatedAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "patientId",
+    "subject"
+  ],
+  "uniqueKey": "patientId",
+  "searchable": [
+    "patientName"
+  ],
+  "sensitive": [
+    "patientId",
+    "subject",
+    "patientName",
+    "birthYear",
+    "sex",
+    "ward",
+    "phone",
+    "insuranceNo",
+    "noKnownAllergies"
+  ]
+}

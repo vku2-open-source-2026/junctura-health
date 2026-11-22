@@ -1,0 +1,54 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "settlementId",
+      "claimIds",
+      "count",
+      "totalVnd",
+      "at"
+    ],
+    "properties": {
+      "settlementId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "claimIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "count": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "totalVnd": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "createdByName": {
+        "type": "string"
+      },
+      "at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "settlementId",
+    "at"
+  ],
+  "uniqueKey": "settlementId",
+  "searchable": [],
+  "sensitive": [
+    "claimIds",
+    "createdBy",
+    "createdByName"
+  ]
+}

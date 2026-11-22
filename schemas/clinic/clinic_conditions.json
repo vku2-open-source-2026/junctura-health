@@ -1,0 +1,41 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "name",
+      "since"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "code": {
+        "type": "string",
+        "maxLength": 16
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "since": {
+        "type": "string",
+        "format": "date"
+      }
+    }
+  },
+  "indexed": [
+    "patientId",
+    "since"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "code",
+    "name",
+    "since"
+  ]
+}

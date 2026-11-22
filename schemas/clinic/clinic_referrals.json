@@ -1,0 +1,92 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "referralId",
+      "patientId",
+      "issuedAt",
+      "toFacility",
+      "urgency",
+      "reason",
+      "status"
+    ],
+    "properties": {
+      "referralId": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "issuedAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "toFacility": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "urgency": {
+        "type": "string",
+        "enum": [
+          "routine",
+          "urgent",
+          "emergency"
+        ]
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "provisionalDiagnosis": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160
+          }
+        }
+      },
+      "treatmentGiven": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "issued",
+          "received",
+          "cancelled"
+        ]
+      },
+      "by": {
+        "type": "string"
+      }
+    }
+  },
+  "indexed": [
+    "referralId",
+    "patientId",
+    "issuedAt",
+    "status"
+  ],
+  "uniqueKey": "referralId",
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "referralId",
+    "reason",
+    "provisionalDiagnosis",
+    "treatmentGiven",
+    "by"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "subject",
+      "updatedAt"
+    ],
+    "properties": {
+      "subject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "contactName": {
+        "type": "string"
+      },
+      "contactPhone": {
+        "type": "string"
+      },
+      "bloodType": {
+        "type": "string"
+      },
+      "note": {
+        "type": "string"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "subject"
+  ],
+  "uniqueKey": "subject",
+  "searchable": [],
+  "sensitive": [
+    "subject",
+    "contactName",
+    "contactPhone",
+    "bloodType",
+    "note"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "kind",
+      "requestId",
+      "admissionId",
+      "patientSubject",
+      "reason",
+      "findings",
+      "diagnosis",
+      "plan",
+      "createdBy"
+    ],
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "hospital-exam-note/v1"
+        ]
+      },
+      "requestId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "admissionId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "patientSubject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      },
+      "findings": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1200
+      },
+      "diagnosis": {
+        "type": "object",
+        "required": [
+          "code",
+          "name"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      },
+      "plan": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "createdBy": {
+        "type": "object",
+        "required": [
+          "subject",
+          "displayName"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "indexed": [
+    "requestId",
+    "admissionId",
+    "patientSubject"
+  ],
+  "uniqueKey": "requestId",
+  "searchable": [],
+  "sensitive": [
+    "patientSubject",
+    "reason",
+    "findings",
+    "diagnosis",
+    "plan",
+    "admissionId",
+    "createdBy"
+  ]
+}

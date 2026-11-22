@@ -1,0 +1,33 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "code",
+      "vaccine"
+    ],
+    "properties": {
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 16
+      },
+      "vaccine": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "doses": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  },
+  "indexed": [
+    "code"
+  ],
+  "uniqueKey": "code",
+  "searchable": [
+    "vaccine"
+  ],
+  "sensitive": []
+}

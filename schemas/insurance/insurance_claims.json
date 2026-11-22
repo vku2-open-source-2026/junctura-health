@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "claimId",
+      "subject",
+      "requestedAmountVnd"
+    ],
+    "properties": {
+      "claimId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "requestedAmountVnd": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "submittedAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "claimId",
+    "subject",
+    "submittedAt"
+  ],
+  "uniqueKey": "claimId",
+  "searchable": [],
+  "sensitive": [
+    "subject",
+    "requestedAmountVnd"
+  ]
+}

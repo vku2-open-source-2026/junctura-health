@@ -1,0 +1,70 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "kind",
+      "operationId",
+      "patientSubject",
+      "capability",
+      "justification",
+      "executionId",
+      "endedAt",
+      "createdBy"
+    ],
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "hospital-emergency-request/v1"
+        ]
+      },
+      "operationId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "patientSubject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "capability": {
+        "type": "string",
+        "enum": [
+          "pre-visit-summary",
+          "allergy-list"
+        ]
+      },
+      "justification": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 500
+      },
+      "executionId": {},
+      "endedAt": {},
+      "createdBy": {
+        "type": "object",
+        "required": [
+          "subject",
+          "displayName"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "indexed": [
+    "operationId"
+  ],
+  "uniqueKey": "operationId",
+  "searchable": [],
+  "sensitive": [
+    "patientSubject",
+    "justification",
+    "createdBy"
+  ]
+}

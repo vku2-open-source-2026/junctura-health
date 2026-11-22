@@ -1,0 +1,53 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "claimId",
+      "kind",
+      "reason",
+      "at"
+    ],
+    "properties": {
+      "claimId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "kind": {
+        "type": "string",
+        "minLength": 1
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "amountVnd": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "assessor": {
+        "type": "string"
+      },
+      "assessorName": {
+        "type": "string"
+      },
+      "at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "claimId",
+    "kind",
+    "at"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "claimId",
+    "amountVnd",
+    "assessor",
+    "assessorName",
+    "reason"
+  ]
+}

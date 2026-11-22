@@ -1,0 +1,124 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "date",
+      "reason"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "date": {
+        "type": "string",
+        "format": "date"
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "diagnosis": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160
+          }
+        }
+      },
+      "vitals": {
+        "type": "object",
+        "properties": {
+          "temperatureC": {
+            "type": "number",
+            "minimum": 30,
+            "maximum": 45
+          },
+          "pulse": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 250
+          },
+          "systolic": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 260
+          },
+          "diastolic": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 160
+          },
+          "spo2": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 100
+          },
+          "weightKg": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 300
+          }
+        }
+      },
+      "notes": {
+        "type": "string"
+      },
+      "advice": {
+        "type": "string"
+      },
+      "prescriptions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "name",
+            "dose"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "dose": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "ongoing": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "by": {
+        "type": "string"
+      }
+    }
+  },
+  "indexed": [
+    "patientId",
+    "date"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "date",
+    "reason",
+    "diagnosis",
+    "vitals",
+    "notes",
+    "advice",
+    "prescriptions",
+    "by"
+  ]
+}

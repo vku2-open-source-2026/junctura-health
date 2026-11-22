@@ -1,0 +1,49 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "prescriptionCode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "strength": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "lot": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "status": {},
+      "reason": {
+        "type": "string"
+      }
+    }
+  },
+  "indexed": [
+    "prescriptionCode"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "prescriptionCode",
+    "items",
+    "reason"
+  ]
+}
