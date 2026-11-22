@@ -1,0 +1,58 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "vaccine",
+      "code",
+      "date",
+      "doseNumber"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "vaccine": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "code": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 16
+      },
+      "date": {
+        "type": "string",
+        "format": "date"
+      },
+      "doseNumber": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "lot": {
+        "type": "string"
+      },
+      "by": {
+        "type": "string"
+      }
+    }
+  },
+  "indexed": [
+    "patientId",
+    "code",
+    "date"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "vaccine",
+    "code",
+    "date",
+    "doseNumber",
+    "lot",
+    "by"
+  ]
+}

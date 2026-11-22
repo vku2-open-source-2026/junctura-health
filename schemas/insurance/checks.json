@@ -1,0 +1,44 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "claimId",
+      "matches",
+      "at"
+    ],
+    "properties": {
+      "claimId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "matches": {
+        "type": "boolean"
+      },
+      "checkedAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "assessor": {
+        "type": "string"
+      },
+      "assessorName": {
+        "type": "string"
+      },
+      "at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "indexed": [
+    "claimId",
+    "at"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "claimId",
+    "assessor",
+    "assessorName"
+  ]
+}

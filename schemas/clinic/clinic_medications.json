@@ -1,0 +1,49 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "name",
+      "dose",
+      "since"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "dose": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "since": {
+        "type": "string",
+        "format": "date"
+      },
+      "stoppedOn": {
+        "type": "string",
+        "format": "date"
+      }
+    }
+  },
+  "indexed": [
+    "patientId",
+    "since",
+    "stoppedOn"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "name",
+    "dose",
+    "since",
+    "stoppedOn"
+  ]
+}

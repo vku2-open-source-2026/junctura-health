@@ -1,0 +1,44 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "patientId",
+      "substance",
+      "severity",
+      "reaction"
+    ],
+    "properties": {
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "substance": {
+        "type": "string",
+        "minLength": 1
+      },
+      "severity": {
+        "type": "string",
+        "enum": [
+          "mild",
+          "moderate",
+          "severe"
+        ]
+      },
+      "reaction": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "indexed": [
+    "patientId"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "substance",
+    "severity",
+    "reaction"
+  ]
+}

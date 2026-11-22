@@ -1,0 +1,81 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "day",
+      "ticket",
+      "patientId",
+      "reason",
+      "priority",
+      "state",
+      "stationId",
+      "since"
+    ],
+    "properties": {
+      "day": {
+        "type": "string",
+        "format": "date"
+      },
+      "ticket": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "patientId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "priority": {
+        "type": "string",
+        "enum": [
+          "normal",
+          "urgent"
+        ]
+      },
+      "state": {
+        "type": "string",
+        "enum": [
+          "waiting",
+          "called",
+          "done",
+          "cancelled"
+        ]
+      },
+      "stationId": {
+        "type": "string"
+      },
+      "since": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "calledAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "doneAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "by": {
+        "type": "string"
+      }
+    }
+  },
+  "indexed": [
+    "day",
+    "ticket",
+    "state",
+    "patientId",
+    "stationId"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": [
+    "patientId",
+    "reason",
+    "by"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "lot": {
+        "type": "string"
+      },
+      "quantity": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "expiresOn": {
+        "type": "string",
+        "format": "date"
+      }
+    }
+  },
+  "indexed": [
+    "name",
+    "expiresOn"
+  ],
+  "uniqueKey": null,
+  "searchable": [],
+  "sensitive": []
+}

@@ -1,0 +1,98 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "kind",
+      "operationId",
+      "patientSubject",
+      "patientName",
+      "referralId",
+      "urgency",
+      "workflowId",
+      "definitionId"
+    ],
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "hospital-admission/v1"
+        ]
+      },
+      "operationId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "patientSubject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "patientName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      },
+      "birthYear": {},
+      "sex": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female",
+          "unknown"
+        ]
+      },
+      "referralId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "urgency": {
+        "type": "string",
+        "enum": [
+          "routine",
+          "urgent",
+          "emergency"
+        ]
+      },
+      "fromFacility": {
+        "type": "string",
+        "maxLength": 160
+      },
+      "toFacility": {
+        "type": "string",
+        "maxLength": 160
+      },
+      "workflowId": {
+        "type": "string"
+      },
+      "definitionId": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "indexed": [
+    "operationId",
+    "patientSubject",
+    "referralId",
+    "urgency"
+  ],
+  "uniqueKey": "operationId",
+  "searchable": [],
+  "sensitive": [
+    "patientSubject",
+    "patientName",
+    "birthYear",
+    "sex",
+    "referralId",
+    "createdBy"
+  ]
+}
