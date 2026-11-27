@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-FileCopyrightText: 2026 Junctura Contributors -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             targetNamespace="https://junctura.studio/health/pack">
+  <process id="chuyentuyen" name="Chuyển tuyến" isExecutable="true">
+    <startEvent id="start" name="Trạm y tế mở hồ sơ chuyển tuyến" />
+    <sequenceFlow id="flow-start-tiep-nhan" sourceRef="start" targetRef="tiep-nhan-benh-nhan" />
+    <userTask id="tiep-nhan-benh-nhan" name="Tiếp nhận người bệnh" flowable:candidateGroups="y-ta" />
+    <sequenceFlow id="flow-tiep-nhan-quyet-dinh" sourceRef="tiep-nhan-benh-nhan" targetRef="quyet-dinh-tiep-nhan" />
+    <exclusiveGateway id="quyet-dinh-tiep-nhan" name="Kết quả tiếp nhận" />
+    <sequenceFlow id="flow-tiep-nhan-approve" sourceRef="quyet-dinh-tiep-nhan" targetRef="kham-va-chi-dinh">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'tiep-nhan'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow-tiep-nhan-reject" sourceRef="quyet-dinh-tiep-nhan" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'tu-choi-tiep-nhan'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="kham-va-chi-dinh" name="Khám và chỉ định" flowable:candidateGroups="bac-si" />
+    <sequenceFlow id="flow-kham-quyet-dinh" sourceRef="kham-va-chi-dinh" targetRef="quyet-dinh-kham" />
+    <exclusiveGateway id="quyet-dinh-kham" name="Kết quả khám và chỉ định" />
+    <sequenceFlow id="flow-kham-approve" sourceRef="quyet-dinh-kham" targetRef="phan-hoi-ket-qua">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'dieu-tri'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow-kham-forward" sourceRef="quyet-dinh-kham" targetRef="phan-hoi-ket-qua">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'chuyen-tiep'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow-kham-reject" sourceRef="quyet-dinh-kham" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'tu-choi'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="phan-hoi-ket-qua" name="Phản hồi kết quả về trạm" flowable:candidateGroups="bac-si" />
+    <sequenceFlow id="flow-phan-hoi-end" sourceRef="phan-hoi-ket-qua" targetRef="end" />
+    <endEvent id="end" name="Hoàn tất chuyển tuyến" />
+  </process>
+</definitions>

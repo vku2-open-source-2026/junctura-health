@@ -1,0 +1,294 @@
+{
+  "formatVersion": 1,
+  "id": "health",
+  "version": "0.1.0",
+  "name": "Gói Y tế",
+  "description": "Gói ngành Y tế của Junctura Health: quy trình chuyển tuyến giữa trạm y tế và bệnh viện, và quy trình thanh toán giữa bệnh viện với sở y tế. Toàn bộ đơn vị và dữ liệu chỉ mang tính tổng hợp, không phải người hay đơn vị thật.",
+  "language": "vi",
+  "unitsFile": "units.json",
+  "groups": [
+    {
+      "id": "y-ta",
+      "name": "Y tá, y sĩ",
+      "description": "Tiếp nhận người bệnh và hỗ trợ trạm y tế, bệnh viện."
+    },
+    {
+      "id": "bac-si",
+      "name": "Bác sĩ",
+      "description": "Khám, chỉ định điều trị và phản hồi kết quả."
+    },
+    {
+      "id": "tai-chinh",
+      "name": "Tài chính",
+      "description": "Lập và theo dõi hồ sơ thanh toán."
+    },
+    {
+      "id": "lanh-dao",
+      "name": "Lãnh đạo đơn vị",
+      "description": "Duyệt quyết định và chi tiêu."
+    }
+  ],
+  "unitTypes": [
+    {
+      "id": "so-y-te",
+      "name": "Sở Y tế"
+    },
+    {
+      "id": "benh-vien",
+      "name": "Bệnh viện"
+    },
+    {
+      "id": "tram-y-te",
+      "name": "Trạm Y tế"
+    }
+  ],
+  "recordTypes": [
+    {
+      "id": "chuyen-tuyen",
+      "name": "Hồ sơ chuyển tuyến",
+      "description": "Chuyển người bệnh từ trạm y tế lên bệnh viện tuyến trên."
+    },
+    {
+      "id": "thanh-toan",
+      "name": "Hồ sơ thanh toán",
+      "description": "Bệnh viện trình sở y tế duyệt chi cho hoạt động điều trị."
+    }
+  ],
+  "workflows": [
+    {
+      "id": "chuyentuyen",
+      "name": "Chuyển tuyến",
+      "description": "Trạm y tế gửi người bệnh, bệnh viện tiếp nhận, điều trị và phản hồi kết quả về trạm.",
+      "recordType": "chuyen-tuyen",
+      "bpmn": "workflows/chuyen-tuyen.bpmn20.xml",
+      "senderUnitTypes": ["tram-y-te"],
+      "receiverUnitTypes": ["benh-vien", "tram-y-te"],
+      "senderGroups": ["y-ta"],
+      "receiverGroups": ["y-ta", "bac-si"],
+      "open": {
+        "role": "y-ta",
+        "form": {
+          "fields": [
+            {
+              "id": "ly-do-chuyen-tuyen",
+              "label": "Lý do chuyển tuyến",
+              "type": "text-multiline",
+              "required": true
+            },
+            {
+              "id": "muc-uu-tien",
+              "label": "Mức ưu tiên",
+              "type": "select",
+              "options": ["Thường", "Khẩn", "Cấp cứu"]
+            }
+          ]
+        }
+      },
+      "steps": [
+        {
+          "id": "tiep-nhan-benh-nhan",
+          "name": "Tiếp nhận người bệnh",
+          "description": "Bệnh viện ghi nhận người bệnh được chuyển tuyến và gán mã chuyển tuyến.",
+          "role": "y-ta",
+          "unitTypes": ["benh-vien"],
+          "deadlineDays": 1,
+          "form": {
+            "fields": [
+              {
+                "id": "ma-chuyen-tuyen",
+                "label": "Mã chuyển tuyến",
+                "type": "text"
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "id": "tiep-nhan",
+              "label": "Tiếp nhận điều trị",
+              "outcome": "approve"
+            },
+            {
+              "id": "tu-choi-tiep-nhan",
+              "label": "Từ chối tiếp nhận",
+              "outcome": "reject",
+              "requiresReason": true
+            }
+          ]
+        },
+        {
+          "id": "kham-va-chi-dinh",
+          "name": "Khám và chỉ định",
+          "description": "Bác sĩ bệnh viện khám, ghi chẩn đoán và chọn phương án điều trị.",
+          "role": "bac-si",
+          "unitTypes": ["benh-vien"],
+          "deadlineDays": 3,
+          "form": {
+            "fields": [
+              {
+                "id": "chan-doan",
+                "label": "Chẩn đoán",
+                "type": "text-multiline"
+              },
+              {
+                "id": "phuong-an",
+                "label": "Phương án điều trị",
+                "type": "select",
+                "options": ["Điều trị tại bệnh viện", "Chuyển tiếp tuyến trên"]
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "id": "dieu-tri",
+              "label": "Tiếp nhận điều trị",
+              "outcome": "approve"
+            },
+            {
+              "id": "chuyen-tiep",
+              "label": "Chuyển tiếp tuyến trên",
+              "outcome": "forward",
+              "requiresReason": true
+            },
+            {
+              "id": "tu-choi",
+              "label": "Từ chối điều trị",
+              "outcome": "reject",
+              "requiresReason": true
+            }
+          ]
+        },
+        {
+          "id": "phan-hoi-ket-qua",
+          "name": "Phản hồi kết quả về trạm",
+          "description": "Bệnh viện gửi kết luận điều trị về trạm y tế gửi người bệnh.",
+          "role": "bac-si",
+          "unitTypes": ["tram-y-te"],
+          "deadlineDays": 3,
+          "form": {
+            "fields": [
+              {
+                "id": "ket-luan",
+                "label": "Kết luận điều trị",
+                "type": "text-multiline"
+              },
+              {
+                "id": "dieu-tri-tiep",
+                "label": "Hướng điều trị tiếp theo",
+                "type": "text-multiline"
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "id": "gui-ket-qua",
+              "label": "Gửi kết quả về trạm y tế",
+              "outcome": "approve"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thanhtoan",
+      "name": "Thanh toán",
+      "description": "Bệnh viện lập hồ sơ chi, sở y tế duyệt hoặc yêu cầu bổ sung.",
+      "recordType": "thanh-toan",
+      "bpmn": "workflows/thanh-toan.bpmn20.xml",
+      "senderUnitTypes": ["benh-vien"],
+      "receiverUnitTypes": ["so-y-te"],
+      "senderGroups": ["tai-chinh"],
+      "receiverGroups": ["lanh-dao"],
+      "open": {
+        "role": "tai-chinh",
+        "form": {
+          "fields": [
+            {
+              "id": "so-tien",
+              "label": "Số tiền đề nghị thanh toán",
+              "type": "number",
+              "required": true
+            },
+            {
+              "id": "noi-dung",
+              "label": "Nội dung chi",
+              "type": "text-multiline",
+              "required": true
+            }
+          ]
+        }
+      },
+      "steps": [
+        {
+          "id": "lap-ho-so-chi",
+          "name": "Lập hồ sơ chi",
+          "description": "Tài chính bệnh viện kèm kỳ thanh toán và tệp hồ sơ chi.",
+          "role": "tai-chinh",
+          "unitTypes": ["benh-vien"],
+          "deadlineDays": 2,
+          "form": {
+            "fields": [
+              {
+                "id": "ky-thanh-toan",
+                "label": "Kỳ thanh toán",
+                "type": "date"
+              },
+              {
+                "id": "ho-so-chi",
+                "label": "Tệp hồ sơ chi",
+                "type": "file"
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "id": "trinh-duyet",
+              "label": "Trình sở y tế duyệt",
+              "outcome": "approve"
+            }
+          ]
+        },
+        {
+          "id": "duyet-thanh-toan",
+          "name": "Duyệt thanh toán",
+          "description": "Lãnh đạo sở y tế duyệt, không duyệt hoặc yêu cầu bổ sung hồ sơ.",
+          "role": "lanh-dao",
+          "unitTypes": ["so-y-te"],
+          "deadlineDays": 5,
+          "form": {
+            "fields": [
+              {
+                "id": "ghi-chu-duyet",
+                "label": "Ghi chú duyệt",
+                "type": "text-multiline"
+              },
+              {
+                "id": "tai-lieu-bo-sung",
+                "label": "Tài liệu bổ sung",
+                "type": "file"
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "id": "duyet",
+              "label": "Duyệt thanh toán",
+              "outcome": "approve"
+            },
+            {
+              "id": "khong-duyet",
+              "label": "Không duyệt",
+              "outcome": "reject",
+              "requiresReason": true
+            },
+            {
+              "id": "yeu-cau-bo-sung",
+              "label": "Yêu cầu bổ sung hồ sơ",
+              "outcome": "request-info",
+              "requiresReason": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-FileCopyrightText: 2026 Junctura Contributors -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             targetNamespace="https://junctura.studio/health/pack">
+  <process id="thanhtoan" name="Thanh toán" isExecutable="true">
+    <startEvent id="start" name="Bệnh viện mở hồ sơ thanh toán" />
+    <sequenceFlow id="flow-start-lap-ho-so" sourceRef="start" targetRef="lap-ho-so-chi" />
+    <userTask id="lap-ho-so-chi" name="Lập hồ sơ chi" flowable:candidateGroups="tai-chinh" />
+    <sequenceFlow id="flow-lap-ho-so-duyet" sourceRef="lap-ho-so-chi" targetRef="duyet-thanh-toan" />
+    <userTask id="duyet-thanh-toan" name="Duyệt thanh toán" flowable:candidateGroups="lanh-dao" />
+    <sequenceFlow id="flow-duyet-quyet-dinh" sourceRef="duyet-thanh-toan" targetRef="quyet-dinh-duyet" />
+    <exclusiveGateway id="quyet-dinh-duyet" name="Kết quả duyệt" />
+    <sequenceFlow id="flow-duyet-approve" sourceRef="quyet-dinh-duyet" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'duyet'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow-duyet-reject" sourceRef="quyet-dinh-duyet" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'khong-duyet'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow-duyet-request-info" sourceRef="quyet-dinh-duyet" targetRef="lap-ho-so-chi">
+      <conditionExpression xsi:type="tFormalExpression">${decision == 'yeu-cau-bo-sung'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="end" name="Hoàn tất thanh toán" />
+  </process>
+</definitions>
