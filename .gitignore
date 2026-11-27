@@ -25,6 +25,10 @@ coverage/
 # Junctura DX-OS checkout used only by CI conformance tests (never committed)
 .junctura-dxos/
 
+# Junctura Workspace checkout at the supported revision, for the pack and UI-RC checks
+# (never committed; CI checks out the pinned ref into this path)
+.junctura-workspace/
+
 # Release output
 release/
 preview-dist/

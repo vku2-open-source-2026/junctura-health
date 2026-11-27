@@ -48,10 +48,22 @@ jobs:
           ref: v0.1.0
           path: .junctura-dxos
           persist-credentials: false
+      - name: Check out Junctura Workspace at the supported revision for the pack and UI-RC checks
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          repository: vku2-open-source-2026/junctura-workspace
+          ref: 73171dae8d50031a6d52c8dde7cfcd82bebb68ef
+          path: .junctura-workspace
+          persist-credentials: false
+      - name: Install the Workspace pack reader dependencies (ajv, saxes at the revision's pins)
+        run: npm --prefix .junctura-workspace/server ci --prefer-offline --no-audit --no-fund
       - name: Run tests
         env:
           JUNCTURA_DXOS_DIR: .junctura-dxos
+          JUNCTURA_WORKSPACE_DIR: .junctura-workspace
         run: npm test
+      - name: Build the pinned @junctura/ui RC and verify Health UI compatibility
+        run: node scripts/check-ui-compat.mjs
       - name: Check the contracts package contents (what npm would publish)
         working-directory: contracts
         run: |

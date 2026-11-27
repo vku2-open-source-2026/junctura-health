@@ -1,0 +1,22 @@
+{
+  "formatVersion": 1,
+  "units": [
+    {
+      "id": "so-y-te-x",
+      "unitType": "so-y-te",
+      "name": "Sở Y tế Tỉnh X"
+    },
+    {
+      "id": "benh-vien-x",
+      "unitType": "benh-vien",
+      "name": "Bệnh viện X",
+      "parent": "so-y-te-x"
+    },
+    {
+      "id": "tram-y-te-y",
+      "unitType": "tram-y-te",
+      "name": "Trạm Y tế xã Y",
+      "parent": "so-y-te-x"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@junctura/health-ui-compat",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Điểm nhập giao diện Y tế trên RC @junctura/ui: dùng lại các thành phần dùng chung của bản RC và giữ lại các thành phần đặc thù Y tế của @junctura/health-ui, để scripts/check-ui-compat.mjs kiểm tương thích thật khi RC chưa phát hành.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitest": "^3.2.4"
+  }
+}
